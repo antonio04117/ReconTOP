@@ -1,20 +1,20 @@
 package model.topology;
 
-import model.geometry.Point2D;
+import model.geometry.Point3D;
 
 /**
  * simplex 0
  */
 public class Vertex2D {
 
-	private Point2D p;
+	private Point3D p;
 
 	/**
 	 * create a simplex 0 for the point
 	 *
 	 * @param p
 	 */
-	public Vertex2D(Point2D p) {
+	public Vertex2D(Point3D p) {
 		this.p = p;
 	}
 
@@ -23,7 +23,7 @@ public class Vertex2D {
 	 *
 	 * @return point
 	 */
-	public Point2D getP() {
+	public Point3D getP() {
 		return p;
 	}
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import model.geometry.Orient2D;
 import model.geometry.OrientOrientation;
-import model.geometry.Point2D;
+import model.geometry.Point3D;
 
 /**
  * a triangle consisting of three edges
@@ -124,7 +124,7 @@ public class Triangle2D {
 	 * @param p
 	 * @return true if p is inside of the triangle (not on border)
 	 */
-	public boolean isPointInside(Point2D p) {
+	public boolean isPointInside(Point3D p) {
 
 		OrientOrientation orientationA = Orient2D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
 				new BigDecimal(getP0().getP().getX()), new BigDecimal(getP0().getP().getY()),
@@ -159,7 +159,7 @@ public class Triangle2D {
 	 * @param p
 	 * @return
 	 */
-	public boolean isPointOnVertex(Point2D p) {
+	public boolean isPointOnVertex(Point3D p) {
 		return getP0().getP().equals(p) || getP1().getP().equals(p) || getP2().getP().equals(p);
 	}
 
@@ -169,7 +169,7 @@ public class Triangle2D {
 	 * @param p
 	 * @return
 	 */
-	public boolean isPointOnEdge(Point2D p) {
+	public boolean isPointOnEdge(Point3D p) {
 		return WindingNumber.isOnEdge(getP0(), getP1(), new Vertex2D(p))
 				|| WindingNumber.isOnEdge(getP0(), getP2(), new Vertex2D(p))
 				|| WindingNumber.isOnEdge(getP1(), getP2(), new Vertex2D(p));
@@ -253,8 +253,8 @@ public class Triangle2D {
 	 *
 	 * @return
 	 */
-	public ArrayList<Point2D> getPoints() {
-		ArrayList<Point2D> points = new ArrayList<>();
+	public ArrayList<Point3D> getPoints() {
+		ArrayList<Point3D> points = new ArrayList<>();
 		for (Vertex2D vertex2d : vertices) {
 			points.add(vertex2d.getP());
 		}

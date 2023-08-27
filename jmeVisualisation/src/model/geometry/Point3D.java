@@ -3,9 +3,9 @@ package model.geometry;
 /**
  * Point in 2d
  */
-public class Point2D {
+public class Point3D {
 	// coordinates
-	private int x, y;
+	private int x, y, z;
 
 	/**
 	 * create a point
@@ -13,9 +13,10 @@ public class Point2D {
 	 * @param x x-coordinate
 	 * @param y y-coordinate
 	 */
-	public Point2D(int x, int y) {
+	public Point3D(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
+		this.z = z;
 	}
 
 	/**
@@ -37,6 +38,15 @@ public class Point2D {
 	}
 
 	/**
+	 * get z-coordinate
+	 *
+	 * @return z-coordinate
+	 */
+	public int getZ() {
+		return z;
+	}
+
+	/**
 	 * get x-coordinate as double value
 	 *
 	 * @return
@@ -54,11 +64,20 @@ public class Point2D {
 		return y;
 	}
 
+	/**
+	 * get z-coordinate as double value
+	 *
+	 * @return
+	 */
+	public double getZDouble() {
+		return z;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Point2D) {
-			Point2D other = (Point2D) obj;
-			return other.x == x && other.y == y;
+		if (obj instanceof Point3D) {
+			Point3D other = (Point3D) obj;
+			return other.x == x && other.y == y && other.z == z;
 		}
 		return false;
 	}
@@ -70,6 +89,6 @@ public class Point2D {
 	 */
 	@Override
 	public String toString() {
-		return "Point " + x + "/" + y;
+		return "Point " + x + "/" + y + "/" + z;
 	}
 }
