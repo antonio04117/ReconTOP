@@ -8,7 +8,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
 
-public class Point {
+public class Vertex3DVM {
 
 	AssetManager assetManager;
 	Node parentNode;
@@ -29,7 +29,7 @@ public class Point {
 	 * @param z
 	 * @param color
 	 */
-	public Point(AssetManager assetManager, Node parentNode, float x, float y, float z, ColorRGBA color) {
+	public Vertex3DVM(AssetManager assetManager, Node parentNode, float x, float y, float z, ColorRGBA color) {
 		this.assetManager = assetManager;
 		this.parentNode = parentNode;
 

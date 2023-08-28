@@ -7,7 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
-public class Line {
+public class Edge3DVM {
 
 	AssetManager assetManager;
 	Node parentNode;
@@ -30,7 +30,7 @@ public class Line {
 	 * @param yE
 	 * @param zE
 	 */
-	public Line(AssetManager assetManager, Node parentNode, float xS, float yS, float zS, float xE, float yE,
+	public Edge3DVM(AssetManager assetManager, Node parentNode, float xS, float yS, float zS, float xE, float yE,
 			float zE, ColorRGBA color) {
 		this.assetManager = assetManager;
 		this.parentNode = parentNode;

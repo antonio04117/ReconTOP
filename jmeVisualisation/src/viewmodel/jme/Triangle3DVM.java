@@ -11,7 +11,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.util.BufferUtils;
 
-public class Triangle {
+public class Triangle3DVM {
 
 	AssetManager assetManager;
 	Node parentNode;
@@ -39,7 +39,7 @@ public class Triangle {
 	 * @param z3
 	 * @param color
 	 */
-	public Triangle(AssetManager assetManager, Node parentNode, float x1, float y1, float z1, float x2, float y2,
+	public Triangle3DVM(AssetManager assetManager, Node parentNode, float x1, float y1, float z1, float x2, float y2,
 			float z2, float x3, float y3, float z3, ColorRGBA color) {
 		this.assetManager = assetManager;
 		this.parentNode = parentNode;
