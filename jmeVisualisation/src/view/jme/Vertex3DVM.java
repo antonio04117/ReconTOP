@@ -1,7 +1,8 @@
-package viewmodel.jme;
+package view.jme;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -51,6 +52,21 @@ public class Vertex3DVM {
 
 	public void move(float y1, float y2, float y3) {
 		this.pointGeo.move(y1, y2, y3);
+	}
+
+	public Geometry getPointGeo() {
+		return pointGeo;
+	}
+
+	public void switchVisibility(boolean visible) {
+		// visible from the outside
+		if (visible == true) {
+			pointGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Back);
+		}
+		// not visible
+		else {
+			pointGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+		}
 	}
 
 }
