@@ -29,7 +29,6 @@ public class Triangle3D {
 		vertices.add(p3);
 	}
 
-	// TODO adapt
 	/**
 	 * orientates triangle ccw
 	 */
@@ -37,8 +36,9 @@ public class Triangle3D {
 		Triangle3D newTriangle = this;
 
 		OrientOrientation orientation = Orient3D.orientExact(newTriangle.getP0().getP().getX(),
-				newTriangle.getP0().getP().getY(), newTriangle.getP1().getP().getX(), newTriangle.getP1().getP().getY(),
-				newTriangle.getP2().getP().getX(), newTriangle.getP2().getP().getY());
+				newTriangle.getP0().getP().getY(), newTriangle.getP0().getP().getZ(), newTriangle.getP1().getP().getX(),
+				newTriangle.getP1().getP().getY(), newTriangle.getP1().getP().getZ(), newTriangle.getP2().getP().getX(),
+				newTriangle.getP2().getP().getY(), newTriangle.getP2().getP().getZ());
 
 		if (orientation != OrientOrientation.CCW) {
 			if (orientation == OrientOrientation.COPLANAR) {
@@ -54,7 +54,6 @@ public class Triangle3D {
 		vertices.set(2, newTriangle.getP2());
 	}
 
-	// TODO adapt
 	/**
 	 * tells if triangle is ccw
 	 *
@@ -62,8 +61,9 @@ public class Triangle3D {
 	 */
 	public boolean isCCW() {
 
-		if (Orient3D.orientExact(getP0().getP().getX(), getP0().getP().getY(), getP1().getP().getX(),
-				getP1().getP().getY(), getP2().getP().getX(), getP2().getP().getY()) == OrientOrientation.CCW) {
+		if (Orient3D.orientExact(getP0().getP().getX(), getP0().getP().getY(), getP0().getP().getZ(),
+				getP1().getP().getX(), getP1().getP().getY(), getP1().getP().getZ(), getP2().getP().getX(),
+				getP2().getP().getY(), getP2().getP().getZ()) == OrientOrientation.CCW) {
 			return true;
 		}
 
@@ -92,7 +92,6 @@ public class Triangle3D {
 
 	}
 
-	// TODO adapt
 	/**
 	 * Computes, whether a point is inside a triangle despite of its orientation
 	 * (does not use exact arithmetic)
@@ -101,17 +100,20 @@ public class Triangle3D {
 	 * @return true if the coordinate is inside (not on border)
 	 */
 	public boolean isCoordinateInside(double[] coordinate) {
-		double signA = Orient3D.orientDet(coordinate[0], coordinate[1], getP0().getP().getXDouble(),
-				getP0().getP().getYDouble(), getP1().getP().getXDouble(), getP1().getP().getYDouble());
-		double signB = Orient3D.orientDet(coordinate[0], coordinate[1], getP1().getP().getXDouble(),
-				getP1().getP().getYDouble(), getP2().getP().getXDouble(), getP2().getP().getYDouble());
+		double signA = Orient3D.orientDet(coordinate[0], coordinate[1], coordinate[2], getP0().getP().getXDouble(),
+				getP0().getP().getYDouble(), getP0().getP().getZDouble(), getP1().getP().getXDouble(),
+				getP1().getP().getYDouble(), getP1().getP().getZDouble());
+		double signB = Orient3D.orientDet(coordinate[0], coordinate[1], coordinate[2], getP1().getP().getXDouble(),
+				getP1().getP().getYDouble(), getP1().getP().getZDouble(), getP2().getP().getXDouble(),
+				getP2().getP().getYDouble(), getP2().getP().getZDouble());
 
 		if ((signA >= 0l && signB <= 0l) || (signA <= 0l && signB >= 0l)) {
 			return false;
 		}
 
-		double signC = Orient3D.orientDet(coordinate[0], coordinate[1], getP2().getP().getXDouble(),
-				getP2().getP().getYDouble(), getP0().getP().getXDouble(), getP0().getP().getYDouble());
+		double signC = Orient3D.orientDet(coordinate[0], coordinate[1], coordinate[2], getP2().getP().getXDouble(),
+				getP2().getP().getYDouble(), getP2().getP().getZDouble(), getP0().getP().getXDouble(),
+				getP0().getP().getYDouble(), getP0().getP().getZDouble());
 
 		if ((signA >= 0l && signC <= 0l) || (signA <= 0l && signC >= 0l)) {
 			return false;
@@ -120,7 +122,6 @@ public class Triangle3D {
 		return true;
 	}
 
-	// TODO adapt
 	/**
 	 * computes whether a point is inside a triangle despite of its orientation
 	 * (using exact arithmetic)
@@ -131,24 +132,27 @@ public class Triangle3D {
 	public boolean isPointInside(Point3D p) {
 
 		OrientOrientation orientationA = Orient3D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
-				new BigDecimal(getP0().getP().getX()), new BigDecimal(getP0().getP().getY()),
-				new BigDecimal(getP1().getP().getX()), new BigDecimal(getP1().getP().getY()));
+				new BigDecimal(p.getZ()), new BigDecimal(getP0().getP().getX()), new BigDecimal(getP0().getP().getY()),
+				new BigDecimal(getP0().getP().getZ()), new BigDecimal(getP1().getP().getX()),
+				new BigDecimal(getP1().getP().getY()), new BigDecimal(getP1().getP().getZ()));
 
 		if (orientationA == OrientOrientation.COPLANAR) {
 			return false;
 		}
 
 		OrientOrientation orientationB = Orient3D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
-				new BigDecimal(getP1().getP().getX()), new BigDecimal(getP1().getP().getY()),
-				new BigDecimal(getP2().getP().getX()), new BigDecimal(getP2().getP().getY()));
+				new BigDecimal(p.getZ()), new BigDecimal(getP1().getP().getX()), new BigDecimal(getP1().getP().getY()),
+				new BigDecimal(getP1().getP().getZ()), new BigDecimal(getP2().getP().getX()),
+				new BigDecimal(getP2().getP().getY()), new BigDecimal(getP2().getP().getZ()));
 
 		if (orientationB == OrientOrientation.COPLANAR || orientationA != orientationB) {
 			return false;
 		}
 
 		OrientOrientation orientationC = Orient3D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
-				new BigDecimal(getP2().getP().getX()), new BigDecimal(getP2().getP().getY()),
-				new BigDecimal(getP0().getP().getX()), new BigDecimal(getP0().getP().getY()));
+				new BigDecimal(p.getZ()), new BigDecimal(getP2().getP().getX()), new BigDecimal(getP2().getP().getY()),
+				new BigDecimal(getP2().getP().getZ()), new BigDecimal(getP0().getP().getX()),
+				new BigDecimal(getP0().getP().getY()), new BigDecimal(getP0().getP().getZ()));
 
 		if (orientationC == OrientOrientation.COPLANAR || orientationA != orientationC) {
 			return false;
