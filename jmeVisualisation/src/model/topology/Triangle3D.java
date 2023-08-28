@@ -10,10 +10,10 @@ import model.geometry.Point3D;
 /**
  * a triangle consisting of three edges
  */
-public class Triangle2D {
+public class Triangle3D {
 
 	private ArrayList<Vertex3D> vertices = new ArrayList<>(3);
-	private Triangle2D[] neighbors = new Triangle2D[3];
+	private Triangle3D[] neighbors = new Triangle3D[3];
 
 	/**
 	 * create a new simplex 2
@@ -22,18 +22,19 @@ public class Triangle2D {
 	 * @param p2 point 2
 	 * @param p3 point 3
 	 */
-	public Triangle2D(Vertex3D p1, Vertex3D p2, Vertex3D p3) {
+	public Triangle3D(Vertex3D p1, Vertex3D p2, Vertex3D p3) {
 
 		vertices.add(p1);
 		vertices.add(p2);
 		vertices.add(p3);
 	}
 
+	// TODO adapt
 	/**
 	 * orientates triangle ccw
 	 */
 	public void orientateCCW() {
-		Triangle2D newTriangle = this;
+		Triangle3D newTriangle = this;
 
 		OrientOrientation orientation = Orient2D.orientExact(newTriangle.getP0().getP().getX(),
 				newTriangle.getP0().getP().getY(), newTriangle.getP1().getP().getX(), newTriangle.getP1().getP().getY(),
@@ -45,7 +46,7 @@ public class Triangle2D {
 			}
 
 			// if newTriangle not oriented correctly -> reorganize triangle
-			newTriangle = new Triangle2D(newTriangle.getP0(), newTriangle.getP2(), newTriangle.getP1());
+			newTriangle = new Triangle3D(newTriangle.getP0(), newTriangle.getP2(), newTriangle.getP1());
 		}
 
 		vertices.set(0, newTriangle.getP0());
@@ -53,6 +54,7 @@ public class Triangle2D {
 		vertices.set(2, newTriangle.getP2());
 	}
 
+	// TODO adapt
 	/**
 	 * tells if triangle is ccw
 	 *
@@ -78,7 +80,7 @@ public class Triangle2D {
 	 * @param start the first point of the common edge
 	 * @param end   the second point of the common edge
 	 */
-	public static void flip(Triangle2D s1, Triangle2D s2, Vertex3D p1, Vertex3D p2, Vertex3D start, Vertex3D end) {
+	public static void flip(Triangle3D s1, Triangle3D s2, Vertex3D p1, Vertex3D p2, Vertex3D start, Vertex3D end) {
 
 		s1.vertices.set(0, p1);
 		s1.vertices.set(1, p2);
@@ -90,6 +92,7 @@ public class Triangle2D {
 
 	}
 
+	// TODO adapt
 	/**
 	 * Computes, whether a point is inside a triangle despite of its orientation
 	 * (does not use exact arithmetic)
@@ -117,6 +120,7 @@ public class Triangle2D {
 		return true;
 	}
 
+	// TODO adapt
 	/**
 	 * computes whether a point is inside a triangle despite of its orientation
 	 * (using exact arithmetic)
@@ -183,7 +187,7 @@ public class Triangle2D {
 	 * @param edge
 	 * @return
 	 */
-	public boolean containsEdge(Edge2D e) {
+	public boolean containsEdge(Edge3D e) {
 		if (getPoints().contains(e.getStart().getP()) && getPoints().contains(e.getEnd().getP())) {
 			return true;
 		}
@@ -200,7 +204,9 @@ public class Triangle2D {
 				/ 3.0;
 		double centerY = (getP0().getP().getYDouble() + getP1().getP().getYDouble() + getP2().getP().getYDouble())
 				/ 3.0;
-		return new double[] { centerX, centerY };
+		double centerZ = (getP0().getP().getZDouble() + getP1().getP().getZDouble() + getP2().getP().getZDouble())
+				/ 3.0;
+		return new double[] { centerX, centerY, centerZ };
 	}
 
 	/**
@@ -224,21 +230,21 @@ public class Triangle2D {
 	 * @return position of the third point
 	 */
 	public int getIndexOfThirdPoint(Vertex3D p1, Vertex3D p2) {
-		if (getP0() == p1) {
-			if (getP1() == p2) {
+		if (getP0().equals(p1)) {
+			if (getP1().equals(p2)) {
 				return 2;
 			} else {
 				return 1;
 			}
 		} else {
-			if (getP1() == p1) {
-				if (getP0() == p2) {
+			if (getP1().equals(p1)) {
+				if (getP0().equals(p2)) {
 					return 2;
 				} else {
 					return 0;
 				}
 			} else {
-				if (getP0() == p2) {
+				if (getP0().equals(p2)) {
 					return 1;
 				} else {
 					return 0;
@@ -255,8 +261,8 @@ public class Triangle2D {
 	 */
 	public ArrayList<Point3D> getPoints() {
 		ArrayList<Point3D> points = new ArrayList<>();
-		for (Vertex3D vertex2d : vertices) {
-			points.add(vertex2d.getP());
+		for (Vertex3D vertex3d : vertices) {
+			points.add(vertex3d.getP());
 		}
 
 		return points;
@@ -294,7 +300,7 @@ public class Triangle2D {
 	 *
 	 * @return
 	 */
-	public Triangle2D[] getNeighbors() {
+	public Triangle3D[] getNeighbors() {
 		return neighbors;
 	}
 
@@ -304,7 +310,7 @@ public class Triangle2D {
 	 * @param index
 	 * @param t
 	 */
-	public void setNeighborI(int index, Triangle2D t) {
+	public void setNeighborI(int index, Triangle3D t) {
 		neighbors[index] = t;
 	}
 

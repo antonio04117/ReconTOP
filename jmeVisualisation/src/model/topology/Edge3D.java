@@ -3,7 +3,7 @@ package model.topology;
 /**
  * an edge in 2D
  */
-public class Edge2D {
+public class Edge3D {
 
 	private Vertex3D start, end;
 
@@ -16,7 +16,7 @@ public class Edge2D {
 	 * @param p2       end
 	 * @param boundary
 	 */
-	public Edge2D(Vertex3D p1, Vertex3D p2, boolean boundary) {
+	public Edge3D(Vertex3D p1, Vertex3D p2, boolean boundary) {
 		// set the points
 		start = p1;
 		end = p2;
