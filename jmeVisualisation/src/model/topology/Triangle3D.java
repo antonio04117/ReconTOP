@@ -3,7 +3,7 @@ package model.topology;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import model.geometry.Orient2D;
+import model.geometry.Orient3D;
 import model.geometry.OrientOrientation;
 import model.geometry.Point3D;
 
@@ -36,7 +36,7 @@ public class Triangle3D {
 	public void orientateCCW() {
 		Triangle3D newTriangle = this;
 
-		OrientOrientation orientation = Orient2D.orientExact(newTriangle.getP0().getP().getX(),
+		OrientOrientation orientation = Orient3D.orientExact(newTriangle.getP0().getP().getX(),
 				newTriangle.getP0().getP().getY(), newTriangle.getP1().getP().getX(), newTriangle.getP1().getP().getY(),
 				newTriangle.getP2().getP().getX(), newTriangle.getP2().getP().getY());
 
@@ -62,7 +62,7 @@ public class Triangle3D {
 	 */
 	public boolean isCCW() {
 
-		if (Orient2D.orientExact(getP0().getP().getX(), getP0().getP().getY(), getP1().getP().getX(),
+		if (Orient3D.orientExact(getP0().getP().getX(), getP0().getP().getY(), getP1().getP().getX(),
 				getP1().getP().getY(), getP2().getP().getX(), getP2().getP().getY()) == OrientOrientation.CCW) {
 			return true;
 		}
@@ -101,16 +101,16 @@ public class Triangle3D {
 	 * @return true if the coordinate is inside (not on border)
 	 */
 	public boolean isCoordinateInside(double[] coordinate) {
-		double signA = Orient2D.orientDet(coordinate[0], coordinate[1], getP0().getP().getXDouble(),
+		double signA = Orient3D.orientDet(coordinate[0], coordinate[1], getP0().getP().getXDouble(),
 				getP0().getP().getYDouble(), getP1().getP().getXDouble(), getP1().getP().getYDouble());
-		double signB = Orient2D.orientDet(coordinate[0], coordinate[1], getP1().getP().getXDouble(),
+		double signB = Orient3D.orientDet(coordinate[0], coordinate[1], getP1().getP().getXDouble(),
 				getP1().getP().getYDouble(), getP2().getP().getXDouble(), getP2().getP().getYDouble());
 
 		if ((signA >= 0l && signB <= 0l) || (signA <= 0l && signB >= 0l)) {
 			return false;
 		}
 
-		double signC = Orient2D.orientDet(coordinate[0], coordinate[1], getP2().getP().getXDouble(),
+		double signC = Orient3D.orientDet(coordinate[0], coordinate[1], getP2().getP().getXDouble(),
 				getP2().getP().getYDouble(), getP0().getP().getXDouble(), getP0().getP().getYDouble());
 
 		if ((signA >= 0l && signC <= 0l) || (signA <= 0l && signC >= 0l)) {
@@ -130,7 +130,7 @@ public class Triangle3D {
 	 */
 	public boolean isPointInside(Point3D p) {
 
-		OrientOrientation orientationA = Orient2D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
+		OrientOrientation orientationA = Orient3D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
 				new BigDecimal(getP0().getP().getX()), new BigDecimal(getP0().getP().getY()),
 				new BigDecimal(getP1().getP().getX()), new BigDecimal(getP1().getP().getY()));
 
@@ -138,7 +138,7 @@ public class Triangle3D {
 			return false;
 		}
 
-		OrientOrientation orientationB = Orient2D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
+		OrientOrientation orientationB = Orient3D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
 				new BigDecimal(getP1().getP().getX()), new BigDecimal(getP1().getP().getY()),
 				new BigDecimal(getP2().getP().getX()), new BigDecimal(getP2().getP().getY()));
 
@@ -146,7 +146,7 @@ public class Triangle3D {
 			return false;
 		}
 
-		OrientOrientation orientationC = Orient2D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
+		OrientOrientation orientationC = Orient3D.orientExact(new BigDecimal(p.getX()), new BigDecimal(p.getY()),
 				new BigDecimal(getP2().getP().getX()), new BigDecimal(getP2().getP().getY()),
 				new BigDecimal(getP0().getP().getX()), new BigDecimal(getP0().getP().getY()));
 
