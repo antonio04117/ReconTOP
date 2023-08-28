@@ -12,7 +12,7 @@ import model.geometry.Point3D;
  */
 public class Triangle2D {
 
-	private ArrayList<Vertex2D> vertices = new ArrayList<>(3);
+	private ArrayList<Vertex3D> vertices = new ArrayList<>(3);
 	private Triangle2D[] neighbors = new Triangle2D[3];
 
 	/**
@@ -22,7 +22,7 @@ public class Triangle2D {
 	 * @param p2 point 2
 	 * @param p3 point 3
 	 */
-	public Triangle2D(Vertex2D p1, Vertex2D p2, Vertex2D p3) {
+	public Triangle2D(Vertex3D p1, Vertex3D p2, Vertex3D p3) {
 
 		vertices.add(p1);
 		vertices.add(p2);
@@ -78,7 +78,7 @@ public class Triangle2D {
 	 * @param start the first point of the common edge
 	 * @param end   the second point of the common edge
 	 */
-	public static void flip(Triangle2D s1, Triangle2D s2, Vertex2D p1, Vertex2D p2, Vertex2D start, Vertex2D end) {
+	public static void flip(Triangle2D s1, Triangle2D s2, Vertex3D p1, Vertex3D p2, Vertex3D start, Vertex3D end) {
 
 		s1.vertices.set(0, p1);
 		s1.vertices.set(1, p2);
@@ -170,9 +170,9 @@ public class Triangle2D {
 	 * @return
 	 */
 	public boolean isPointOnEdge(Point3D p) {
-		return WindingNumber.isOnEdge(getP0(), getP1(), new Vertex2D(p))
-				|| WindingNumber.isOnEdge(getP0(), getP2(), new Vertex2D(p))
-				|| WindingNumber.isOnEdge(getP1(), getP2(), new Vertex2D(p));
+		return WindingNumber.isOnEdge(getP0(), getP1(), new Vertex3D(p))
+				|| WindingNumber.isOnEdge(getP0(), getP2(), new Vertex3D(p))
+				|| WindingNumber.isOnEdge(getP1(), getP2(), new Vertex3D(p));
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class Triangle2D {
 	 * @param p2
 	 * @return the third point
 	 */
-	public Vertex2D getThirdPoint(Vertex2D p1, Vertex2D p2) {
+	public Vertex3D getThirdPoint(Vertex3D p1, Vertex3D p2) {
 		int i = getIndexOfThirdPoint(p1, p2);
 		return vertices.get(i);
 
@@ -223,7 +223,7 @@ public class Triangle2D {
 	 * @param p2
 	 * @return position of the third point
 	 */
-	public int getIndexOfThirdPoint(Vertex2D p1, Vertex2D p2) {
+	public int getIndexOfThirdPoint(Vertex3D p1, Vertex3D p2) {
 		if (getP0() == p1) {
 			if (getP1() == p2) {
 				return 2;
@@ -255,7 +255,7 @@ public class Triangle2D {
 	 */
 	public ArrayList<Point3D> getPoints() {
 		ArrayList<Point3D> points = new ArrayList<>();
-		for (Vertex2D vertex2d : vertices) {
+		for (Vertex3D vertex2d : vertices) {
 			points.add(vertex2d.getP());
 		}
 
@@ -267,7 +267,7 @@ public class Triangle2D {
 	 *
 	 * @return point 1
 	 */
-	public Vertex2D getP0() {
+	public Vertex3D getP0() {
 		return vertices.get(0);
 	}
 
@@ -276,7 +276,7 @@ public class Triangle2D {
 	 *
 	 * @return point 2
 	 */
-	public Vertex2D getP1() {
+	public Vertex3D getP1() {
 		return vertices.get(1);
 	}
 
@@ -285,7 +285,7 @@ public class Triangle2D {
 	 *
 	 * @return point 3
 	 */
-	public Vertex2D getP2() {
+	public Vertex3D getP2() {
 		return vertices.get(2);
 	}
 

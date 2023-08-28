@@ -5,7 +5,7 @@ import model.geometry.Point3D;
 /**
  * simplex 0
  */
-public class Vertex2D {
+public class Vertex3D {
 
 	private Point3D p;
 
@@ -14,7 +14,7 @@ public class Vertex2D {
 	 *
 	 * @param p
 	 */
-	public Vertex2D(Point3D p) {
+	public Vertex3D(Point3D p) {
 		this.p = p;
 	}
 

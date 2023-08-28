@@ -5,7 +5,7 @@ package model.topology;
  */
 public class Edge2D {
 
-	private Vertex2D start, end;
+	private Vertex3D start, end;
 
 	private boolean boundary = true;
 
@@ -16,7 +16,7 @@ public class Edge2D {
 	 * @param p2       end
 	 * @param boundary
 	 */
-	public Edge2D(Vertex2D p1, Vertex2D p2, boolean boundary) {
+	public Edge2D(Vertex3D p1, Vertex3D p2, boolean boundary) {
 		// set the points
 		start = p1;
 		end = p2;
@@ -28,7 +28,7 @@ public class Edge2D {
 	 *
 	 * @return start
 	 */
-	public Vertex2D getStart() {
+	public Vertex3D getStart() {
 		return start;
 	}
 
@@ -37,7 +37,7 @@ public class Edge2D {
 	 *
 	 * @return end
 	 */
-	public Vertex2D getEnd() {
+	public Vertex3D getEnd() {
 		return end;
 	}
 
@@ -65,7 +65,7 @@ public class Edge2D {
 	 * @param p1
 	 * @param p2
 	 */
-	public void flip(Vertex2D p1, Vertex2D p2) {
+	public void flip(Vertex3D p1, Vertex3D p2) {
 		start = p1;
 		end = p2;
 	}
