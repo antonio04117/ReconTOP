@@ -14,9 +14,9 @@ public class AppJFX extends javafx.application.Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		Presenter pres = new Presenter();
-
-		pres.init();
+//		Presenter pres = new Presenter();
+//
+//		pres.init();
 
 		stage.show();
 	}

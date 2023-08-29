@@ -16,17 +16,20 @@ public class Triangle3D {
 	private Triangle3D[] neighbors = new Triangle3D[3];
 
 	/**
-	 * create a new simplex 2
+	 * create a new simplex 2 that is ccw
 	 *
-	 * @param p1 point 1
-	 * @param p2 point 2
-	 * @param p3 point 3
+	 * @param p0 point 1
+	 * @param p1 point 2
+	 * @param p2 point 3
 	 */
-	public Triangle3D(Vertex3D p1, Vertex3D p2, Vertex3D p3) {
+	public Triangle3D(Vertex3D p0, Vertex3D p1, Vertex3D p2) {
 
+		vertices.add(p0);
 		vertices.add(p1);
 		vertices.add(p2);
-		vertices.add(p3);
+
+		// make ccw
+		orientateCCW();
 	}
 
 	/**

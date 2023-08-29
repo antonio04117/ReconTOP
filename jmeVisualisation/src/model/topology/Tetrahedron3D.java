@@ -48,5 +48,7 @@ public class Tetrahedron3D {
 	public Vertex3D getP3() {
 		return vertices.get(3);
 	}
+	
+	
 
 }

@@ -1,7 +1,5 @@
 package app;
 
-import java.awt.Button;
-
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -13,10 +11,6 @@ import com.jme3.scene.debug.Arrow;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import presenter.Presenter;
 import view.jfx.ViewJFX;
@@ -27,6 +21,25 @@ public class DualWindowApp {
 		// Starte den JavaFX-Thread
 		new Thread(() -> Application.launch(JavaFXApp.class)).start();
 
+	}
+
+	public static class JavaFXApp extends Application {
+
+		@Override
+		public void start(Stage primaryStage) {
+			// JavaFX benötigt JavaFX-Thread
+			Platform.runLater(() -> {
+				ViewJFX viewJFX = new ViewJFX(primaryStage);
+
+				// Starte den JMonkey-Thread
+				new Thread(() -> {
+					JMonkeyApp appJME = new JMonkeyApp();
+					appJME.start();
+					Presenter presenter = new Presenter(viewJFX, appJME);
+				}).start();
+
+			});
+		}
 	}
 
 	public static class JMonkeyApp extends SimpleApplication {
@@ -150,26 +163,6 @@ public class DualWindowApp {
 			n.attachChild(g);
 		}
 
-	}
-
-	public static class JavaFXApp extends Application {
-
-		@Override
-		public void start(Stage primaryStage) {
-			// JavaFX benötigt JavaFX-Thread
-			JFXPanel fxPanel = new JFXPanel(); // Initialisiere den JavaFX-Thread
-			Platform.runLater(() -> {
-				ViewJFX viewJFX = new ViewJFX(primaryStage);
-
-				// Starte den JMonkey-Thread
-				new Thread(() -> {
-					JMonkeyApp app = new JMonkeyApp();
-					app.start();
-					Presenter presenter = new Presenter(viewJFX, app);
-				}).start();
-
-			});
-		}
 	}
 
 }
