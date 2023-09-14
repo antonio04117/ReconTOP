@@ -299,4 +299,8 @@ public class Triangle3D {
 		return isBoundary;
 	}
 
+	public void setBoundary(boolean boundary) {
+		this.isBoundary = boundary;
+	}
+
 }

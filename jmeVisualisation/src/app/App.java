@@ -2,7 +2,6 @@ package app;
 
 import com.jme3.app.SimpleApplication;
 
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Mesh;
@@ -47,29 +46,27 @@ public class App {
 
 			@Override
 			public void simpleInitApp() {
-				
+
 				Mesh mesh = new Mesh();
-				
-				
+
+				Vertex3D[] square = new Vertex3D[] { new Vertex3D(new Point3D(0, 0, 0)),
+						new Vertex3D(new Point3D(0, 10, 0)), new Vertex3D(new Point3D(10, 10, 0)),
+						new Vertex3D(new Point3D(0, 0, 10)), new Vertex3D(new Point3D(10, 0, 0)),
+						new Vertex3D(new Point3D(0, 10, 10)), new Vertex3D(new Point3D(10, 10, 10)),
+						new Vertex3D(new Point3D(10, 0, 10)) };
+
 				// a square of tetrahedrons
-				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 0, 0)), new Vertex3D(new Point3D(0, 10, 0)),
-						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(0, 0, 10))));
-				
-				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 0, 0)), new Vertex3D(new Point3D(10, 0, 0)),
-						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(0, 0, 10))));
-				
-				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 10, 0)), new Vertex3D(new Point3D(0, 0, 10)),
-						new Vertex3D(new Point3D(0, 10, 10)), new Vertex3D(new Point3D(10, 10, 10))));
-				
-				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 10, 0)), new Vertex3D(new Point3D(0, 0, 10)),
-						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(10, 10, 10))));
-				
-				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 0, 10)), new Vertex3D(new Point3D(10, 0, 10)),
-						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(10, 10, 10))));
-				
-				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 0, 10)), new Vertex3D(new Point3D(10, 0, 0)),
-						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(10, 0, 10))));
-				
+				mesh.addTet(new Tetrahedron3D(square[0], square[1], square[2], square[3]));
+
+				mesh.addTet(new Tetrahedron3D(square[0], square[4], square[2], square[3]));
+
+				mesh.addTet(new Tetrahedron3D(square[1], square[3], square[5], square[6]));
+
+				mesh.addTet(new Tetrahedron3D(square[1], square[3], square[2], square[6]));
+
+				mesh.addTet(new Tetrahedron3D(square[3], square[7], square[2], square[6]));
+
+				mesh.addTet(new Tetrahedron3D(square[3], square[4], square[2], square[7]));
 
 				// set Scene while selecting sample size in each direction
 				// true -> example A

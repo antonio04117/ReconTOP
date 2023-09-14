@@ -73,6 +73,30 @@ public class Mesh {
 		tetCount++;
 	}
 
+	/**
+	 * mark boundary for square
+	 */
+	public void markBoundary() {
+		for (int i = 0; i < mapTri.size(); i++) {
+			for (Triangle3D triangle : mapTri.get(i)) {
+
+				// check if triangle is boundary (is on same plane)
+				if (triangle.getP0().getP().getX() == triangle.getP1().getP().getX()
+						&& triangle.getP0().getP().getX() == triangle.getP2().getP().getX()
+						&& triangle.getP1().getP().getX() == triangle.getP2().getP().getX()
+						|| triangle.getP0().getP().getY() == triangle.getP1().getP().getY()
+								&& triangle.getP0().getP().getY() == triangle.getP2().getP().getY()
+								&& triangle.getP1().getP().getY() == triangle.getP2().getP().getY()
+						|| triangle.getP0().getP().getZ() == triangle.getP1().getP().getZ()
+								&& triangle.getP0().getP().getZ() == triangle.getP2().getP().getZ()
+								&& triangle.getP1().getP().getZ() == triangle.getP2().getP().getZ()) {
+					triangle.setBoundary(true);
+				}
+
+			}
+		}
+	}
+
 	public Map<Integer, Tetrahedron3D> getMapTet() {
 		return mapTet;
 	}
@@ -92,7 +116,5 @@ public class Mesh {
 	public Integer getTetCount() {
 		return tetCount;
 	}
-	
-	
 
 }
