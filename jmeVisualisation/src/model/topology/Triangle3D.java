@@ -12,6 +12,7 @@ import model.geometry.Point3D;
  */
 public class Triangle3D {
 
+	private boolean isBoundary = false;
 	private ArrayList<Vertex3D> vertices = new ArrayList<>(3);
 	private Triangle3D[] neighbors = new Triangle3D[3];
 
@@ -28,33 +29,6 @@ public class Triangle3D {
 		vertices.add(p1);
 		vertices.add(p2);
 
-		// make ccw
-		orientateCCW();
-	}
-
-	/**
-	 * orientates triangle ccw
-	 */
-	public void orientateCCW() {
-		Triangle3D newTriangle = this;
-
-		OrientOrientation orientation = Orient3D.orientExact(newTriangle.getP0().getP().getX(),
-				newTriangle.getP0().getP().getY(), newTriangle.getP0().getP().getZ(), newTriangle.getP1().getP().getX(),
-				newTriangle.getP1().getP().getY(), newTriangle.getP1().getP().getZ(), newTriangle.getP2().getP().getX(),
-				newTriangle.getP2().getP().getY(), newTriangle.getP2().getP().getZ());
-
-		if (orientation != OrientOrientation.CCW) {
-			if (orientation == OrientOrientation.COPLANAR) {
-				throw new IllegalArgumentException("Point is not added! The resulting triangle would be zero");
-			}
-
-			// if newTriangle not oriented correctly -> reorganize triangle
-			newTriangle = new Triangle3D(newTriangle.getP0(), newTriangle.getP2(), newTriangle.getP1());
-		}
-
-		vertices.set(0, newTriangle.getP0());
-		vertices.set(1, newTriangle.getP1());
-		vertices.set(2, newTriangle.getP2());
 	}
 
 	/**
@@ -319,6 +293,10 @@ public class Triangle3D {
 	 */
 	public void setNeighborI(int index, Triangle3D t) {
 		neighbors[index] = t;
+	}
+
+	public boolean isBoundary() {
+		return isBoundary;
 	}
 
 }

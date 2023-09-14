@@ -5,6 +5,10 @@ import com.jme3.app.SimpleApplication;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Mesh;
+import model.geometry.Point3D;
+import model.topology.Tetrahedron3D;
+import model.topology.Vertex3D;
 import presenter.Presenter;
 import view.jfx.ViewFX;
 
@@ -43,11 +47,34 @@ public class App {
 
 			@Override
 			public void simpleInitApp() {
+				
+				Mesh mesh = new Mesh();
+				
+				
+				// a square of tetrahedrons
+				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 0, 0)), new Vertex3D(new Point3D(0, 10, 0)),
+						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(0, 0, 10))));
+				
+				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 0, 0)), new Vertex3D(new Point3D(10, 0, 0)),
+						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(0, 0, 10))));
+				
+				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 10, 0)), new Vertex3D(new Point3D(0, 0, 10)),
+						new Vertex3D(new Point3D(0, 10, 10)), new Vertex3D(new Point3D(10, 10, 10))));
+				
+				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 10, 0)), new Vertex3D(new Point3D(0, 0, 10)),
+						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(10, 10, 10))));
+				
+				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 0, 10)), new Vertex3D(new Point3D(10, 0, 10)),
+						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(10, 10, 10))));
+				
+				mesh.addTet(new Tetrahedron3D(new Vertex3D(new Point3D(0, 0, 10)), new Vertex3D(new Point3D(10, 0, 0)),
+						new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(10, 0, 10))));
+				
 
 				// set Scene while selecting sample size in each direction
 				// true -> example A
 				// false -> example B
-				Presenter.setScene(this, sampleSize);
+				Presenter.setScene(this, mesh);
 			}
 		}
 	}

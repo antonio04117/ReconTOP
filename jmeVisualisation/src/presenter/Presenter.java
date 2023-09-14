@@ -4,10 +4,12 @@ import com.jme3.math.ColorRGBA;
 
 import app.App.AppFX.AppJME;
 import model.Mesh;
+import model.geometry.Point3D;
+import model.topology.Tetrahedron3D;
+import model.topology.Vertex3D;
 import view.jfx.ViewFX;
+import view.jme.TetrahedronJME;
 import viewmodel.ViewModel;
-
-
 
 /**
  * presenter according to mvpvm-pattern
@@ -35,12 +37,10 @@ public abstract class Presenter {
 	 * @param app
 	 * @param sampleSize
 	 */
-	public static void setScene(AppJME app, int sampleSize) {
+	public static void setScene(AppJME app, Mesh mesh) {
 
 		ViewModel.initializeView(app, exampleA);
 
-		// get selected example
-		Mesh[] mesh = new Mesh[2];
 
 //		if (exampleA) {
 //			// first surface
@@ -61,11 +61,11 @@ public abstract class Presenter {
 //		}
 
 		// change colors of Meshes
-		boolean firstMesh = true;
-		for (Mesh meshI : mesh) {
-			Presenter.drawElements(app, meshI, firstMesh);
-			firstMesh = false;
-		}
+//		boolean firstMesh = true;
+//		for (Mesh meshI : mesh) {
+		Presenter.drawElements(app, mesh);
+//			firstMesh = false;
+//		}
 	}
 
 	/**
@@ -75,9 +75,15 @@ public abstract class Presenter {
 	 * @param mesh
 	 * @param firstMesh
 	 */
-	private static void drawElements(AppJME app, Mesh mesh, boolean firstMesh) {
+	private static void drawElements(AppJME app, Mesh mesh) {
 
-		ColorRGBA color;
+		ColorRGBA color = ColorRGBA.Red;
+
+		// draw Tetrahedrons
+		for (int i = 0; i < mesh.getMapTet().size(); i++) {
+			Tetrahedron3D tet = mesh.getMapTet().get(i);
+			ViewModel.drawTetrahedron(app, tet, color);
+		}
 
 //		// draw triangles
 //		if (firstMesh) {

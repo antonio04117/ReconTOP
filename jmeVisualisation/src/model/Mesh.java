@@ -73,4 +73,26 @@ public class Mesh {
 		tetCount++;
 	}
 
+	public Map<Integer, Tetrahedron3D> getMapTet() {
+		return mapTet;
+	}
+
+	public Map<Integer, HashSet<Triangle3D>> getMapTri() {
+		return mapTri;
+	}
+
+	public Map<Integer, HashSet<Edge3D>> getMapEdg() {
+		return mapEdg;
+	}
+
+	public Map<Integer, HashSet<Vertex3D>> getMapVer() {
+		return mapVer;
+	}
+
+	public Integer getTetCount() {
+		return tetCount;
+	}
+	
+	
+
 }
