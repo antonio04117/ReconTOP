@@ -17,8 +17,8 @@ public class ViewFX {
 	private Stage stage;
 	private Scene scene;
 
-	private Button exampleA;
-	private Button exampleB;
+	private Button showBoundary;
+	private Button hideBoundary;
 
 	public ViewFX(Stage stage) {
 		canvas = new Canvas();
@@ -37,12 +37,12 @@ public class ViewFX {
 				"  Steuerung:\n   W: vorwärts\n   S: rückwärts\n   A: links\n   D: rechts\n   Q: hoch\n   Y, Z: runter\n   Maus: rotieren\n\n  Beispiel auswählen:");
 
 		// add Button
-		exampleA = new Button("Beispiel A");
-		exampleB = new Button("Beispiel B");
+		showBoundary = new Button("show boundary");
+		hideBoundary = new Button("hide boundary");
 
 		HBox hBox = new HBox();
-		hBox.getChildren().add(exampleA);
-		hBox.getChildren().add(exampleB);
+		hBox.getChildren().add(showBoundary);
+		hBox.getChildren().add(hideBoundary);
 		// add elements to root
 		borderPane.setTop(label);
 		borderPane.setCenter(hBox);
@@ -59,12 +59,12 @@ public class ViewFX {
 		stage.show();
 	}
 
-	public Button getExampleA() {
-		return exampleA;
+	public Button getShowBoundary() {
+		return showBoundary;
 	}
 
-	public Button getExampleB() {
-		return exampleB;
+	public Button getHideBoundary() {
+		return hideBoundary;
 	}
 
 }

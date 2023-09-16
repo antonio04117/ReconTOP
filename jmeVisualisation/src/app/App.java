@@ -11,6 +11,7 @@ import model.topology.Triangle3D;
 import model.topology.Vertex3D;
 import presenter.Presenter;
 import view.jfx.ViewFX;
+import view.jme.TetrahedronJME;
 
 /**
  * app for combined fx and jme application
@@ -48,6 +49,10 @@ public class App {
 			@Override
 			public void simpleInitApp() {
 
+				/*
+				 * example
+				 */
+
 				Mesh mesh = new Mesh();
 
 				Vertex3D[] square = new Vertex3D[] { new Vertex3D(new Point3D(0, 0, 0)),
@@ -59,14 +64,14 @@ public class App {
 				// a square of tetrahedrons
 				mesh.addTet(new Tetrahedron3D(square[0], square[1], square[2], square[3]));
 
-				mesh.addTet(new Tetrahedron3D(square[0], square[4], square[2], square[3]));
-
-				mesh.addTet(new Tetrahedron3D(square[1], square[3], square[5], square[6]));
-
-				mesh.addTet(new Tetrahedron3D(square[1], square[3], square[2], square[6]));
-
-				mesh.addTet(new Tetrahedron3D(square[3], square[7], square[2], square[6]));
-
+//				mesh.addTet(new Tetrahedron3D(square[0], square[4], square[2], square[3]));
+//
+//				mesh.addTet(new Tetrahedron3D(square[1], square[3], square[5], square[6]));
+//
+//				mesh.addTet(new Tetrahedron3D(square[1], square[3], square[2], square[6]));
+//
+//				mesh.addTet(new Tetrahedron3D(square[3], square[7], square[2], square[6]));
+//
 //				mesh.addTet(new Tetrahedron3D(square[3], square[4], square[2], square[7]));
 
 				// mark triangles that are boundary
@@ -80,6 +85,11 @@ public class App {
 						}
 					}
 				}
+
+				/*
+				 * end of example
+				 */
+
 				// set Scene while selecting sample size in each direction
 				// true -> example A
 				// false -> example B

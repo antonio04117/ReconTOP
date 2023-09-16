@@ -1,5 +1,7 @@
 package viewmodel;
 
+import java.util.HashSet;
+
 import com.jme3.math.ColorRGBA;
 
 import app.App.AppFX.AppJME;
@@ -17,6 +19,8 @@ import view.jme.VertexJME;
  * viewmodel according to mvpvm-pattern
  */
 public abstract class ViewModel {
+
+	private static HashSet<TriangleJME> boundary = new HashSet<TriangleJME>();
 
 	/**
 	 * initialize jme view without drawn elements
@@ -37,15 +41,19 @@ public abstract class ViewModel {
 	 */
 	public static void drawTetrahedron(AppJME app, Tetrahedron3D tet, ColorRGBA color) {
 
-		new TetrahedronJME(app.getAssetManager(), app.getRootNode(), (float) tet.getP0().getP().getX(),
-				(float) tet.getP0().getP().getY(), (float) tet.getP0().getP().getZ(), (float) tet.getP1().getP().getX(),
-				(float) tet.getP1().getP().getY(), (float) tet.getP1().getP().getZ(), (float) tet.getP2().getP().getX(),
-				(float) tet.getP2().getP().getY(), (float) tet.getP2().getP().getZ(), (float) tet.getP3().getP().getX(),
-				(float) tet.getP3().getP().getY(), (float) tet.getP3().getP().getZ(), color);
+		TetrahedronJME tetra = new TetrahedronJME(app.getAssetManager(), app.getRootNode(),
+				(float) tet.getP0().getP().getX(), (float) tet.getP0().getP().getY(), (float) tet.getP0().getP().getZ(),
+				(float) tet.getP1().getP().getX(), (float) tet.getP1().getP().getY(), (float) tet.getP1().getP().getZ(),
+				(float) tet.getP2().getP().getX(), (float) tet.getP2().getP().getY(), (float) tet.getP2().getP().getZ(),
+				(float) tet.getP3().getP().getX(), (float) tet.getP3().getP().getY(), (float) tet.getP3().getP().getZ(),
+				color);
+
+		// TODO change later
+		tetra.setVisibility(true);
 	}
 
 	/**
-	 * create triangle in jme
+	 * create triangle in jme -> boundary triangles are shown
 	 *
 	 * @param assetManager
 	 * @param parentNode
@@ -64,6 +72,7 @@ public abstract class ViewModel {
 
 		if (t.isBoundary()) {
 			tri.setVisibility(true);
+			ViewModel.boundary.add(tri);
 		}
 	}
 
@@ -105,4 +114,21 @@ public abstract class ViewModel {
 		JmeConfigurations.adaptView(appJME, exampleA);
 	}
 
+	/**
+	 * hides boundary elements
+	 */
+	public static void hideBoundary() {
+		for (TriangleJME triangleJME : boundary) {
+			triangleJME.setVisibility(false);
+		}
+	}
+
+	/**
+	 * shows boundary elements
+	 */
+	public static void showBoundary() {
+		for (TriangleJME triangleJME : boundary) {
+			triangleJME.setVisibility(true);
+		}
+	}
 }

@@ -49,20 +49,20 @@ public class TriangleJME {
 		p2 = new Vector3f(x2, y2, z2);
 
 		// triangle in jme
-		Mesh triangleMesh1 = new Mesh();
+		Mesh triangleMesh = new Mesh();
 
-		float[] vertices1 = { x0, y0, z0, // Punkt A
-				x1, y1, z1, // Punkt B
-				x2, y2, z2 // Punkt C
+		float[] vertices = { x0, y0, z0, // point A
+				x1, y1, z1, // point B
+				x2, y2, z2 // point C
 		};
 
 		int[] indexes = { 0, 1, 2 };
 
-		triangleMesh1.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices1));
-		triangleMesh1.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(indexes));
-		triangleMesh1.updateBound();
+		triangleMesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
+		triangleMesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(indexes));
+		triangleMesh.updateBound();
 
-		triangleGeo = new Geometry("Triangle", triangleMesh1);
+		triangleGeo = new Geometry("Triangle", triangleMesh);
 
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat.setColor("Color", color);
