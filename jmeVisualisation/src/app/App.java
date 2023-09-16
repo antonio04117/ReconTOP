@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import model.Mesh;
 import model.geometry.Point3D;
 import model.topology.Tetrahedron3D;
+import model.topology.Triangle3D;
 import model.topology.Vertex3D;
 import presenter.Presenter;
 import view.jfx.ViewFX;
@@ -66,8 +67,19 @@ public class App {
 
 				mesh.addTet(new Tetrahedron3D(square[3], square[7], square[2], square[6]));
 
-				mesh.addTet(new Tetrahedron3D(square[3], square[4], square[2], square[7]));
+//				mesh.addTet(new Tetrahedron3D(square[3], square[4], square[2], square[7]));
 
+				// mark triangles that are boundary
+				mesh.markBoundary();
+
+				// if triangle is not boundary cull it
+				for (int i = 0; i < mesh.getMapTri().size(); i++) {
+					for (Triangle3D triangle : mesh.getMapTri().get(i)) {
+						if (!triangle.isBoundary()) {
+
+						}
+					}
+				}
 				// set Scene while selecting sample size in each direction
 				// true -> example A
 				// false -> example B

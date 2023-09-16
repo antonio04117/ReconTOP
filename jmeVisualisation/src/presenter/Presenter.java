@@ -6,6 +6,7 @@ import app.App.AppFX.AppJME;
 import model.Mesh;
 import model.geometry.Point3D;
 import model.topology.Tetrahedron3D;
+import model.topology.Triangle3D;
 import model.topology.Vertex3D;
 import view.jfx.ViewFX;
 import view.jme.TetrahedronJME;
@@ -40,7 +41,6 @@ public abstract class Presenter {
 	public static void setScene(AppJME app, Mesh mesh) {
 
 		ViewModel.initializeView(app, exampleA);
-
 
 //		if (exampleA) {
 //			// first surface
@@ -80,9 +80,17 @@ public abstract class Presenter {
 		ColorRGBA color = ColorRGBA.Red;
 
 		// draw Tetrahedrons
-		for (int i = 0; i < mesh.getMapTet().size(); i++) {
-			Tetrahedron3D tet = mesh.getMapTet().get(i);
-			ViewModel.drawTetrahedron(app, tet, color);
+//		for (int i = 0; i < mesh.getMapTet().size(); i++) {
+//			Tetrahedron3D tet = mesh.getMapTet().get(i);
+//			ViewModel.drawTetrahedron(app, tet, color);
+//		}
+
+		for (int i = 0; i < mesh.getMapTri().size(); i++) {
+			for (Triangle3D triangle : mesh.getMapTri().get(i)) {
+
+				ViewModel.drawTriangle(app, triangle, color);
+			}
+
 		}
 
 //		// draw triangles

@@ -57,10 +57,14 @@ public abstract class ViewModel {
 	 */
 	public static void drawTriangle(AppJME app, Triangle3D t, ColorRGBA color) {
 
-		new TriangleJME(app.getAssetManager(), app.getRootNode(), (float) t.getP0().getP().getX(),
+		TriangleJME tri = new TriangleJME(app.getAssetManager(), app.getRootNode(), (float) t.getP0().getP().getX(),
 				(float) t.getP0().getP().getY(), (float) t.getP0().getP().getZ(), (float) t.getP1().getP().getX(),
 				(float) t.getP1().getP().getY(), (float) t.getP1().getP().getZ(), (float) t.getP2().getP().getX(),
 				(float) t.getP2().getP().getY(), (float) t.getP2().getP().getZ(), color);
+
+		if (t.isBoundary()) {
+			tri.setVisibility(true);
+		}
 	}
 
 	/**
