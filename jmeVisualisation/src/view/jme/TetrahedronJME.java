@@ -11,7 +11,6 @@ import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.util.BufferUtils;
 
-//TODO not needed at the moment
 public class TetrahedronJME {
 
 	private AssetManager assetManager;

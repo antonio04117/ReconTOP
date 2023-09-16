@@ -20,7 +20,10 @@ import view.jme.VertexJME;
  */
 public abstract class ViewModel {
 
-	private static HashSet<TriangleJME> boundary = new HashSet<TriangleJME>();
+	private static HashSet<TetrahedronJME> tetrahedrons = new HashSet<TetrahedronJME>();
+	private static HashSet<TriangleJME> triBoundary = new HashSet<TriangleJME>();
+	private static HashSet<TriangleJME> triangles = new HashSet<TriangleJME>();
+	
 
 	/**
 	 * initialize jme view without drawn elements
@@ -47,9 +50,10 @@ public abstract class ViewModel {
 				(float) tet.getP2().getP().getX(), (float) tet.getP2().getP().getY(), (float) tet.getP2().getP().getZ(),
 				(float) tet.getP3().getP().getX(), (float) tet.getP3().getP().getY(), (float) tet.getP3().getP().getZ(),
 				color);
+		
+		// set of all tetrahedrons
+		ViewModel.tetrahedrons.add(tetra);
 
-		// TODO change later
-		tetra.setVisibility(true);
 	}
 
 	/**
@@ -70,10 +74,15 @@ public abstract class ViewModel {
 				(float) t.getP1().getP().getY(), (float) t.getP1().getP().getZ(), (float) t.getP2().getP().getX(),
 				(float) t.getP2().getP().getY(), (float) t.getP2().getP().getZ(), color);
 
+		// set of boundary triangles
 		if (t.isBoundary()) {
 			tri.setVisibility(true);
-			ViewModel.boundary.add(tri);
+			ViewModel.triBoundary.add(tri);
 		}
+		
+		//set of all triangles
+		ViewModel.triangles.add(tri);
+		
 	}
 
 	/**
@@ -118,7 +127,7 @@ public abstract class ViewModel {
 	 * hides boundary elements
 	 */
 	public static void hideBoundary() {
-		for (TriangleJME triangleJME : boundary) {
+		for (TriangleJME triangleJME : triBoundary) {
 			triangleJME.setVisibility(false);
 		}
 	}
@@ -127,7 +136,7 @@ public abstract class ViewModel {
 	 * shows boundary elements
 	 */
 	public static void showBoundary() {
-		for (TriangleJME triangleJME : boundary) {
+		for (TriangleJME triangleJME : triBoundary) {
 			triangleJME.setVisibility(true);
 		}
 	}

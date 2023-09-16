@@ -1,11 +1,19 @@
 package view.jfx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -17,8 +25,7 @@ public class ViewFX {
 	private Stage stage;
 	private Scene scene;
 
-	private Button showBoundary;
-	private Button hideBoundary;
+	private Text showBoundary;
 
 	public ViewFX(Stage stage) {
 		canvas = new Canvas();
@@ -31,23 +38,27 @@ public class ViewFX {
 	 * set scene of the gui depending on different selected handlers
 	 */
 	public void setScene() {
+
 		BorderPane borderPane = new BorderPane(canvas);
 
-		Label label = new Label(
-				"  Steuerung:\n   W: vorwärts\n   S: rückwärts\n   A: links\n   D: rechts\n   Q: hoch\n   Y, Z: runter\n   Maus: rotieren\n\n  Beispiel auswählen:");
+		Label label = new Label(" List of all Tetrahedrons");
 
 		// add Button
-		showBoundary = new Button("show boundary");
-		hideBoundary = new Button("hide boundary");
+		showBoundary = new Text("show boundary");
+		showBoundary.setMouseTransparent(true);
 
-		HBox hBox = new HBox();
-		hBox.getChildren().add(showBoundary);
-		hBox.getChildren().add(hideBoundary);
+		ListView<Text> listView = new ListView<Text>();
+		ObservableList<Text> items = FXCollections.observableArrayList(showBoundary);
+		listView.setItems(items);
 		// add elements to root
 		borderPane.setTop(label);
-		borderPane.setCenter(hBox);
+		borderPane.setCenter(listView);
 
-		scene = new Scene(borderPane, 180, 210);
+		Tab tab1 = new Tab("Start", borderPane);
+
+		TabPane tabPane = new TabPane(tab1);
+
+		scene = new Scene(tabPane, 300, 300);
 
 		stage.setScene(scene);
 
@@ -59,12 +70,8 @@ public class ViewFX {
 		stage.show();
 	}
 
-	public Button getShowBoundary() {
+	public Text getShowBoundary() {
 		return showBoundary;
-	}
-
-	public Button getHideBoundary() {
-		return hideBoundary;
 	}
 
 }

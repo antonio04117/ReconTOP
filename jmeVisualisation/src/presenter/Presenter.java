@@ -28,8 +28,16 @@ public abstract class Presenter {
 	 * @param sampleSize
 	 */
 	public static void createConnection(ViewFX viewJFX, AppJME appJME, int sampleSize) {
-		viewJFX.getShowBoundary().setOnAction(e -> appJME.enqueue(() -> ViewModel.showBoundary()));
-		viewJFX.getHideBoundary().setOnAction(e -> appJME.enqueue(() -> ViewModel.hideBoundary()));
+		//TODO change to tablePane (siehe Google Verlauf)
+		
+//		viewJFX.getShowBoundary().selectedTextProperty().addListener((observable, oldValue, newValue) -> {
+//			if (newValue.length() > 0) {
+//				appJME.enqueue(() -> ViewModel.showBoundary());
+//			} else {
+//				appJME.enqueue(() -> ViewModel.hideBoundary());
+//			}
+//		});
+
 	}
 
 	/**
@@ -59,12 +67,12 @@ public abstract class Presenter {
 		for (int i = 0; i < mesh.getMapTet().size(); i++) {
 			// draw tetrahedron
 			ViewModel.drawTetrahedron(app, mesh.getMapTet().get(i), color);
-			
+
 		}
 
 		// color for triangle
 		color = ColorRGBA.Blue;
-		
+
 		for (int i = 0; i < mesh.getMapTri().size(); i++) {
 			for (Triangle3D triangle : mesh.getMapTri().get(i)) {
 
