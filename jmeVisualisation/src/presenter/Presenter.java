@@ -1,28 +1,13 @@
 package presenter;
 
-import javax.swing.event.ChangeListener;
-
 import com.jme3.math.ColorRGBA;
 
 import app.App.AppFX.AppJME;
-import javafx.collections.ObservableList;
-import javafx.scene.text.Text;
 import model.Mesh;
-import model.geometry.Point3D;
-import model.topology.Tetrahedron3D;
 import model.topology.Triangle3D;
-import model.topology.Vertex3D;
-import view.jfx.ViewFX;
-import view.jme.TetrahedronJME;
+import view.fx.ViewFX;
 import viewmodel.ViewModel;
-import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 /**
  * presenter according to mvpvm-pattern
@@ -35,18 +20,17 @@ public abstract class Presenter {
 	/**
 	 * create controls on selection of input in fx-tables
 	 * 
-	 * @param viewJFX
+	 * @param viewFX
 	 * @param appJME
-	 * @param sampleSize
 	 */
-	public static void createConnection(ViewFX viewJFX, AppJME appJME, int sampleSize) {
+	public static void createConnection(ViewFX viewFX, AppJME appJME) {
 
 		// trigger event for selection/deselection of elements
-		viewJFX.getListView().getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
+		viewFX.getListView().getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
 			@Override
 			public void onChanged(Change<? extends Integer> c) {
-				for (int i = 0; i < viewJFX.getListView().getItems().size(); i++) {
-					if (viewJFX.getListView().getSelectionModel().getSelectedIndices().contains(i)) {
+				for (int i = 0; i < viewFX.getListView().getItems().size(); i++) {
+					if (viewFX.getListView().getSelectionModel().getSelectedIndices().contains(i)) {
 						System.out.println("Element " + i + " ausgewählt\n");
 						appJME.enqueue(() -> ViewModel.showBoundary());
 					} else {
