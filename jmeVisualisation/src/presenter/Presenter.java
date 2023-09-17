@@ -26,12 +26,12 @@ public abstract class Presenter {
 	public static void createConnection(ViewFX viewFX, AppJME appJME) {
 
 		// trigger event for selection/deselection of elements
-		viewFX.getListView().getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
+		viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
 			@Override
 			public void onChanged(Change<? extends Integer> c) {
-				for (int i = 0; i < viewFX.getListView().getItems().size(); i++) {
+				for (int i = 0; i < viewFX.getListViewTriangle().getItems().size(); i++) {
 					final int index = i; // Make 'i' effectively final
-					if (viewFX.getListView().getSelectionModel().getSelectedIndices().contains(i)) {
+					if (viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().contains(i)) {
 						System.out.println("Element " + i + " ausgewählt\n");
 						appJME.enqueue(() -> ViewModel.showTriangle(Integer.valueOf(index)));
 					} else {

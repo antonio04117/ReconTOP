@@ -23,7 +23,7 @@ public class ViewFX {
 	private Stage stage;
 	private Scene scene;
 
-	private ListView<Text> listView = new ListView<Text>();
+	private ListView<Text> listViewTriangle = new ListView<Text>();
 
 	public ViewFX(Stage stage, Mesh mesh) {
 		canvas = new Canvas();
@@ -37,22 +37,7 @@ public class ViewFX {
 	 */
 	public void setScene(Mesh mesh) {
 
-		BorderPane borderPane = new BorderPane(canvas);
-
-		Label label = new Label(" List of all Tetrahedrons");
-
-		// enable multiple selections
-		listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-		
-		ObservableList<Text> items = createTriangleList(mesh);
-
-		listView.setItems(items);
-		// add elements to root
-		borderPane.setTop(label);
-		borderPane.setCenter(listView);
-
-		Tab tab1 = new Tab("Start", borderPane);
+		Tab tab1 = new Tab("Triangles", createTriangleTab(mesh));
 
 		TabPane tabPane = new TabPane(tab1);
 
@@ -64,10 +49,40 @@ public class ViewFX {
 		canvas.heightProperty().bind(scene.heightProperty());
 
 		// Window title
-		stage.setTitle("NURBS Visualisierung");
+		stage.setTitle("Control displayed elements in jMonkey");
 		stage.show();
 	}
 
+	/**
+	 * creates Tab for Triangles
+	 * 
+	 * @param mesh
+	 * @return
+	 */
+	private BorderPane createTriangleTab(Mesh mesh) {
+		BorderPane borderPane = new BorderPane(canvas);
+
+		Label label = new Label(" List of all Traingles");
+
+		// enable multiple selections
+		listViewTriangle.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+		ObservableList<Text> items = createTriangleList(mesh);
+
+		listViewTriangle.setItems(items);
+		// add elements to root
+		borderPane.setTop(label);
+		borderPane.setCenter(listViewTriangle);
+
+		return borderPane;
+	}
+
+	/**
+	 * create List of all triangles depending on given mesh
+	 * 
+	 * @param mesh
+	 * @return
+	 */
 	private ObservableList<Text> createTriangleList(Mesh mesh) {
 
 		ObservableList<Text> items = FXCollections.observableArrayList();
@@ -76,16 +91,14 @@ public class ViewFX {
 			for (int j = 0; j < mesh.getMapTri().get(i).size(); j++) {
 
 				items.add(new Text("Tet: " + i + " ; Tri: " + j));
-//				ObservableList<Text> triangleList = FXCollections.observableArrayList(new Text("show boundary"), new Text("Test A"),
-//						new Text("Test B"));
 			}
 		}
 
 		return items;
 	}
 
-	public ListView<Text> getListView() {
-		return listView;
+	public ListView<Text> getListViewTriangle() {
+		return listViewTriangle;
 	}
 
 }
