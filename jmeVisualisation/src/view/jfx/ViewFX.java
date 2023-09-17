@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -26,6 +27,7 @@ public class ViewFX {
 	private Scene scene;
 
 	private Text showBoundary;
+	private ListView<Text> listView = new ListView<Text>();
 
 	public ViewFX(Stage stage) {
 		canvas = new Canvas();
@@ -47,8 +49,10 @@ public class ViewFX {
 		showBoundary = new Text("show boundary");
 		showBoundary.setMouseTransparent(true);
 
-		ListView<Text> listView = new ListView<Text>();
-		ObservableList<Text> items = FXCollections.observableArrayList(showBoundary);
+		// enable multiple selections
+		listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		ObservableList<Text> items = FXCollections.observableArrayList(showBoundary, new Text("Test A"),
+				new Text("Test B"));
 		listView.setItems(items);
 		// add elements to root
 		borderPane.setTop(label);
@@ -72,6 +76,10 @@ public class ViewFX {
 
 	public Text getShowBoundary() {
 		return showBoundary;
+	}
+
+	public ListView<Text> getListView() {
+		return listView;
 	}
 
 }

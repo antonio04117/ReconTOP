@@ -1,8 +1,12 @@
 package presenter;
 
+import javax.swing.event.ChangeListener;
+
 import com.jme3.math.ColorRGBA;
 
 import app.App.AppFX.AppJME;
+import javafx.collections.ObservableList;
+import javafx.scene.text.Text;
 import model.Mesh;
 import model.geometry.Point3D;
 import model.topology.Tetrahedron3D;
@@ -11,6 +15,13 @@ import model.topology.Vertex3D;
 import view.jfx.ViewFX;
 import view.jme.TetrahedronJME;
 import viewmodel.ViewModel;
+import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 /**
  * presenter according to mvpvm-pattern
@@ -28,15 +39,20 @@ public abstract class Presenter {
 	 * @param sampleSize
 	 */
 	public static void createConnection(ViewFX viewJFX, AppJME appJME, int sampleSize) {
-		//TODO change to tablePane (siehe Google Verlauf)
-		
-//		viewJFX.getShowBoundary().selectedTextProperty().addListener((observable, oldValue, newValue) -> {
-//			if (newValue.length() > 0) {
-//				appJME.enqueue(() -> ViewModel.showBoundary());
-//			} else {
-//				appJME.enqueue(() -> ViewModel.hideBoundary());
-//			}
-//		});
+
+		// Fügen Sie einen Listener hinzu, um das erste ausgewählte Element zu
+		// überwachen
+		viewJFX.getListView().getSelectionModel().selectedItemProperty()
+				.addListener(new javafx.beans.value.ChangeListener<Text>() {
+					@Override
+					public void changed(ObservableValue<? extends Text> observable, Text oldValue, Text newValue) {
+						if (viewJFX.getListView().getSelectionModel().getSelectedIndices().contains(0)) {
+							appJME.enqueue(() -> ViewModel.showBoundary());
+						} else {
+							appJME.enqueue(() -> ViewModel.hideBoundary());
+						}
+					}
+				});
 
 	}
 
