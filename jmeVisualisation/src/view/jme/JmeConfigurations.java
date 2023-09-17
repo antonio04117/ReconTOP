@@ -26,13 +26,13 @@ public abstract class JmeConfigurations {
 	/**
 	 * set initial settings of jme project
 	 */
-	public static void jmeInitializer(AppJME app, boolean exampleA) {
+	public static void jmeInitializer(AppJME app) {
 		JmeConfigurations.initInput(app);
 
 		JmeConfigurations.hideSettings(app);
 
 		// adapt starting position to chosen example
-		JmeConfigurations.configureCamera(app, exampleA);
+		JmeConfigurations.configureCamera(app);
 
 		JmeConfigurations.createCoordSys(app);
 	}
@@ -81,16 +81,12 @@ public abstract class JmeConfigurations {
 	 * settings for navigation (e.g. speed for scrolling) are set
 	 *
 	 */
-	private static void configureCamera(AppJME app, boolean exampleA) {
+	private static void configureCamera(AppJME app) {
 
 		// origin of the camera
-		if (exampleA) {
-			app.getCamera().lookAtDirection(new Vector3f(0.60457885f, 0.79543835f, 0.04197961f), Vector3f.UNIT_Z);
-			app.getCamera().setLocation(new Vector3f(-8.776165f, -12.8125305f, 1.8886071f));
-		} else {
-			app.getCamera().lookAtDirection(new Vector3f(0.6053308f, 0.794814f, 0.04295534f), Vector3f.UNIT_Z);
-			app.getCamera().setLocation(new Vector3f(21f, 3f, 5.5f));
-		}
+		app.getCamera().lookAtDirection(new Vector3f(0.60457885f, 0.79543835f, 0.04197961f), Vector3f.UNIT_Z);
+		app.getCamera().setLocation(new Vector3f(-8.776165f, -12.8125305f, 1.8886071f));
+
 		/*
 		 * The distance between screen and camera is 100f by default.
 		 *

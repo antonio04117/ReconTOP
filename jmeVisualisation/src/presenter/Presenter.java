@@ -14,9 +14,6 @@ import javafx.collections.ListChangeListener;
  */
 public abstract class Presenter {
 
-	// Application starts with exampleA
-	private static boolean exampleA = true;
-
 	/**
 	 * create controls on selection of input in fx-tables
 	 * 
@@ -53,11 +50,6 @@ public abstract class Presenter {
 							if (viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().contains(i)) {
 								System.out.println("Triangle " + i + " selected\n");
 								appJME.enqueue(() -> ViewModel.showTriangle(Integer.valueOf(index)));
-							} else if (viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().contains(i)
-									&& viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices()
-											.size() == 1) {
-								System.out.println("Triangle " + i + " not selected anymore\n");
-								appJME.enqueue(() -> ViewModel.hideTriangle(Integer.valueOf(index)));
 							} else {
 								System.out.println("Triangle " + i + " not selected\n");
 								appJME.enqueue(() -> ViewModel.hideTriangle(Integer.valueOf(index)));
@@ -76,7 +68,7 @@ public abstract class Presenter {
 	 */
 	public static void setScene(AppJME app, Mesh mesh) {
 
-		ViewModel.initializeView(app, exampleA);
+		ViewModel.initializeView(app);
 		Presenter.drawElements(app, mesh);
 	}
 

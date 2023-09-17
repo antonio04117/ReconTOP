@@ -31,8 +31,8 @@ public abstract class ViewModel {
 	 * @param app
 	 * @param exampleA
 	 */
-	public static void initializeView(AppJME app, boolean exampleA) {
-		JmeConfigurations.jmeInitializer(app, exampleA);
+	public static void initializeView(AppJME app) {
+		JmeConfigurations.jmeInitializer(app);
 	}
 
 	/**

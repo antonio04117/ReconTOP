@@ -114,16 +114,6 @@ public class ViewFX {
 		// enable multiple selections
 		listViewTriangle.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		// tried to deselect element, when clicked on only selected element
-//		// Behandeln Sie den Klick auf ein Listenelement
-//		listViewTriangle.setOnMousePressed(event -> {
-//			// Wenn ein Element ausgewählt ist, entfernen Sie die Auswahl
-//			if (listViewTriangle.getSelectionModel().getSelectedIndices().size() == 1) {
-//				System.out.println("Triangle not selected anymore\n");
-//				listViewTriangle.getSelectionModel().clearSelection();
-//			}
-//		});
-
 		ObservableList<Text> items = createTriangleList(mesh);
 
 		listViewTriangle.setItems(items);
