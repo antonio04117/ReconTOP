@@ -18,6 +18,7 @@ import viewmodel.ViewModel;
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.StackPane;
@@ -40,19 +41,18 @@ public abstract class Presenter {
 	 */
 	public static void createConnection(ViewFX viewJFX, AppJME appJME, int sampleSize) {
 
-		// Fügen Sie einen Listener hinzu, um das erste ausgewählte Element zu
-		// überwachen
-		viewJFX.getListView().getFocusModel().focusedItemProperty()
-				.addListener(new javafx.beans.value.ChangeListener<Text>() {
-					@Override
-					public void changed(ObservableValue<? extends Text> observable, Text oldValue, Text newValue) {
-						if (viewJFX.getListView().getFocusModel().isFocused(0)) {
-							appJME.enqueue(() -> ViewModel.showBoundary());
-						} else {
-							appJME.enqueue(() -> ViewModel.hideBoundary());
-						}
-					}
-				});
+		viewJFX.getListView().getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
+			@Override
+			public void onChanged(Change<? extends Integer> c) {
+				if (viewJFX.getListView().getSelectionModel().getSelectedIndices().contains(0)) {
+					System.out.println("Element ausgewählt");
+					appJME.enqueue(() -> ViewModel.showBoundary());
+				} else {
+					System.out.println("Element nicht ausgewählt");
+					appJME.enqueue(() -> ViewModel.hideBoundary());
+				}
+			}
+		});
 
 	}
 
