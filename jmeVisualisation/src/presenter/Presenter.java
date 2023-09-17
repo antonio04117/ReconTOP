@@ -33,7 +33,7 @@ public abstract class Presenter {
 	private static boolean exampleA = true;
 
 	/**
-	 * create controls on fx-Buttons
+	 * create controls on selection of input in fx-tables
 	 * 
 	 * @param viewJFX
 	 * @param appJME
@@ -41,6 +41,7 @@ public abstract class Presenter {
 	 */
 	public static void createConnection(ViewFX viewJFX, AppJME appJME, int sampleSize) {
 
+		// trigger event for selection/deselection of elements
 		viewJFX.getListView().getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
 			@Override
 			public void onChanged(Change<? extends Integer> c) {
