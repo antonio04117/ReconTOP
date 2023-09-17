@@ -2,6 +2,7 @@ package view.jme;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -52,6 +53,17 @@ public class EdgeJME {
 
 	public void move(float y1, float y2, float y3) {
 		this.lineGeo.move(y1, y2, y3);
+	}
+
+	public void setVisibility(boolean visible) {
+		if (visible) {
+			// visible
+			lineGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+		} else {
+			// not visible
+			lineGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+
+		}
 	}
 
 }

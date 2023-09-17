@@ -4,7 +4,9 @@ import com.jme3.math.ColorRGBA;
 
 import app.App.AppFX.AppJME;
 import model.Mesh;
+import model.topology.Edge3D;
 import model.topology.Triangle3D;
+import model.topology.Vertex3D;
 import view.fx.ViewFX;
 import viewmodel.ViewModel;
 import javafx.collections.ListChangeListener;
@@ -33,7 +35,7 @@ public abstract class Presenter {
 								System.out.println("Tetrahedron " + i + " selected\n");
 								appJME.enqueue(() -> ViewModel.showTetrahedron(Integer.valueOf(index)));
 							} else {
-								System.out.println("Tetrahedron " + i + " nicht selected\n");
+								System.out.println("Tetrahedron " + i + " not selected\n");
 								appJME.enqueue(() -> ViewModel.hideTetrahedron(Integer.valueOf(index)));
 							}
 						}
@@ -53,6 +55,42 @@ public abstract class Presenter {
 							} else {
 								System.out.println("Triangle " + i + " not selected\n");
 								appJME.enqueue(() -> ViewModel.hideTriangle(Integer.valueOf(index)));
+							}
+						}
+					}
+				});
+
+		// trigger event for selection/deselection of traingles
+		viewFX.getListViewEdges().getSelectionModel().getSelectedIndices()
+				.addListener(new ListChangeListener<Integer>() {
+					@Override
+					public void onChanged(Change<? extends Integer> c) {
+						for (int i = 0; i < viewFX.getListViewEdges().getItems().size(); i++) {
+							final int index = i; // Make 'i' effectively final
+							if (viewFX.getListViewEdges().getSelectionModel().getSelectedIndices().contains(i)) {
+								System.out.println("Edge " + i + " selected\n");
+								appJME.enqueue(() -> ViewModel.showEdge(Integer.valueOf(index)));
+							} else {
+								System.out.println("Triangle " + i + " not selected\n");
+								appJME.enqueue(() -> ViewModel.hideEdge(Integer.valueOf(index)));
+							}
+						}
+					}
+				});
+
+		// trigger event for selection/deselection of traingles
+		viewFX.getListViewVertices().getSelectionModel().getSelectedIndices()
+				.addListener(new ListChangeListener<Integer>() {
+					@Override
+					public void onChanged(Change<? extends Integer> c) {
+						for (int i = 0; i < viewFX.getListViewVertices().getItems().size(); i++) {
+							final int index = i; // Make 'i' effectively final
+							if (viewFX.getListViewVertices().getSelectionModel().getSelectedIndices().contains(i)) {
+								System.out.println("Vertex " + i + " selected\n");
+								appJME.enqueue(() -> ViewModel.showVertex(Integer.valueOf(index)));
+							} else {
+								System.out.println("Vertex " + i + " not selected\n");
+								appJME.enqueue(() -> ViewModel.hideVertex(Integer.valueOf(index)));
 							}
 						}
 					}
@@ -97,6 +135,28 @@ public abstract class Presenter {
 			for (Triangle3D triangle : mesh.getMapTri().get(i)) {
 
 				ViewModel.drawTriangle(app, triangle, color);
+
+			}
+		}
+		
+		// color for edge
+		color = ColorRGBA.Yellow;
+
+		for (int i = 0; i < mesh.getMapEdg().size(); i++) {
+			for (Edge3D edge : mesh.getMapEdg().get(i)) {
+
+				ViewModel.drawEdge(app, edge, color);
+
+			}
+		}
+		
+		// color for vertex
+		color = ColorRGBA.Green;
+
+		for (int i = 0; i < mesh.getMapVer().size(); i++) {
+			for (Vertex3D vertex : mesh.getMapVer().get(i)) {
+
+				ViewModel.drawVertex(app, vertex, color);
 
 			}
 		}

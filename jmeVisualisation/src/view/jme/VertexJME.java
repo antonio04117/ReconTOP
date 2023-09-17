@@ -58,14 +58,14 @@ public class VertexJME {
 		return pointGeo;
 	}
 
-	public void switchVisibility(boolean visible) {
-		// visible from the outside
-		if (visible == true) {
-			pointGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Back);
-		}
-		// not visible
-		else {
+	public void setVisibility(boolean visible) {
+		if (visible) {
+			// visible
+			pointGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+		} else {
+			// not visible
 			pointGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+
 		}
 	}
 
