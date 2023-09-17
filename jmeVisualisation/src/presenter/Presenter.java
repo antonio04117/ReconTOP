@@ -51,10 +51,15 @@ public abstract class Presenter {
 						for (int i = 0; i < viewFX.getListViewTriangle().getItems().size(); i++) {
 							final int index = i; // Make 'i' effectively final
 							if (viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().contains(i)) {
-								System.out.println("Element " + i + " ausgewählt\n");
+								System.out.println("Triangle " + i + " selected\n");
 								appJME.enqueue(() -> ViewModel.showTriangle(Integer.valueOf(index)));
+							} else if (viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().contains(i)
+									&& viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices()
+											.size() == 1) {
+								System.out.println("Triangle " + i + " not selected anymore\n");
+								appJME.enqueue(() -> ViewModel.hideTriangle(Integer.valueOf(index)));
 							} else {
-								System.out.println("Element " + i + " nicht ausgewählt\n");
+								System.out.println("Triangle " + i + " not selected\n");
 								appJME.enqueue(() -> ViewModel.hideTriangle(Integer.valueOf(index)));
 							}
 						}
