@@ -44,12 +44,14 @@ public abstract class Presenter {
 		viewJFX.getListView().getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
 			@Override
 			public void onChanged(Change<? extends Integer> c) {
-				if (viewJFX.getListView().getSelectionModel().getSelectedIndices().contains(0)) {
-					System.out.println("Element ausgewählt");
-					appJME.enqueue(() -> ViewModel.showBoundary());
-				} else {
-					System.out.println("Element nicht ausgewählt");
-					appJME.enqueue(() -> ViewModel.hideBoundary());
+				for (int i = 0; i < viewJFX.getListView().getItems().size(); i++) {
+					if (viewJFX.getListView().getSelectionModel().getSelectedIndices().contains(i)) {
+						System.out.println("Element " + i + " ausgewählt\n");
+						appJME.enqueue(() -> ViewModel.showBoundary());
+					} else {
+						System.out.println("Element " + i + " nicht ausgewählt\n");
+						appJME.enqueue(() -> ViewModel.hideBoundary());
+					}
 				}
 			}
 		});
