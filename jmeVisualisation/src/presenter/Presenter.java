@@ -42,11 +42,11 @@ public abstract class Presenter {
 
 		// Fügen Sie einen Listener hinzu, um das erste ausgewählte Element zu
 		// überwachen
-		viewJFX.getListView().getSelectionModel().selectedItemProperty()
+		viewJFX.getListView().getFocusModel().focusedItemProperty()
 				.addListener(new javafx.beans.value.ChangeListener<Text>() {
 					@Override
 					public void changed(ObservableValue<? extends Text> observable, Text oldValue, Text newValue) {
-						if (viewJFX.getListView().getSelectionModel().getSelectedIndices().contains(0)) {
+						if (viewJFX.getListView().getFocusModel().isFocused(0)) {
 							appJME.enqueue(() -> ViewModel.showBoundary());
 						} else {
 							appJME.enqueue(() -> ViewModel.hideBoundary());
