@@ -141,6 +141,14 @@ public abstract class ViewModel {
 		}
 	}
 
+	public static void showTetrahedron(int i) {
+		tetrahedrons.get(i).setVisibility(true);
+	}
+
+	public static void hideTetrahedron(int i) {
+		tetrahedrons.get(i).setVisibility(false);
+	}
+
 	public static void showTriangle(int i) {
 		triangles.get(i).setVisibility(true);
 	}
@@ -148,4 +156,5 @@ public abstract class ViewModel {
 	public static void hideTriangle(int i) {
 		triangles.get(i).setVisibility(false);
 	}
+
 }

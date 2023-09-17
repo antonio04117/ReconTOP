@@ -31,7 +31,7 @@ public class App {
 		// a square of tetrahedrons
 		mesh.addTet(new Tetrahedron3D(square[0], square[1], square[2], square[3]));
 
-//		mesh.addTet(new Tetrahedron3D(square[0], square[4], square[2], square[3]));
+		mesh.addTet(new Tetrahedron3D(square[0], square[4], square[2], square[3]));
 //
 //		mesh.addTet(new Tetrahedron3D(square[1], square[3], square[5], square[6]));
 //

@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -23,6 +24,7 @@ public class ViewFX {
 	private Stage stage;
 	private Scene scene;
 
+	private ListView<Text> listViewTetrahedron = new ListView<Text>();
 	private ListView<Text> listViewTriangle = new ListView<Text>();
 
 	public ViewFX(Stage stage, Mesh mesh) {
@@ -37,9 +39,12 @@ public class ViewFX {
 	 */
 	public void setScene(Mesh mesh) {
 
-		Tab tab1 = new Tab("Triangles", createTriangleTab(mesh));
+		Tab tabTetrahedrons = new Tab("Tetrahedrons", createTetrahedronTab(mesh));
+		Tab tabTriangles = new Tab("Triangles", createTriangleTab(mesh));
 
-		TabPane tabPane = new TabPane(tab1);
+		TabPane tabPane = new TabPane(tabTetrahedrons, tabTriangles);
+		// tabs can not be closed by the user
+		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
 		scene = new Scene(tabPane, 300, 300);
 
@@ -51,6 +56,48 @@ public class ViewFX {
 		// Window title
 		stage.setTitle("Control displayed elements in jMonkey");
 		stage.show();
+	}
+
+	/**
+	 * creates Tab for Tetrahedrons
+	 * 
+	 * @param mesh
+	 * @return
+	 */
+	private BorderPane createTetrahedronTab(Mesh mesh) {
+		BorderPane borderPane = new BorderPane(canvas);
+
+		Label label = new Label(" List of all Tetrahedrons");
+
+		// enable multiple selections
+		listViewTetrahedron.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+		ObservableList<Text> items = createTetrahedronList(mesh);
+
+		listViewTetrahedron.setItems(items);
+		// add elements to root
+		borderPane.setTop(label);
+		borderPane.setCenter(listViewTetrahedron);
+
+		return borderPane;
+	}
+
+	/**
+	 * create List of all triangles depending on given mesh
+	 * 
+	 * @param mesh
+	 * @return
+	 */
+	private ObservableList<Text> createTetrahedronList(Mesh mesh) {
+
+		ObservableList<Text> items = FXCollections.observableArrayList();
+
+		for (int i = 0; i < mesh.getMapTet().size(); i++) {
+
+			items.add(new Text("Tet: " + i));
+		}
+
+		return items;
 	}
 
 	/**
@@ -95,6 +142,10 @@ public class ViewFX {
 		}
 
 		return items;
+	}
+
+	public ListView<Text> getListViewTetrahedron() {
+		return listViewTetrahedron;
 	}
 
 	public ListView<Text> getListViewTriangle() {
