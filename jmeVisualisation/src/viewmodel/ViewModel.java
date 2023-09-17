@@ -1,6 +1,7 @@
 package viewmodel;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 
 import com.jme3.math.ColorRGBA;
 
@@ -20,10 +21,9 @@ import view.jme.VertexJME;
  */
 public abstract class ViewModel {
 
-	private static HashSet<TetrahedronJME> tetrahedrons = new HashSet<TetrahedronJME>();
+	private static LinkedList<TetrahedronJME> tetrahedrons = new LinkedList<TetrahedronJME>();
 	private static HashSet<TriangleJME> triBoundary = new HashSet<TriangleJME>();
-	private static HashSet<TriangleJME> triangles = new HashSet<TriangleJME>();
-	
+	private static LinkedList<TriangleJME> triangles = new LinkedList<TriangleJME>();
 
 	/**
 	 * initialize jme view without drawn elements
@@ -50,7 +50,7 @@ public abstract class ViewModel {
 				(float) tet.getP2().getP().getX(), (float) tet.getP2().getP().getY(), (float) tet.getP2().getP().getZ(),
 				(float) tet.getP3().getP().getX(), (float) tet.getP3().getP().getY(), (float) tet.getP3().getP().getZ(),
 				color);
-		
+
 		// set of all tetrahedrons
 		ViewModel.tetrahedrons.add(tetra);
 
@@ -79,10 +79,10 @@ public abstract class ViewModel {
 			tri.setVisibility(true);
 			ViewModel.triBoundary.add(tri);
 		}
-		
-		//set of all triangles
+
+		// set of all triangles
 		ViewModel.triangles.add(tri);
-		
+
 	}
 
 	/**
@@ -139,5 +139,13 @@ public abstract class ViewModel {
 		for (TriangleJME triangleJME : triBoundary) {
 			triangleJME.setVisibility(true);
 		}
+	}
+
+	public static void showTriangle(int i) {
+		triangles.get(i).setVisibility(true);
+	}
+
+	public static void hideTriangle(int i) {
+		triangles.get(i).setVisibility(false);
 	}
 }

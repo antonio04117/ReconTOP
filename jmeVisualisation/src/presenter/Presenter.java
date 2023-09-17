@@ -30,12 +30,13 @@ public abstract class Presenter {
 			@Override
 			public void onChanged(Change<? extends Integer> c) {
 				for (int i = 0; i < viewFX.getListView().getItems().size(); i++) {
+					final int index = i; // Make 'i' effectively final
 					if (viewFX.getListView().getSelectionModel().getSelectedIndices().contains(i)) {
 						System.out.println("Element " + i + " ausgewählt\n");
-						appJME.enqueue(() -> ViewModel.showBoundary());
+						appJME.enqueue(() -> ViewModel.showTriangle(Integer.valueOf(index)));
 					} else {
 						System.out.println("Element " + i + " nicht ausgewählt\n");
-						appJME.enqueue(() -> ViewModel.hideBoundary());
+						appJME.enqueue(() -> ViewModel.hideTriangle(Integer.valueOf(index)));
 					}
 				}
 			}

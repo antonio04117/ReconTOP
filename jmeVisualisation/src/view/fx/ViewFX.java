@@ -44,6 +44,7 @@ public class ViewFX {
 		// enable multiple selections
 		listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+		
 		ObservableList<Text> items = createTriangleList(mesh);
 
 		listView.setItems(items);
