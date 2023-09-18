@@ -6,11 +6,8 @@ import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Line;
-import com.jme3.scene.VertexBuffer.Type;
-import com.jme3.util.BufferUtils;
 
 public class EdgeJME {
 
@@ -46,18 +43,6 @@ public class EdgeJME {
 		// line in jme
 		Line lineMesh = new com.jme3.scene.shape.Line(startPoint, endPoint);
 
-//		Mesh lineMesh = new Mesh();
-//		lineMesh.setMode(Mesh.Mode.Lines);
-//
-//		float[] vertices = { xS, yS, zS, // point A
-//				xE, yE, zE, // point B
-//		};
-//		short[] indexes = { 0, 1 };
-//
-//		lineMesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
-//		lineMesh.setBuffer(Type.Index, 3, indexes);
-//		lineMesh.updateBound();
-
 		lineGeo = new Geometry("Line", lineMesh);
 
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -68,7 +53,9 @@ public class EdgeJME {
 		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
 		lineGeo.setMaterial(mat);
 
-		parentNode.attachChild(lineGeo);
+		this.parentNode = parentNode;
+		// do not attach node now, because edge is ought to be created transparently
+//		parentNode.attachChild(lineGeo);
 	}
 
 	public void move(float y1, float y2, float y3) {
@@ -78,11 +65,10 @@ public class EdgeJME {
 	public void setVisibility(boolean visible) {
 		if (visible) {
 			// visible
-			lineGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
-			System.out.println("triggered");
+			parentNode.attachChild(lineGeo);
 		} else {
 			// not visible
-			lineGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+			parentNode.detachChild(lineGeo);
 		}
 	}
 

@@ -4,6 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.shape.Line;
 
@@ -39,17 +40,17 @@ public class App {
 		mesh.addTet(new Tetrahedron3D(square[0], square[1], square[2], square[3]));
 
 		mesh.addTet(new Tetrahedron3D(square[0], square[4], square[2], square[3]));
-//
-//		mesh.addTet(new Tetrahedron3D(square[1], square[3], square[5], square[6]));
-//
-//		mesh.addTet(new Tetrahedron3D(square[1], square[3], square[2], square[6]));
-//
-//		mesh.addTet(new Tetrahedron3D(square[3], square[7], square[2], square[6]));
-//
-//		mesh.addTet(new Tetrahedron3D(square[3], square[4], square[2], square[7]));
+
+		mesh.addTet(new Tetrahedron3D(square[1], square[3], square[5], square[6]));
+
+		mesh.addTet(new Tetrahedron3D(square[1], square[3], square[2], square[6]));
+
+		mesh.addTet(new Tetrahedron3D(square[3], square[7], square[2], square[6]));
+
+		mesh.addTet(new Tetrahedron3D(square[3], square[4], square[2], square[7]));
 
 		// mark triangles that are boundary
-//		mesh.markBoundary();
+		mesh.markBoundary();
 
 		/*
 		 * end of example
@@ -92,13 +93,6 @@ public class App {
 
 			@Override
 			public void simpleInitApp() {
-				
-				EdgeJME e = new EdgeJME(assetManager, rootNode, 0, 0, 0, 0, 0, -5, ColorRGBA.Red);
-				
-				e.lineGeo.getMaterial().getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-				e.lineGeo.setQueueBucket(RenderQueue.Bucket.Transparent);
-				
-				
 
 				// set Scene
 				Presenter.setScene(this, mesh);
