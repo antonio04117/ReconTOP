@@ -58,15 +58,4 @@ public class Edge3D {
 	public void setBoundary(boolean boundary) {
 		this.boundary = boundary;
 	}
-
-	/**
-	 * flip edge
-	 *
-	 * @param p1
-	 * @param p2
-	 */
-	public void flip(Vertex3D p1, Vertex3D p2) {
-		start = p1;
-		end = p2;
-	}
 }
