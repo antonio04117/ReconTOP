@@ -80,7 +80,6 @@ public abstract class ViewModel {
 
 		// list of boundary triangles
 		if (t.isBoundary()) {
-			tri.setVisibility(true);
 			ViewModel.triBoundary.add(tri);
 		}
 
@@ -104,7 +103,6 @@ public abstract class ViewModel {
 
 		// list of boundary triangles
 		if (e.isBoundary()) {
-			edg.setVisibility(true);
 			ViewModel.edgBoundary.add(edg);
 		}
 
@@ -126,13 +124,29 @@ public abstract class ViewModel {
 
 		// list of boundary triangles
 		if (v.isBoundary()) {
-			ver.setVisibility(true);
 			ViewModel.verBoundary.add(ver);
 		}
 
 		// list of all vertices
 		ViewModel.vertices.add(ver);
+	}
 
+	public static void drawBoundaryElements(boolean triangles, boolean edges, boolean vertices) {
+		if (triangles) {
+			for (TriangleJME triangleJME : triBoundary) {
+				triangleJME.setVisibility(true);
+			}
+		}
+		if (edges) {
+			for (EdgeJME edgeJME : edgBoundary) {
+				edgeJME.setVisibility(true);
+			}
+		}
+		if (vertices) {
+			for (VertexJME vertexJME : verBoundary) {
+				vertexJME.setVisibility(true);
+			}
+		}
 	}
 
 	/**
