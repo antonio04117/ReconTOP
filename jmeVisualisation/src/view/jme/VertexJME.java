@@ -11,14 +11,14 @@ import com.jme3.scene.shape.Sphere;
 
 public class VertexJME {
 
-	AssetManager assetManager;
-	Node parentNode;
+	private AssetManager assetManager;
+	private Node parentNode;
 	// point
-	Vector3f point;
+	private Vector3f point;
 
 	private float radius = 0.1f;
 
-	Geometry pointGeo;
+	private Geometry pointGeo;
 
 	/**
 	 * creates a point in jme

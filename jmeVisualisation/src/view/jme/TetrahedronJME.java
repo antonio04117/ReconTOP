@@ -42,13 +42,13 @@ public class TetrahedronJME {
 				x3, y3, z3 // point D
 		};
 
-		int[] indexes = { 0, 1, 2, // triangle A
+		short[] indexes = { 0, 1, 2, // triangle A
 				0, 1, 3, // triangle B
 				0, 2, 3, // triangle C
 				1, 2, 3 }; // triangle D
 
 		tetrahedronMesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
-		tetrahedronMesh.setBuffer(Type.Index, 3, new short[] { 0, 1, 2, 0, 1, 3, 1, 2, 3, 2, 0, 3 });
+		tetrahedronMesh.setBuffer(Type.Index, 3, indexes);
 		tetrahedronMesh.updateBound();
 
 		tetrahedronGeo = new Geometry("Tetrahedron", tetrahedronMesh);

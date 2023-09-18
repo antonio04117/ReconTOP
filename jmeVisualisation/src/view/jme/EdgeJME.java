@@ -6,18 +6,22 @@ import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Line;
+import com.jme3.scene.VertexBuffer.Type;
+import com.jme3.util.BufferUtils;
 
 public class EdgeJME {
 
-	AssetManager assetManager;
-	Node parentNode;
+	private AssetManager assetManager;
+	private Node parentNode;
 	// start point
-	Vector3f startPoint;
+	private Vector3f startPoint;
 	// end point
-	Vector3f endPoint;
+	private Vector3f endPoint;
 
-	Geometry lineGeo;
+	public Geometry lineGeo;
 
 	/**
 	 * creates a line in jme
@@ -40,12 +44,26 @@ public class EdgeJME {
 		endPoint = new Vector3f(xE, yE, zE);
 
 		// line in jme
-		com.jme3.scene.shape.Line lineMesh = new com.jme3.scene.shape.Line(startPoint, endPoint);
+		Line lineMesh = new com.jme3.scene.shape.Line(startPoint, endPoint);
+
+//		Mesh lineMesh = new Mesh();
+//		lineMesh.setMode(Mesh.Mode.Lines);
+//
+//		float[] vertices = { xS, yS, zS, // point A
+//				xE, yE, zE, // point B
+//		};
+//		short[] indexes = { 0, 1 };
+//
+//		lineMesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
+//		lineMesh.setBuffer(Type.Index, 3, indexes);
+//		lineMesh.updateBound();
 
 		lineGeo = new Geometry("Line", lineMesh);
 
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat.setColor("Color", color);
+		// set line width
+		mat.getAdditionalRenderState().setLineWidth(5f);
 		// initialize invisible
 		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
 		lineGeo.setMaterial(mat);
@@ -61,10 +79,10 @@ public class EdgeJME {
 		if (visible) {
 			// visible
 			lineGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+			System.out.println("triggered");
 		} else {
 			// not visible
 			lineGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
-
 		}
 	}
 

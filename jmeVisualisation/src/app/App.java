@@ -1,6 +1,11 @@
 package app;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.material.RenderState;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue;
+import com.jme3.scene.shape.Line;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -10,6 +15,7 @@ import model.topology.Tetrahedron3D;
 import model.topology.Vertex3D;
 import presenter.Presenter;
 import view.fx.ViewFX;
+import view.jme.EdgeJME;
 
 /**
  * app for combined fx and jme application
@@ -86,6 +92,13 @@ public class App {
 
 			@Override
 			public void simpleInitApp() {
+				
+				EdgeJME e = new EdgeJME(assetManager, rootNode, 0, 0, 0, 0, 0, -5, ColorRGBA.Red);
+				
+				e.lineGeo.getMaterial().getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+				e.lineGeo.setQueueBucket(RenderQueue.Bucket.Transparent);
+				
+				
 
 				// set Scene
 				Presenter.setScene(this, mesh);
