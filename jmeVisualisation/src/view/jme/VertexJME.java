@@ -43,6 +43,8 @@ public class VertexJME {
 
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat.setColor("Color", color);
+		// initialize invisible
+		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
 		pointGeo.setMaterial(mat);
 		// set location
 		move(x, y, z);

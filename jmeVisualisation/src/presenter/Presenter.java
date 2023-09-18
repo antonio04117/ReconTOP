@@ -140,7 +140,7 @@ public abstract class Presenter {
 		}
 		
 		// color for edge
-		color = ColorRGBA.Yellow;
+		color = ColorRGBA.DarkGray;
 
 		for (int i = 0; i < mesh.getMapEdg().size(); i++) {
 			for (Edge3D edge : mesh.getMapEdg().get(i)) {

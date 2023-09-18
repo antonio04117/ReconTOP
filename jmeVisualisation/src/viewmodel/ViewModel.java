@@ -24,7 +24,9 @@ public abstract class ViewModel {
 	private static LinkedList<TetrahedronJME> tetrahedrons = new LinkedList<TetrahedronJME>();
 	private static HashSet<TriangleJME> triBoundary = new HashSet<TriangleJME>();
 	private static LinkedList<TriangleJME> triangles = new LinkedList<TriangleJME>();
+	private static HashSet<EdgeJME> edgBoundary = new HashSet<EdgeJME>();
 	private static LinkedList<EdgeJME> edges = new LinkedList<EdgeJME>();
+	private static HashSet<VertexJME> verBoundary = new HashSet<VertexJME>();
 	private static LinkedList<VertexJME> vertices = new LinkedList<VertexJME>();
 
 	/**
@@ -76,7 +78,7 @@ public abstract class ViewModel {
 				(float) t.getP1().getP().getY(), (float) t.getP1().getP().getZ(), (float) t.getP2().getP().getX(),
 				(float) t.getP2().getP().getY(), (float) t.getP2().getP().getZ(), color);
 
-		// set of boundary triangles
+		// list of boundary triangles
 		if (t.isBoundary()) {
 			tri.setVisibility(true);
 			ViewModel.triBoundary.add(tri);
@@ -85,6 +87,29 @@ public abstract class ViewModel {
 		// list of all triangles
 		ViewModel.triangles.add(tri);
 
+	}
+
+	/**
+	 * create line in jme
+	 * 
+	 * @param app
+	 * @param e
+	 * @param color
+	 */
+	public static void drawEdge(AppJME app, Edge3D e, ColorRGBA color) {
+		EdgeJME edg = new EdgeJME(app.getAssetManager(), app.getRootNode(), (float) e.getStart().getP().getX(),
+				(float) e.getStart().getP().getY(), (float) e.getStart().getP().getZ(),
+				(float) e.getEnd().getP().getX(), (float) e.getEnd().getP().getY(), (float) e.getEnd().getP().getZ(),
+				color);
+
+		// list of boundary triangles
+		if (e.isBoundary()) {
+			edg.setVisibility(true);
+			ViewModel.edgBoundary.add(edg);
+		}
+
+		// list of all edges
+		ViewModel.edges.add(edg);
 	}
 
 	/**
@@ -99,26 +124,15 @@ public abstract class ViewModel {
 		VertexJME ver = new VertexJME(app.getAssetManager(), app.getRootNode(), (float) v.getP().getX(),
 				(float) v.getP().getY(), (float) v.getP().getZ(), color);
 
+		// list of boundary triangles
+		if (v.isBoundary()) {
+			ver.setVisibility(true);
+			ViewModel.verBoundary.add(ver);
+		}
+
 		// list of all vertices
 		ViewModel.vertices.add(ver);
 
-	}
-
-	/**
-	 * create line in jme
-	 * 
-	 * @param app
-	 * @param cp
-	 * @param color
-	 */
-	public static void drawEdge(AppJME app, Edge3D cp, ColorRGBA color) {
-		EdgeJME edg = new EdgeJME(app.getAssetManager(), app.getRootNode(), (float) cp.getStart().getP().getX(),
-				(float) cp.getStart().getP().getY(), (float) cp.getStart().getP().getZ(),
-				(float) cp.getEnd().getP().getX(), (float) cp.getEnd().getP().getY(), (float) cp.getEnd().getP().getZ(),
-				color);
-
-		// list of all edges
-		ViewModel.edges.add(edg);
 	}
 
 	/**

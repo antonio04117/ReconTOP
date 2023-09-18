@@ -46,18 +46,12 @@ public class Mesh {
 		// create edges of tet
 		// TODO check if there are exactly 6 edges in Set
 		HashSet<Edge3D> setEdg = new HashSet<Edge3D>();
-		setEdg.add(new Edge3D(tri0.getP0(), tri0.getP1(), false));
-		setEdg.add(new Edge3D(tri0.getP1(), tri0.getP2(), false));
-		setEdg.add(new Edge3D(tri0.getP2(), tri0.getP0(), false));
-		setEdg.add(new Edge3D(tri1.getP0(), tri1.getP1(), false));
-		setEdg.add(new Edge3D(tri1.getP1(), tri1.getP2(), false));
-		setEdg.add(new Edge3D(tri1.getP2(), tri1.getP0(), false));
-		setEdg.add(new Edge3D(tri2.getP0(), tri2.getP1(), false));
-		setEdg.add(new Edge3D(tri2.getP1(), tri2.getP2(), false));
-		setEdg.add(new Edge3D(tri2.getP2(), tri2.getP0(), false));
-		setEdg.add(new Edge3D(tri3.getP0(), tri3.getP1(), false));
-		setEdg.add(new Edge3D(tri3.getP1(), tri3.getP2(), false));
-		setEdg.add(new Edge3D(tri3.getP2(), tri3.getP0(), false));
+		setEdg.add(new Edge3D(tet.getP0(), tet.getP1(), false));
+		setEdg.add(new Edge3D(tet.getP0(), tet.getP2(), false));
+		setEdg.add(new Edge3D(tet.getP0(), tet.getP3(), false));
+		setEdg.add(new Edge3D(tet.getP1(), tet.getP2(), false));
+		setEdg.add(new Edge3D(tet.getP1(), tet.getP3(), false));
+		setEdg.add(new Edge3D(tet.getP2(), tet.getP3(), false));
 		// add edges to edg map with id of according tet
 		mapEdg.put(tetCount, setEdg);
 
@@ -74,7 +68,7 @@ public class Mesh {
 	}
 
 	/**
-	 * mark boundary for square
+	 * mark boundary for square: HAS TO BE ADAPTED FOR EVERY GIVEN EXAMPLE
 	 */
 	public void markBoundary() {
 		for (int i = 0; i < mapTri.size(); i++) {
@@ -95,6 +89,28 @@ public class Mesh {
 
 			}
 		}
+
+		for (int i = 0; i < mapEdg.size(); i++) {
+			for (Edge3D edge : mapEdg.get(i)) {
+
+				// check if edge is boundary (is on same plane)
+				if (edge.getStart().getP().getX() == edge.getEnd().getP().getX()
+						|| edge.getStart().getP().getY() == edge.getEnd().getP().getY()
+						|| edge.getStart().getP().getZ() == edge.getEnd().getP().getZ()) {
+					edge.setBoundary(true);
+				}
+			}
+		}
+
+		for (int i = 0; i < mapVer.size(); i++) {
+			for (Vertex3D vertex : mapVer.get(i)) {
+
+				// no check if vertex is boundary needed
+				vertex.setBoundary(true);
+
+			}
+		}
+
 	}
 
 	public Map<Integer, Tetrahedron3D> getMapTet() {

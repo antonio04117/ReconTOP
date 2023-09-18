@@ -155,9 +155,9 @@ public class Triangle3D {
 	 * @return
 	 */
 	public boolean isPointOnEdge(Point3D p) {
-		return WindingNumber.isOnEdge(getP0(), getP1(), new Vertex3D(p))
-				|| WindingNumber.isOnEdge(getP0(), getP2(), new Vertex3D(p))
-				|| WindingNumber.isOnEdge(getP1(), getP2(), new Vertex3D(p));
+		return WindingNumber.isOnEdge(getP0(), getP1(), new Vertex3D(p, false))
+				|| WindingNumber.isOnEdge(getP0(), getP2(), new Vertex3D(p, false))
+				|| WindingNumber.isOnEdge(getP1(), getP2(), new Vertex3D(p, false));
 	}
 
 	/**

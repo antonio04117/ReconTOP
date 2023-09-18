@@ -23,10 +23,11 @@ public class App {
 
 		Mesh mesh = new Mesh();
 
-		Vertex3D[] square = new Vertex3D[] { new Vertex3D(new Point3D(0, 0, 0)), new Vertex3D(new Point3D(0, 10, 0)),
-				new Vertex3D(new Point3D(10, 10, 0)), new Vertex3D(new Point3D(0, 0, 10)),
-				new Vertex3D(new Point3D(10, 0, 0)), new Vertex3D(new Point3D(0, 10, 10)),
-				new Vertex3D(new Point3D(10, 10, 10)), new Vertex3D(new Point3D(10, 0, 10)) };
+		Vertex3D[] square = new Vertex3D[] { new Vertex3D(new Point3D(0, 0, 0), false),
+				new Vertex3D(new Point3D(0, 10, 0), false), new Vertex3D(new Point3D(10, 10, 0), false),
+				new Vertex3D(new Point3D(0, 0, 10), false), new Vertex3D(new Point3D(10, 0, 0), false),
+				new Vertex3D(new Point3D(0, 10, 10), false), new Vertex3D(new Point3D(10, 10, 10), false),
+				new Vertex3D(new Point3D(10, 0, 10), false) };
 
 		// a square of tetrahedrons
 		mesh.addTet(new Tetrahedron3D(square[0], square[1], square[2], square[3]));
@@ -42,7 +43,7 @@ public class App {
 //		mesh.addTet(new Tetrahedron3D(square[3], square[4], square[2], square[7]));
 
 		// mark triangles that are boundary
-		mesh.markBoundary();
+//		mesh.markBoundary();
 
 		/*
 		 * end of example
