@@ -97,6 +97,9 @@ public class ViewFX {
 
 		ObservableList<Text> items = FXCollections.observableArrayList();
 
+		// add possibility to select all elements
+		items.add(new Text("select all"));
+
 		for (int i = 0; i < mesh.getMapTet().size(); i++) {
 
 			items.add(new Text("Tet: " + i));
@@ -138,6 +141,9 @@ public class ViewFX {
 	private ObservableList<Text> createTriangleList(Mesh mesh) {
 
 		ObservableList<Text> items = FXCollections.observableArrayList();
+
+		// add possibility to select all elements
+		items.add(new Text("select all"));
 
 		for (int i = 0; i < mesh.getMapTri().size(); i++) {
 			for (int j = 0; j < mesh.getMapTri().get(i).size(); j++) {
@@ -183,6 +189,9 @@ public class ViewFX {
 
 		ObservableList<Text> items = FXCollections.observableArrayList();
 
+		// add possibility to select all elements
+		items.add(new Text("select all"));
+
 		for (int i = 0; i < mesh.getMapEdg().size(); i++) {
 			for (int j = 0; j < mesh.getMapEdg().get(i).size(); j++) {
 
@@ -226,6 +235,9 @@ public class ViewFX {
 	private ObservableList<Text> createVerticesList(Mesh mesh) {
 
 		ObservableList<Text> items = FXCollections.observableArrayList();
+
+		// add possibility to select all elements
+		items.add(new Text("select all"));
 
 		for (int i = 0; i < mesh.getMapVer().size(); i++) {
 			for (int j = 0; j < mesh.getMapVer().get(i).size(); j++) {

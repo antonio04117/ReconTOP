@@ -1,12 +1,6 @@
 package app;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.material.RenderState;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
-import com.jme3.renderer.RenderManager;
-import com.jme3.renderer.queue.RenderQueue;
-import com.jme3.scene.shape.Line;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -16,7 +10,7 @@ import model.topology.Tetrahedron3D;
 import model.topology.Vertex3D;
 import presenter.Presenter;
 import view.fx.ViewFX;
-import view.jme.EdgeJME;
+import viewmodel.InitialView;
 
 /**
  * app for combined fx and jme application
@@ -94,8 +88,8 @@ public class App {
 			@Override
 			public void simpleInitApp() {
 
-				// set Scene
-				Presenter.setScene(this, mesh);
+				// set Scene -> choose initial view
+				Presenter.setScene(this, mesh, InitialView.NOELEMENTS);
 			}
 		}
 	}
