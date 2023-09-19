@@ -24,24 +24,25 @@ public class App {
 
 		Mesh mesh = new Mesh();
 
-		Vertex3D[] square = new Vertex3D[] { new Vertex3D(new Point3D(0, 0, 0), false),
+		Vertex3D[] cube = new Vertex3D[] { new Vertex3D(new Point3D(0, 0, 0), false),
 				new Vertex3D(new Point3D(0, 10, 0), false), new Vertex3D(new Point3D(10, 10, 0), false),
 				new Vertex3D(new Point3D(0, 0, 10), false), new Vertex3D(new Point3D(10, 0, 0), false),
 				new Vertex3D(new Point3D(0, 10, 10), false), new Vertex3D(new Point3D(10, 10, 10), false),
 				new Vertex3D(new Point3D(10, 0, 10), false) };
 
 		// a square of tetrahedrons
-		mesh.addTet(new Tetrahedron3D(square[0], square[1], square[2], square[3]));
-
-		mesh.addTet(new Tetrahedron3D(square[0], square[4], square[2], square[3]));
-
-		mesh.addTet(new Tetrahedron3D(square[1], square[3], square[5], square[6]));
-
-		mesh.addTet(new Tetrahedron3D(square[1], square[3], square[2], square[6]));
-
-		mesh.addTet(new Tetrahedron3D(square[3], square[7], square[2], square[6]));
-
-		mesh.addTet(new Tetrahedron3D(square[3], square[4], square[2], square[7]));
+		Tetrahedron3D tet0 = new Tetrahedron3D(cube[0], cube[1], cube[2], cube[3]);
+		mesh.addTet(tet0);
+		Tetrahedron3D tet1 = new Tetrahedron3D(cube[0], cube[4], cube[2], cube[3]);
+		mesh.addTet(tet1);
+		Tetrahedron3D tet2 = new Tetrahedron3D(cube[1], cube[3], cube[5], cube[6]);
+		mesh.addTet(tet2);
+		Tetrahedron3D tet3 = new Tetrahedron3D(cube[1], cube[3], cube[2], cube[6]);
+		mesh.addTet(tet3);
+		Tetrahedron3D tet4 = new Tetrahedron3D(cube[3], cube[7], cube[2], cube[6]);
+		mesh.addTet(tet4);
+		Tetrahedron3D tet5 = new Tetrahedron3D(cube[3], cube[4], cube[2], cube[7]);
+		mesh.addTet(tet5);
 
 		// mark triangles that are boundary
 		mesh.markBoundary();

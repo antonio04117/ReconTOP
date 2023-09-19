@@ -1,8 +1,11 @@
 package model;
 
 import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import model.topology.Edge3D;
@@ -36,25 +39,6 @@ public class Mesh {
 
 		cellIDs = new LinkedHashMap<Integer, Set<Integer>>();
 
-	}
-
-	/**
-	 * adds tetrahedron and its triangles, edges and vertices to mesh and to a cell
-	 * 
-	 * @param tet
-	 * @param cellID
-	 */
-	public void addTet(Tetrahedron3D tet, int cellID) {
-		addTet(tet);
-		// keep tetCount on former level until end of this method
-		tetCount--;
-
-		// add tet to cell
-		Set<Integer> setOfCellID = cellIDs.get(Integer.valueOf(cellID));
-		setOfCellID.add(Integer.valueOf(tetCount));
-		cellIDs.put(Integer.valueOf(cellID), setOfCellID);
-
-		tetCount++;
 	}
 
 	/**
@@ -105,7 +89,55 @@ public class Mesh {
 	}
 
 	/**
-	 * mark boundary for square: HAS TO BE ADAPTED FOR EVERY GIVEN EXAMPLE
+	 * adds tetrahedron and its triangles, edges and vertices to mesh and to a cell
+	 * 
+	 * @param tet
+	 * @param cellID
+	 */
+	public void addTet(Tetrahedron3D tet, int cellID) {
+		addTet(tet);
+
+		addExistingTetToCell(tet, cellID);
+	}
+
+	public void addExistingTetToCell(Tetrahedron3D existingTet, int cellID) {
+
+		// check if cell already exists
+		if (cellIDs.containsKey(Integer.valueOf(cellID))) {
+			// add tet to cell
+			Set<Integer> setOfCellID = cellIDs.get(Integer.valueOf(cellID));
+			setOfCellID.add(Integer.valueOf(getIdOfTet(existingTet)));
+			cellIDs.put(Integer.valueOf(cellID), setOfCellID);
+		} else {
+			// create new cell and add tet
+			Set<Integer> setOfCellID = new HashSet<Integer>();
+			setOfCellID.add(Integer.valueOf(getIdOfTet(existingTet)));
+			cellIDs.put(Integer.valueOf(cellID), setOfCellID);
+		}
+
+	}
+
+	/**
+	 * returns id of given tetrahedron
+	 * 
+	 * @param tet
+	 * @return
+	 */
+	public Integer getIdOfTet(Tetrahedron3D tet) {
+		Iterator<Entry<Integer, Tetrahedron3D>> it = mapTet.entrySet().iterator();
+
+		while (it.hasNext()) {
+			Entry<Integer, Tetrahedron3D> currentEntry = it.next();
+			if (currentEntry.getValue().equals(tet)) {
+				return Integer.valueOf((Integer) currentEntry.getKey());
+			}
+		}
+
+		return Integer.valueOf(-1);
+	}
+
+	/**
+	 * mark boundary for cube: HAS TO BE ADAPTED FOR EVERY GIVEN EXAMPLE
 	 */
 	public void markBoundary() {
 		for (int i = 0; i < mapTri.size(); i++) {

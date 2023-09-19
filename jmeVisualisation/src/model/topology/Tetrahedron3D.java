@@ -48,7 +48,17 @@ public class Tetrahedron3D {
 	public Vertex3D getP3() {
 		return vertices.get(3);
 	}
-	
-	
+
+	// method can be used if points of two Tetrahedron3D have same values means
+	// equal
+	// without this method the two Tetrahedron3D have to have the exact id -> same
+	// values of the points is not enough to be equal
+//	public boolean equals(Tetrahedron3D tet) {
+//		if (getP0().getP().equals(tet.getP0().getP()) && getP1().getP().equals(tet.getP1().getP())
+//				&& getP2().getP().equals(tet.getP2().getP()) && getP3().getP().equals(tet.getP3().getP())) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 }
