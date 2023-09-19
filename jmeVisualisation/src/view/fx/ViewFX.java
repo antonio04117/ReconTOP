@@ -2,6 +2,7 @@ package view.fx;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckBox;
@@ -66,7 +67,7 @@ public class ViewFX {
 
 		rootPane.setCenter(tabPane);
 
-		scene = new Scene(rootPane, 300, 300);
+		scene = new Scene(rootPane, 400, 400);
 
 		stage.setScene(scene);
 
@@ -100,6 +101,8 @@ public class ViewFX {
 		}
 		// add vBox to borderPane
 		borderPane.setRight(vBox);
+		// align checkboxes
+		BorderPane.setMargin(borderPane.getRight(), new Insets(50, 5, 5, 5));
 	}
 
 	/**
