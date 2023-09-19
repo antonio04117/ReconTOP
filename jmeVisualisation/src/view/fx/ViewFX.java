@@ -171,36 +171,56 @@ public class ViewFX {
 		Iterator<Entry<Integer, Tetrahedron3D>> it = mesh.getMapTet().entrySet().iterator();
 
 		// true if no checkbox is selected
-//		boolean noCheckBoxSelected = true;
-//		for (CheckBox checkBox : checkBoxCells) {
-//			noCheckBoxSelected = noCheckBoxSelected && !checkBox.isSelected();
-//		}
+		boolean noCheckBoxSelected = true;
+
+		Iterator<Entry<CheckBox, Integer>> it2 = checkBoxCells.entrySet().iterator();
+
+		while (it.hasNext()) {
+			noCheckBoxSelected = noCheckBoxSelected && !it2.next().getKey().isSelected();
+		}
 
 		// if no checkbox is selected -> display all tetrahedrons
-//		if (noCheckBoxSelected) {
+		if (noCheckBoxSelected) {
 			// get id of tetrahedron
 			while (it.hasNext()) {
 				items.add(new Text("Tet: " + it.next().getKey()));
 			}
-//		} else {
-//
-//			// get id of tetrahedron
-//			while (it.hasNext()) {
-//				items.add(new Text("Tet: " + it.next().getKey()));
-//			}
-//		}
+		} else {
+			// get id of tetrahedron
+			while (it.hasNext()) {
+				Entry<Integer, Tetrahedron3D> entry = it.next();
+
+				// only add elements to list that have a ticket cell
+				if (getAllDisplayableTetsID(mesh).contains(Integer.valueOf(entry.getKey()))) {
+					items.add(new Text("Tet: " + entry.getKey()));
+				}
+			}
+		}
 
 		return items;
 	}
 
-//	private Set<Integer> getAllDisplayableTetsID(Mesh mesh) {
-//		Set<Integer> displayableID = new HashSet<Integer>();
-//		for (CheckBox checkBox : checkBoxCells) {
-//			if (checkBox.isSelected()) {
-//				displayableID.addAll(mesh.getCellIDs().get());
-//			}
-//		}
-//	}
+	/**
+	 * returns IDs of all tetraeders that can be drawn
+	 * 
+	 * @param mesh
+	 * @return
+	 */
+	private Set<Integer> getAllDisplayableTetsID(Mesh mesh) {
+		Set<Integer> displayableID = new HashSet<Integer>();
+
+		Iterator<Entry<CheckBox, Integer>> it = checkBoxCells.entrySet().iterator();
+
+		while (it.hasNext()) {
+			Entry<CheckBox, Integer> entry = it.next();
+			// check if checkbox is selected
+			if (entry.getKey().isSelected()) {
+				// add all ids of tets of cell that is checked
+				displayableID.addAll(mesh.getCellIDs().get(entry.getValue()));
+			}
+		}
+		return displayableID;
+	}
 
 	/**
 	 * creates Tab for Triangles
