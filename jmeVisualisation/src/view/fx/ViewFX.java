@@ -154,6 +154,7 @@ public class ViewFX {
 		return borderPane;
 	}
 
+	// TODO WORK IN PROGRESS
 	/**
 	 * create List of all triangles depending on given mesh
 	 * 
@@ -175,9 +176,9 @@ public class ViewFX {
 
 		Iterator<Entry<CheckBox, Integer>> it2 = checkBoxCells.entrySet().iterator();
 
-		while (it.hasNext()) {
-			noCheckBoxSelected = noCheckBoxSelected && !it2.next().getKey().isSelected();
-		}
+//		while (it.hasNext()) {
+//			noCheckBoxSelected = noCheckBoxSelected && !it2.next().getKey().isSelected();
+//		}
 
 		// if no checkbox is selected -> display all tetrahedrons
 		if (noCheckBoxSelected) {
