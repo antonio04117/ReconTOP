@@ -3,6 +3,7 @@ package model;
 import java.util.LinkedList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import model.topology.Edge3D;
 import model.topology.Tetrahedron3D;
@@ -17,8 +18,15 @@ public class Mesh {
 	private Map<Integer, LinkedList<Edge3D>> mapEdg;
 	private Map<Integer, LinkedList<Vertex3D>> mapVer;
 
+	// tetCount to keep track of tets
 	private Integer tetCount = 0;
 
+	// map to create different cells
+	private Map<Integer, Set<Integer>> cellIDs;
+
+	/**
+	 * mesh for all objects
+	 */
 	public Mesh() {
 		// Linked HashMap to keep order
 		mapTet = new LinkedHashMap<Integer, Tetrahedron3D>();
@@ -26,8 +34,34 @@ public class Mesh {
 		mapEdg = new LinkedHashMap<Integer, LinkedList<Edge3D>>();
 		mapVer = new LinkedHashMap<Integer, LinkedList<Vertex3D>>();
 
+		cellIDs = new LinkedHashMap<Integer, Set<Integer>>();
+
 	}
 
+	/**
+	 * adds tetrahedron and its triangles, edges and vertices to mesh and to a cell
+	 * 
+	 * @param tet
+	 * @param cellID
+	 */
+	public void addTet(Tetrahedron3D tet, int cellID) {
+		addTet(tet);
+		// keep tetCount on former level until end of this method
+		tetCount--;
+
+		// add tet to cell
+		Set<Integer> setOfCellID = cellIDs.get(Integer.valueOf(cellID));
+		setOfCellID.add(Integer.valueOf(tetCount));
+		cellIDs.put(Integer.valueOf(cellID), setOfCellID);
+
+		tetCount++;
+	}
+
+	/**
+	 * adds tetrahedron and its triangles, edges and vertices to mesh
+	 * 
+	 * @param tet
+	 */
 	public void addTet(Tetrahedron3D tet) {
 		// add tet to tet map with id of tet
 		mapTet.put(tetCount, tet);
@@ -38,35 +72,35 @@ public class Mesh {
 		Triangle3D tri2 = new Triangle3D(tet.getP0(), tet.getP2(), tet.getP3());
 		Triangle3D tri3 = new Triangle3D(tet.getP1(), tet.getP2(), tet.getP3());
 		// set of triangles that belong to tetrahedron
-		LinkedList<Triangle3D> setTri = new LinkedList<Triangle3D>();
-		setTri.add(tri0);
-		setTri.add(tri1);
-		setTri.add(tri2);
-		setTri.add(tri3);
+		LinkedList<Triangle3D> listTri = new LinkedList<Triangle3D>();
+		listTri.add(tri0);
+		listTri.add(tri1);
+		listTri.add(tri2);
+		listTri.add(tri3);
 		// add tri to tri map with id of according tet
-		mapTri.put(tetCount, setTri);
+		mapTri.put(tetCount, listTri);
 
 		// create edges of tet
-		// TODO check if there are exactly 6 edges in Set
-		LinkedList<Edge3D> setEdg = new LinkedList<Edge3D>();
-		setEdg.add(new Edge3D(tet.getP0(), tet.getP1(), false));
-		setEdg.add(new Edge3D(tet.getP0(), tet.getP2(), false));
-		setEdg.add(new Edge3D(tet.getP0(), tet.getP3(), false));
-		setEdg.add(new Edge3D(tet.getP1(), tet.getP2(), false));
-		setEdg.add(new Edge3D(tet.getP1(), tet.getP3(), false));
-		setEdg.add(new Edge3D(tet.getP2(), tet.getP3(), false));
+		LinkedList<Edge3D> listEdg = new LinkedList<Edge3D>();
+		listEdg.add(new Edge3D(tet.getP0(), tet.getP1(), false));
+		listEdg.add(new Edge3D(tet.getP0(), tet.getP2(), false));
+		listEdg.add(new Edge3D(tet.getP0(), tet.getP3(), false));
+		listEdg.add(new Edge3D(tet.getP1(), tet.getP2(), false));
+		listEdg.add(new Edge3D(tet.getP1(), tet.getP3(), false));
+		listEdg.add(new Edge3D(tet.getP2(), tet.getP3(), false));
 		// add edges to edg map with id of according tet
-		mapEdg.put(tetCount, setEdg);
+		mapEdg.put(tetCount, listEdg);
 
 		// create vertices of tet
-		LinkedList<Vertex3D> setVer = new LinkedList<Vertex3D>();
-		setVer.add(tet.getP0());
-		setVer.add(tet.getP1());
-		setVer.add(tet.getP2());
-		setVer.add(tet.getP3());
+		LinkedList<Vertex3D> listVer = new LinkedList<Vertex3D>();
+		listVer.add(tet.getP0());
+		listVer.add(tet.getP1());
+		listVer.add(tet.getP2());
+		listVer.add(tet.getP3());
 		// add vertices to ver map with id of according tet
-		mapVer.put(tetCount, setVer);
+		mapVer.put(tetCount, listVer);
 
+		// update tetCount
 		tetCount++;
 	}
 
