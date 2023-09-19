@@ -4,17 +4,11 @@ import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
 
 public class VertexJME {
-
-	private AssetManager assetManager;
-	private Node parentNode;
-	// point
-	private Vector3f point;
 
 	private float radius = 0.1f;
 
@@ -31,10 +25,6 @@ public class VertexJME {
 	 * @param color
 	 */
 	public VertexJME(AssetManager assetManager, Node parentNode, float x, float y, float z, ColorRGBA color) {
-		this.assetManager = assetManager;
-		this.parentNode = parentNode;
-
-		point = new Vector3f(x, y, z);
 
 		// line in jme
 		Sphere pointMesh = new Sphere(30, 30, radius);

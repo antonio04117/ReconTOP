@@ -11,7 +11,6 @@ import com.jme3.scene.shape.Line;
 
 public class EdgeJME {
 
-	private AssetManager assetManager;
 	private Node parentNode;
 	// start point
 	private Vector3f startPoint;
@@ -34,7 +33,6 @@ public class EdgeJME {
 	 */
 	public EdgeJME(AssetManager assetManager, Node parentNode, float xS, float yS, float zS, float xE, float yE,
 			float zE, ColorRGBA color) {
-		this.assetManager = assetManager;
 		this.parentNode = parentNode;
 
 		startPoint = new Vector3f(xS, yS, zS);

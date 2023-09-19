@@ -1,5 +1,9 @@
 package view.fx;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map.Entry;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -17,6 +21,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Mesh;
+import model.topology.Edge3D;
+import model.topology.Tetrahedron3D;
+import model.topology.Triangle3D;
+import model.topology.Vertex3D;
 
 /**
  * class for java fx view
@@ -58,8 +66,8 @@ public class ViewFX {
 
 		Tab tabTetrahedrons = new Tab("Tetrahedrons", createTetrahedronTab(mesh));
 		Tab tabTriangles = new Tab("Triangles", createTriangleTab(mesh));
-		Tab tabEdges = new Tab("Edges", createEdgesTab(mesh));
-		Tab tabVertices = new Tab("Vertices", createVerticesTab(mesh));
+		Tab tabEdges = new Tab("Edges", createEdgeTab(mesh));
+		Tab tabVertices = new Tab("Vertices", createVertexTab(mesh));
 
 		TabPane tabPane = new TabPane(tabTetrahedrons, tabTriangles, tabEdges, tabVertices);
 		// tabs can not be closed by the user
@@ -144,9 +152,12 @@ public class ViewFX {
 		// add possibility to select all elements
 		items.add(new Text("select all"));
 
-		for (int i = 0; i < mesh.getMapTet().size(); i++) {
+		// Iterator for entries
+		Iterator<Entry<Integer, Tetrahedron3D>> it = mesh.getMapTet().entrySet().iterator();
 
-			items.add(new Text("Tet: " + i));
+		// get id of tetrahedron
+		while (it.hasNext()) {
+			items.add(new Text("Tet: " + it.next().getKey()));
 		}
 
 		return items;
@@ -191,10 +202,17 @@ public class ViewFX {
 		// add possibility to select all elements
 		items.add(new Text("select all"));
 
-		for (int i = 0; i < mesh.getMapTri().size(); i++) {
-			for (int j = 0; j < mesh.getMapTri().get(i).size(); j++) {
+		// Iterator for entries
+		Iterator<Entry<Integer, LinkedList<Triangle3D>>> it = mesh.getMapTri().entrySet().iterator();
 
-				items.add(new Text("Tet: " + i + " ; Tri: " + j));
+		// get id of tetrahedron
+		while (it.hasNext()) {
+
+			Entry<Integer, LinkedList<Triangle3D>> currentEntry = it.next();
+
+			// get id of triangle
+			for (int j = 0; j < currentEntry.getValue().size(); j++) {
+				items.add(new Text("Tet: " + currentEntry.getKey() + " ; Tri: " + j));
 			}
 		}
 
@@ -207,7 +225,7 @@ public class ViewFX {
 	 * @param mesh
 	 * @return
 	 */
-	private BorderPane createEdgesTab(Mesh mesh) {
+	private BorderPane createEdgeTab(Mesh mesh) {
 		BorderPane borderPane = new BorderPane(canvas);
 
 		Label label = new Label(" List of all Edges" + defaultAnnotation);
@@ -215,7 +233,7 @@ public class ViewFX {
 		// enable multiple selections
 		listViewEdges.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		ObservableList<Text> items = createEdgesList(mesh);
+		ObservableList<Text> items = createEdgeList(mesh);
 
 		listViewEdges.setItems(items);
 		// add elements to root
@@ -233,17 +251,24 @@ public class ViewFX {
 	 * @param mesh
 	 * @return
 	 */
-	private ObservableList<Text> createEdgesList(Mesh mesh) {
+	private ObservableList<Text> createEdgeList(Mesh mesh) {
 
 		ObservableList<Text> items = FXCollections.observableArrayList();
 
 		// add possibility to select all elements
 		items.add(new Text("select all"));
 
-		for (int i = 0; i < mesh.getMapEdg().size(); i++) {
-			for (int j = 0; j < mesh.getMapEdg().get(i).size(); j++) {
+		// Iterator for entries
+		Iterator<Entry<Integer, LinkedList<Edge3D>>> it = mesh.getMapEdg().entrySet().iterator();
 
-				items.add(new Text("Tet: " + i + " ; Edg: " + j));
+		// get id of tetrahedron
+		while (it.hasNext()) {
+
+			Entry<Integer, LinkedList<Edge3D>> currentEntry = it.next();
+
+			// get id of edge
+			for (int j = 0; j < currentEntry.getValue().size(); j++) {
+				items.add(new Text("Tet: " + currentEntry.getKey() + " ; Edg: " + j));
 			}
 		}
 
@@ -256,7 +281,7 @@ public class ViewFX {
 	 * @param mesh
 	 * @return
 	 */
-	private BorderPane createVerticesTab(Mesh mesh) {
+	private BorderPane createVertexTab(Mesh mesh) {
 		BorderPane borderPane = new BorderPane(canvas);
 
 		Label label = new Label(" List of all Vertices" + defaultAnnotation);
@@ -264,7 +289,7 @@ public class ViewFX {
 		// enable multiple selections
 		listViewVertices.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		ObservableList<Text> items = createVerticesList(mesh);
+		ObservableList<Text> items = createVertexList(mesh);
 
 		listViewVertices.setItems(items);
 		// add elements to root
@@ -282,17 +307,24 @@ public class ViewFX {
 	 * @param mesh
 	 * @return
 	 */
-	private ObservableList<Text> createVerticesList(Mesh mesh) {
+	private ObservableList<Text> createVertexList(Mesh mesh) {
 
 		ObservableList<Text> items = FXCollections.observableArrayList();
 
 		// add possibility to select all elements
 		items.add(new Text("select all"));
 
-		for (int i = 0; i < mesh.getMapVer().size(); i++) {
-			for (int j = 0; j < mesh.getMapVer().get(i).size(); j++) {
+		// Iterator for entries
+		Iterator<Entry<Integer, LinkedList<Vertex3D>>> it = mesh.getMapVer().entrySet().iterator();
 
-				items.add(new Text("Tet: " + i + " ; Ver: " + j));
+		// get id of tetrahedron
+		while (it.hasNext()) {
+
+			Entry<Integer, LinkedList<Vertex3D>> currentEntry = it.next();
+
+			// get id of vertex
+			for (int j = 0; j < currentEntry.getValue().size(); j++) {
+				items.add(new Text("Tet: " + currentEntry.getKey() + " ; Ver: " + j));
 			}
 		}
 
