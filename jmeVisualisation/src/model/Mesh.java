@@ -202,4 +202,8 @@ public class Mesh {
 		return tetCount;
 	}
 
+	public Map<Integer, Set<Integer>> getCellIDs() {
+		return cellIDs;
+	}
+
 }

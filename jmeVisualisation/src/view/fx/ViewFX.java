@@ -1,8 +1,12 @@
 package view.fx;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +47,7 @@ public class ViewFX {
 	private ListView<Text> listViewVertices = new ListView<Text>();
 
 	// check box for cells
-	private CheckBox[] checkBoxCells;
+	private Map<CheckBox, Integer> checkBoxCells;
 
 	public ViewFX(Stage stage, Mesh mesh) {
 		canvas = new Canvas();
@@ -62,7 +66,7 @@ public class ViewFX {
 
 		// create checkbox and add right to the rootPane
 		checkBoxCells = createCheckbox(mesh);
-		addCheckbox(rootPane);
+		addCheckboxes(rootPane);
 
 		Tab tabTetrahedrons = new Tab("Tetrahedrons", createTetrahedronTab(mesh));
 		Tab tabTriangles = new Tab("Triangles", createTriangleTab(mesh));
@@ -93,20 +97,34 @@ public class ViewFX {
 	 * @param mesh
 	 * @return
 	 */
-	private CheckBox[] createCheckbox(Mesh mesh) {
-		CheckBox[] cbs = new CheckBox[2];
-		cbs[0] = new CheckBox("a");
-		cbs[1] = new CheckBox("b");
+	private LinkedHashMap<CheckBox, Integer> createCheckbox(Mesh mesh) {
+
+		LinkedHashMap<CheckBox, Integer> cbs = new LinkedHashMap<CheckBox, Integer>();
+
+		Iterator<Entry<Integer, Set<Integer>>> it = mesh.getCellIDs().entrySet().iterator();
+
+		while (it.hasNext()) {
+			int id = it.next().getKey();
+			cbs.put(new CheckBox("Cell " + id), Integer.valueOf(id));
+		}
 		return cbs;
 	}
 
-	private void addCheckbox(BorderPane borderPane) {
+	/**
+	 * add Checkboxes to given BorderPane
+	 * 
+	 * @param borderPane
+	 */
+	private void addCheckboxes(BorderPane borderPane) {
 		// create vBox
 		VBox vBox = new VBox();
 		// add all elements of checkBoxCells
-		for (int i = 0; i < checkBoxCells.length; i++) {
-			vBox.getChildren().add(checkBoxCells[i]);
+		Iterator<Entry<CheckBox, Integer>> it = checkBoxCells.entrySet().iterator();
+
+		while (it.hasNext()) {
+			vBox.getChildren().add(it.next().getKey());
 		}
+
 		// add vBox to borderPane
 		borderPane.setRight(vBox);
 		// align checkboxes
@@ -133,9 +151,6 @@ public class ViewFX {
 		// add elements to root
 		borderPane.setTop(label);
 		borderPane.setCenter(listViewTetrahedron);
-		// add checkbox
-//		addCheckbox(borderPane);
-
 		return borderPane;
 	}
 
@@ -155,13 +170,37 @@ public class ViewFX {
 		// Iterator for entries
 		Iterator<Entry<Integer, Tetrahedron3D>> it = mesh.getMapTet().entrySet().iterator();
 
-		// get id of tetrahedron
-		while (it.hasNext()) {
-			items.add(new Text("Tet: " + it.next().getKey()));
-		}
+		// true if no checkbox is selected
+//		boolean noCheckBoxSelected = true;
+//		for (CheckBox checkBox : checkBoxCells) {
+//			noCheckBoxSelected = noCheckBoxSelected && !checkBox.isSelected();
+//		}
+
+		// if no checkbox is selected -> display all tetrahedrons
+//		if (noCheckBoxSelected) {
+			// get id of tetrahedron
+			while (it.hasNext()) {
+				items.add(new Text("Tet: " + it.next().getKey()));
+			}
+//		} else {
+//
+//			// get id of tetrahedron
+//			while (it.hasNext()) {
+//				items.add(new Text("Tet: " + it.next().getKey()));
+//			}
+//		}
 
 		return items;
 	}
+
+//	private Set<Integer> getAllDisplayableTetsID(Mesh mesh) {
+//		Set<Integer> displayableID = new HashSet<Integer>();
+//		for (CheckBox checkBox : checkBoxCells) {
+//			if (checkBox.isSelected()) {
+//				displayableID.addAll(mesh.getCellIDs().get());
+//			}
+//		}
+//	}
 
 	/**
 	 * creates Tab for Triangles
@@ -183,9 +222,6 @@ public class ViewFX {
 		// add elements to root
 		borderPane.setTop(label);
 		borderPane.setCenter(listViewTriangle);
-		// add checkbox
-//		addCheckbox(borderPane);
-
 		return borderPane;
 	}
 
@@ -239,9 +275,6 @@ public class ViewFX {
 		// add elements to root
 		borderPane.setTop(label);
 		borderPane.setCenter(listViewEdges);
-		// add checkbox
-//		addCheckbox(borderPane);
-
 		return borderPane;
 	}
 
@@ -295,9 +328,6 @@ public class ViewFX {
 		// add elements to root
 		borderPane.setTop(label);
 		borderPane.setCenter(listViewVertices);
-		// add checkbox
-//		addCheckbox(borderPane);
-
 		return borderPane;
 	}
 

@@ -32,17 +32,17 @@ public class App {
 
 		// a square of tetrahedrons
 		Tetrahedron3D tet0 = new Tetrahedron3D(cube[0], cube[1], cube[2], cube[3]);
-		mesh.addTet(tet0);
+		mesh.addTet(tet0, 0);
 		Tetrahedron3D tet1 = new Tetrahedron3D(cube[0], cube[4], cube[2], cube[3]);
-		mesh.addTet(tet1);
+		mesh.addTet(tet1, 0);
 		Tetrahedron3D tet2 = new Tetrahedron3D(cube[1], cube[3], cube[5], cube[6]);
-		mesh.addTet(tet2);
+		mesh.addTet(tet2, 1);
 		Tetrahedron3D tet3 = new Tetrahedron3D(cube[1], cube[3], cube[2], cube[6]);
-		mesh.addTet(tet3);
+		mesh.addTet(tet3, 1);
 		Tetrahedron3D tet4 = new Tetrahedron3D(cube[3], cube[7], cube[2], cube[6]);
-		mesh.addTet(tet4);
+		mesh.addTet(tet4, 2);
 		Tetrahedron3D tet5 = new Tetrahedron3D(cube[3], cube[4], cube[2], cube[7]);
-		mesh.addTet(tet5);
+		mesh.addTet(tet5, 2);
 
 		// mark triangles that are boundary
 		mesh.markBoundary();
