@@ -18,7 +18,7 @@ public abstract class EventManager {
 		if (viewFX.getCheckBoxCells().size() > 0) {
 			Iterator<Entry<CheckBox, Integer>> it = viewFX.getCheckBoxCells().entrySet().iterator();
 
-			if (it.hasNext()) {
+			while (it.hasNext()) {
 				Entry<CheckBox, Integer> entry = it.next();
 
 				entry.getKey().selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -26,7 +26,13 @@ public abstract class EventManager {
 					@Override
 					public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
 							Boolean newValue) {
-						viewFX.createTabPane(mesh, viewFX.getRootPane());
+						// clear selection -> do not display any element
+						viewFX.getListViewTetrahedron().getSelectionModel().clearSelection();
+						viewFX.getListViewTriangle().getSelectionModel().clearSelection();
+						viewFX.getListViewEdge().getSelectionModel().clearSelection();
+						viewFX.getListViewVertex().getSelectionModel().clearSelection();
+						// create new tabPane
+						viewFX.createTabPane(mesh);
 					}
 
 				});
@@ -42,8 +48,8 @@ public abstract class EventManager {
 
 					@Override
 					public void onChanged(Change<? extends Integer> c) {
-						for (int i = 1; i < viewFX.getListViewTetrahedron().getItems().size(); i++) {
-							final int index = i - 1; // Make 'i' effectively final
+						for (int i = 2; i < viewFX.getListViewTetrahedron().getItems().size(); i++) {
+							final int index = i - 2; // Make 'i' effectively final
 							if (viewFX.getListViewTetrahedron().getSelectionModel().getSelectedIndices().contains(i)) {
 								System.out.println("Tetrahedron " + i + " selected\n");
 								appJME.enqueue(() -> ViewModel.showTetrahedron(Integer.valueOf(index)));
@@ -55,7 +61,7 @@ public abstract class EventManager {
 						// if "select all" is selected, every tetrahedron is selected
 						if (viewFX.getListViewTetrahedron().getSelectionModel().getSelectedIndices().contains(0)) {
 							System.out.println("Every Tetrahedron selected\n");
-							for (int j = 1; j < viewFX.getListViewTetrahedron().getItems().size() + 1; j++) {
+							for (int j = 2; j < viewFX.getListViewTetrahedron().getItems().size(); j++) {
 								viewFX.getListViewTetrahedron().getSelectionModel().select(j);
 							}
 						}
@@ -67,8 +73,8 @@ public abstract class EventManager {
 				.addListener(new ListChangeListener<Integer>() {
 					@Override
 					public void onChanged(Change<? extends Integer> c) {
-						for (int i = 1; i < viewFX.getListViewTriangle().getItems().size(); i++) {
-							final int index = i - 1; // Make 'i' effectively final
+						for (int i = 2; i < viewFX.getListViewTriangle().getItems().size(); i++) {
+							final int index = i - 2; // Make 'i' effectively final
 							if (viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().contains(i)) {
 								System.out.println("Triangle " + i + " selected\n");
 								appJME.enqueue(() -> ViewModel.showTriangle(Integer.valueOf(index)));
@@ -80,7 +86,7 @@ public abstract class EventManager {
 						// if "select all" is selected, every triangle is selected
 						if (viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().contains(0)) {
 							System.out.println("Every Triangle selected\n");
-							for (int j = 1; j < viewFX.getListViewTriangle().getItems().size() + 1; j++) {
+							for (int j = 2; j < viewFX.getListViewTriangle().getItems().size(); j++) {
 								viewFX.getListViewTriangle().getSelectionModel().select(j);
 							}
 						}
@@ -89,13 +95,13 @@ public abstract class EventManager {
 				});
 
 		// trigger event for selection/deselection of edges
-		viewFX.getListViewEdges().getSelectionModel().getSelectedIndices()
+		viewFX.getListViewEdge().getSelectionModel().getSelectedIndices()
 				.addListener(new ListChangeListener<Integer>() {
 					@Override
 					public void onChanged(Change<? extends Integer> c) {
-						for (int i = 1; i < viewFX.getListViewEdges().getItems().size(); i++) {
-							final int index = i - 1; // Make 'i' effectively final
-							if (viewFX.getListViewEdges().getSelectionModel().getSelectedIndices().contains(i)) {
+						for (int i = 2; i < viewFX.getListViewEdge().getItems().size(); i++) {
+							final int index = i - 2; // Make 'i' effectively final
+							if (viewFX.getListViewEdge().getSelectionModel().getSelectedIndices().contains(i)) {
 								System.out.println("Edge " + i + " selected\n");
 								appJME.enqueue(() -> ViewModel.showEdge(Integer.valueOf(index)));
 							} else {
@@ -104,23 +110,23 @@ public abstract class EventManager {
 							}
 						}
 						// if "select all" is selected, every edge is selected
-						if (viewFX.getListViewEdges().getSelectionModel().getSelectedIndices().contains(0)) {
+						if (viewFX.getListViewEdge().getSelectionModel().getSelectedIndices().contains(0)) {
 							System.out.println("Every Edge selected\n");
-							for (int j = 1; j < viewFX.getListViewEdges().getItems().size() + 1; j++) {
-								viewFX.getListViewEdges().getSelectionModel().select(j);
+							for (int j = 2; j < viewFX.getListViewEdge().getItems().size(); j++) {
+								viewFX.getListViewEdge().getSelectionModel().select(j);
 							}
 						}
 					}
 				});
 
 		// trigger event for selection/deselection of vertices
-		viewFX.getListViewVertices().getSelectionModel().getSelectedIndices()
+		viewFX.getListViewVertex().getSelectionModel().getSelectedIndices()
 				.addListener(new ListChangeListener<Integer>() {
 					@Override
 					public void onChanged(Change<? extends Integer> c) {
-						for (int i = 1; i < viewFX.getListViewVertices().getItems().size(); i++) {
-							final int index = i - 1; // Make 'i' effectively final
-							if (viewFX.getListViewVertices().getSelectionModel().getSelectedIndices().contains(i)) {
+						for (int i = 2; i < viewFX.getListViewVertex().getItems().size(); i++) {
+							final int index = i - 2; // Make 'i' effectively final
+							if (viewFX.getListViewVertex().getSelectionModel().getSelectedIndices().contains(i)) {
 								System.out.println("Vertex " + i + " selected\n");
 								appJME.enqueue(() -> ViewModel.showVertex(Integer.valueOf(index)));
 							} else {
@@ -129,10 +135,10 @@ public abstract class EventManager {
 							}
 						}
 						// if "select all" is selected, every vertex is selected
-						if (viewFX.getListViewVertices().getSelectionModel().getSelectedIndices().contains(0)) {
+						if (viewFX.getListViewVertex().getSelectionModel().getSelectedIndices().contains(0)) {
 							System.out.println("Every Vertex selected\n");
-							for (int j = 1; j < viewFX.getListViewVertices().getItems().size() + 1; j++) {
-								viewFX.getListViewVertices().getSelectionModel().select(j);
+							for (int j = 2; j < viewFX.getListViewVertex().getItems().size(); j++) {
+								viewFX.getListViewVertex().getSelectionModel().select(j);
 							}
 						}
 					}

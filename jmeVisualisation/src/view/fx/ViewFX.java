@@ -45,8 +45,8 @@ public class ViewFX {
 	// lists for all objects
 	private ListView<Text> listViewTetrahedron = new ListView<Text>();
 	private ListView<Text> listViewTriangle = new ListView<Text>();
-	private ListView<Text> listViewEdges = new ListView<Text>();
-	private ListView<Text> listViewVertices = new ListView<Text>();
+	private ListView<Text> listViewEdge = new ListView<Text>();
+	private ListView<Text> listViewVertex = new ListView<Text>();
 
 	// check box for cells
 	private Map<CheckBox, Integer> checkBoxCells;
@@ -71,7 +71,7 @@ public class ViewFX {
 			addCheckboxes(rootPane);
 		}
 
-		createTabPane(mesh, rootPane);
+		createTabPane(mesh);
 
 		scene = new Scene(rootPane, 400, 400);
 
@@ -85,11 +85,7 @@ public class ViewFX {
 		stage.show();
 	}
 
-	public BorderPane getRootPane() {
-		return rootPane;
-	}
-
-	public void createTabPane(Mesh mesh, BorderPane rootPane) {
+	public void createTabPane(Mesh mesh) {
 		Tab tabTetrahedrons = new Tab("Tetrahedrons", createTetrahedronTab(mesh));
 		Tab tabTriangles = new Tab("Triangles", createTriangleTab(mesh));
 		Tab tabEdges = new Tab("Edges", createEdgeTab(mesh));
@@ -185,6 +181,7 @@ public class ViewFX {
 
 		// add possibility to select all elements
 		items.add(new Text("select all"));
+		items.add(new Text("deselect all"));
 
 		// Iterator for entries
 		Iterator<Entry<Integer, Tetrahedron3D>> it = mesh.getMapTet().entrySet().iterator();
@@ -208,7 +205,7 @@ public class ViewFX {
 			// Iterator for entries
 			Iterator<Entry<Integer, Tetrahedron3D>> sameIt = mesh.getMapTet().entrySet().iterator();
 			// get id of tetrahedron
-			while (it.hasNext()) {
+			while (sameIt.hasNext()) {
 				Entry<Integer, Tetrahedron3D> entry = sameIt.next();
 				items.add(new Text("Tet: " + entry.getKey()));
 			}
@@ -274,18 +271,37 @@ public class ViewFX {
 
 		// add possibility to select all elements
 		items.add(new Text("select all"));
+		items.add(new Text("deselect all"));
 
 		// Iterator for entries
 		Iterator<Entry<Integer, LinkedList<Triangle3D>>> it = mesh.getMapTri().entrySet().iterator();
 
+		// place to save if no checkbox is selected
+		boolean noCheckboxSelected = true;
+
 		// get id of tetrahedron
 		while (it.hasNext()) {
+			Entry<Integer, LinkedList<Triangle3D>> entry = it.next();
+			for (int j = 0; j < entry.getValue().size(); j++) {
+				// only add elements to list that have a ticket cell
+				if (getAllDisplayableTetsID(mesh).contains(Integer.valueOf(entry.getKey()))) {
+					items.add(new Text("Tet: " + entry.getKey() + " ; Tri: " + j));
+					// mark that at least one tet was added
+					noCheckboxSelected = false;
+				}
+			}
+		}
 
-			Entry<Integer, LinkedList<Triangle3D>> currentEntry = it.next();
-
-			// get id of triangle
-			for (int j = 0; j < currentEntry.getValue().size(); j++) {
-				items.add(new Text("Tet: " + currentEntry.getKey() + " ; Tri: " + j));
+		// if no checkbox is selected show every tet
+		if (noCheckboxSelected) {
+			// Iterator for entries
+			Iterator<Entry<Integer, LinkedList<Triangle3D>>> sameIt = mesh.getMapTri().entrySet().iterator();
+			// get id of tetrahedron
+			while (sameIt.hasNext()) {
+				Entry<Integer, LinkedList<Triangle3D>> entry = sameIt.next();
+				for (int j = 0; j < entry.getValue().size(); j++) {
+					items.add(new Text("Tet: " + entry.getKey() + " ; Tri: " + j));
+				}
 			}
 		}
 
@@ -304,14 +320,14 @@ public class ViewFX {
 		Label label = new Label(" List of all Edges" + defaultAnnotation);
 
 		// enable multiple selections
-		listViewEdges.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		listViewEdge.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		ObservableList<Text> items = createEdgeList(mesh);
 
-		listViewEdges.setItems(items);
+		listViewEdge.setItems(items);
 		// add elements to root
 		borderPane.setTop(label);
-		borderPane.setCenter(listViewEdges);
+		borderPane.setCenter(listViewEdge);
 		return borderPane;
 	}
 
@@ -327,18 +343,37 @@ public class ViewFX {
 
 		// add possibility to select all elements
 		items.add(new Text("select all"));
+		items.add(new Text("deselect all"));
 
 		// Iterator for entries
 		Iterator<Entry<Integer, LinkedList<Edge3D>>> it = mesh.getMapEdg().entrySet().iterator();
 
+		// place to save if no checkbox is selected
+		boolean noCheckboxSelected = true;
+
 		// get id of tetrahedron
 		while (it.hasNext()) {
+			Entry<Integer, LinkedList<Edge3D>> entry = it.next();
+			for (int j = 0; j < entry.getValue().size(); j++) {
+				// only add elements to list that have a ticket cell
+				if (getAllDisplayableTetsID(mesh).contains(Integer.valueOf(entry.getKey()))) {
+					items.add(new Text("Tet: " + entry.getKey() + " ; Edg: " + j));
+					// mark that at least one tet was added
+					noCheckboxSelected = false;
+				}
+			}
+		}
 
-			Entry<Integer, LinkedList<Edge3D>> currentEntry = it.next();
-
-			// get id of edge
-			for (int j = 0; j < currentEntry.getValue().size(); j++) {
-				items.add(new Text("Tet: " + currentEntry.getKey() + " ; Edg: " + j));
+		// if no checkbox is selected show every tet
+		if (noCheckboxSelected) {
+			// Iterator for entries
+			Iterator<Entry<Integer, LinkedList<Edge3D>>> sameIt = mesh.getMapEdg().entrySet().iterator();
+			// get id of tetrahedron
+			while (sameIt.hasNext()) {
+				Entry<Integer, LinkedList<Edge3D>> entry = sameIt.next();
+				for (int j = 0; j < entry.getValue().size(); j++) {
+					items.add(new Text("Tet: " + entry.getKey() + " ; Edg: " + j));
+				}
 			}
 		}
 
@@ -357,14 +392,14 @@ public class ViewFX {
 		Label label = new Label(" List of all Vertices" + defaultAnnotation);
 
 		// enable multiple selections
-		listViewVertices.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		listViewVertex.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		ObservableList<Text> items = createVertexList(mesh);
 
-		listViewVertices.setItems(items);
+		listViewVertex.setItems(items);
 		// add elements to root
 		borderPane.setTop(label);
-		borderPane.setCenter(listViewVertices);
+		borderPane.setCenter(listViewVertex);
 		return borderPane;
 	}
 
@@ -380,18 +415,37 @@ public class ViewFX {
 
 		// add possibility to select all elements
 		items.add(new Text("select all"));
+		items.add(new Text("deselect all"));
 
 		// Iterator for entries
 		Iterator<Entry<Integer, LinkedList<Vertex3D>>> it = mesh.getMapVer().entrySet().iterator();
 
+		// place to save if no checkbox is selected
+		boolean noCheckboxSelected = true;
+
 		// get id of tetrahedron
 		while (it.hasNext()) {
+			Entry<Integer, LinkedList<Vertex3D>> entry = it.next();
+			for (int j = 0; j < entry.getValue().size(); j++) {
+				// only add elements to list that have a ticket cell
+				if (getAllDisplayableTetsID(mesh).contains(Integer.valueOf(entry.getKey()))) {
+					items.add(new Text("Tet: " + entry.getKey() + " ; Ver: " + j));
+					// mark that at least one tet was added
+					noCheckboxSelected = false;
+				}
+			}
+		}
 
-			Entry<Integer, LinkedList<Vertex3D>> currentEntry = it.next();
-
-			// get id of vertex
-			for (int j = 0; j < currentEntry.getValue().size(); j++) {
-				items.add(new Text("Tet: " + currentEntry.getKey() + " ; Ver: " + j));
+		// if no checkbox is selected show every tet
+		if (noCheckboxSelected) {
+			// Iterator for entries
+			Iterator<Entry<Integer, LinkedList<Vertex3D>>> sameIt = mesh.getMapVer().entrySet().iterator();
+			// get id of tetrahedron
+			while (sameIt.hasNext()) {
+				Entry<Integer, LinkedList<Vertex3D>> entry = sameIt.next();
+				for (int j = 0; j < entry.getValue().size(); j++) {
+					items.add(new Text("Tet: " + entry.getKey() + " ; Ver: " + j));
+				}
 			}
 		}
 
@@ -406,12 +460,12 @@ public class ViewFX {
 		return listViewTriangle;
 	}
 
-	public ListView<Text> getListViewEdges() {
-		return listViewEdges;
+	public ListView<Text> getListViewEdge() {
+		return listViewEdge;
 	}
 
-	public ListView<Text> getListViewVertices() {
-		return listViewVertices;
+	public ListView<Text> getListViewVertex() {
+		return listViewVertex;
 	}
 
 	public Map<CheckBox, Integer> getCheckBoxCells() {
