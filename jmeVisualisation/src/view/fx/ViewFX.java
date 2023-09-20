@@ -20,8 +20,9 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Mesh;
@@ -35,6 +36,7 @@ import model.topology.Vertex3D;
  */
 public class ViewFX {
 
+	private BorderPane rootPane;
 	private Canvas canvas;
 	private Stage stage;
 	private Scene scene;
@@ -50,6 +52,7 @@ public class ViewFX {
 	private Map<CheckBox, Integer> checkBoxCells;
 
 	public ViewFX(Stage stage, Mesh mesh) {
+		rootPane = new BorderPane();
 		canvas = new Canvas();
 		this.stage = stage;
 
@@ -61,23 +64,14 @@ public class ViewFX {
 	 */
 	public void setScene(Mesh mesh) {
 
-		// create rootPane
-		BorderPane rootPane = new BorderPane();
-
 		// create checkbox and add right to the rootPane
 		checkBoxCells = createCheckbox(mesh);
-		addCheckboxes(rootPane);
+		// only add checkbox view, if it contains content
+		if (checkBoxCells.size() > 0) {
+			addCheckboxes(rootPane);
+		}
 
-		Tab tabTetrahedrons = new Tab("Tetrahedrons", createTetrahedronTab(mesh));
-		Tab tabTriangles = new Tab("Triangles", createTriangleTab(mesh));
-		Tab tabEdges = new Tab("Edges", createEdgeTab(mesh));
-		Tab tabVertices = new Tab("Vertices", createVertexTab(mesh));
-
-		TabPane tabPane = new TabPane(tabTetrahedrons, tabTriangles, tabEdges, tabVertices);
-		// tabs can not be closed by the user
-		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-
-		rootPane.setCenter(tabPane);
+		createTabPane(mesh, rootPane);
 
 		scene = new Scene(rootPane, 400, 400);
 
@@ -89,6 +83,23 @@ public class ViewFX {
 		// Window title
 		stage.setTitle("Control displayed elements in jMonkey");
 		stage.show();
+	}
+
+	public BorderPane getRootPane() {
+		return rootPane;
+	}
+
+	public void createTabPane(Mesh mesh, BorderPane rootPane) {
+		Tab tabTetrahedrons = new Tab("Tetrahedrons", createTetrahedronTab(mesh));
+		Tab tabTriangles = new Tab("Triangles", createTriangleTab(mesh));
+		Tab tabEdges = new Tab("Edges", createEdgeTab(mesh));
+		Tab tabVertices = new Tab("Vertices", createVertexTab(mesh));
+
+		TabPane tabPane = new TabPane(tabTetrahedrons, tabTriangles, tabEdges, tabVertices);
+		// tabs can not be closed by the user
+		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+
+		rootPane.setCenter(tabPane);
 	}
 
 	/**
@@ -115,20 +126,27 @@ public class ViewFX {
 	 * 
 	 * @param borderPane
 	 */
-	private void addCheckboxes(BorderPane borderPane) {
+	@SuppressWarnings("unchecked") // cast to generic type T is not checked
+	private <T> void addCheckboxes(BorderPane borderPane) {
 		// create vBox
-		VBox vBox = new VBox();
+		TreeItem<T> rootItem = new TreeItem<T>((T) new Text("Cells"));
 		// add all elements of checkBoxCells
 		Iterator<Entry<CheckBox, Integer>> it = checkBoxCells.entrySet().iterator();
 
 		while (it.hasNext()) {
-			vBox.getChildren().add(it.next().getKey());
+			TreeItem<T> item = new TreeItem<T>((T) it.next().getKey());
+			rootItem.getChildren().add(item);
 		}
 
+		TreeView<T> tree = new TreeView<T>(rootItem);
+		// set width of tree view
+		tree.setMaxWidth(110);
+		tree.setMaxHeight(200);
+
 		// add vBox to borderPane
-		borderPane.setRight(vBox);
+		borderPane.setRight(tree);
 		// align checkboxes
-		BorderPane.setMargin(borderPane.getRight(), new Insets(50, 5, 5, 5));
+		BorderPane.setMargin(borderPane.getRight(), new Insets(46, 5, 5, 5));
 	}
 
 	/**
@@ -171,30 +189,28 @@ public class ViewFX {
 		// Iterator for entries
 		Iterator<Entry<Integer, Tetrahedron3D>> it = mesh.getMapTet().entrySet().iterator();
 
-		// true if no checkbox is selected
-		boolean noCheckBoxSelected = true;
+		// place to save if no checkbox is selected
+		boolean noCheckboxSelected = true;
 
-		Iterator<Entry<CheckBox, Integer>> it2 = checkBoxCells.entrySet().iterator();
-
-//		while (it.hasNext()) {
-//			noCheckBoxSelected = noCheckBoxSelected && !it2.next().getKey().isSelected();
-//		}
-
-		// if no checkbox is selected -> display all tetrahedrons
-		if (noCheckBoxSelected) {
-			// get id of tetrahedron
-			while (it.hasNext()) {
-				items.add(new Text("Tet: " + it.next().getKey()));
+		// get id of tetrahedron
+		while (it.hasNext()) {
+			Entry<Integer, Tetrahedron3D> entry = it.next();
+			// only add elements to list that have a ticket cell
+			if (getAllDisplayableTetsID(mesh).contains(Integer.valueOf(entry.getKey()))) {
+				items.add(new Text("Tet: " + entry.getKey()));
+				// mark that at least one tet was added
+				noCheckboxSelected = false;
 			}
-		} else {
+		}
+
+		// if no checkbox is selected show every tet
+		if (noCheckboxSelected) {
+			// Iterator for entries
+			Iterator<Entry<Integer, Tetrahedron3D>> sameIt = mesh.getMapTet().entrySet().iterator();
 			// get id of tetrahedron
 			while (it.hasNext()) {
-				Entry<Integer, Tetrahedron3D> entry = it.next();
-
-				// only add elements to list that have a ticket cell
-				if (getAllDisplayableTetsID(mesh).contains(Integer.valueOf(entry.getKey()))) {
-					items.add(new Text("Tet: " + entry.getKey()));
-				}
+				Entry<Integer, Tetrahedron3D> entry = sameIt.next();
+				items.add(new Text("Tet: " + entry.getKey()));
 			}
 		}
 
@@ -396,6 +412,10 @@ public class ViewFX {
 
 	public ListView<Text> getListViewVertices() {
 		return listViewVertices;
+	}
+
+	public Map<CheckBox, Integer> getCheckBoxCells() {
+		return checkBoxCells;
 	}
 
 }
