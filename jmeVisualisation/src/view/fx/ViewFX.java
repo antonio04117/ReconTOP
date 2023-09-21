@@ -227,7 +227,6 @@ public class ViewFX {
 		return borderPane;
 	}
 
-	// TODO WORK IN PROGRESS
 	/**
 	 * create List of all triangles depending on given mesh
 	 * 
