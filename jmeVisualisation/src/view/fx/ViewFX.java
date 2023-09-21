@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -23,6 +24,7 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Mesh;
@@ -51,6 +53,12 @@ public class ViewFX {
 	// check box for cells
 	private Map<CheckBox, Integer> checkBoxCells;
 
+	// button to deselect all elements
+	private Button buttonDeselectAllElements;
+
+	// check box settings
+	private CheckBox[] checkBoxSettings;
+
 	public ViewFX(Stage stage, Mesh mesh) {
 		rootPane = new BorderPane();
 		canvas = new Canvas();
@@ -64,16 +72,27 @@ public class ViewFX {
 	 */
 	public void setScene(Mesh mesh) {
 
-		// create checkbox and add right to the rootPane
+		VBox rightSideVBox = new VBox();
+		// create checkbox and add to vBox to add right to the rootPane
 		checkBoxCells = createCheckbox(mesh);
 		// only add checkbox view, if it contains content
 		if (checkBoxCells.size() > 0) {
-			addCheckboxes(rootPane);
+			addCheckboxes(rightSideVBox);
 		}
+
+		// add button to deselect all elements of scene graph
+		addButtonDeselectAllElements(rightSideVBox);
+
+		// add checkboxes for settings
+		addSettingCheckboxes(rightSideVBox);
+
+		// add rightSideVBox to rootPane
+		rootPane.setRight(rightSideVBox);
 
 		createTabPane(mesh, 0);
 
-		scene = new Scene(rootPane, 400, 400);
+		// TODO final adaption: adapt width to need of visualisation
+		scene = new Scene(rootPane, 402, 400);
 
 		stage.setScene(scene);
 
@@ -130,13 +149,31 @@ public class ViewFX {
 		return cbs;
 	}
 
+	private void addSettingCheckboxes(VBox rightSideVBox) {
+		// create Label
+		Label headline = new Label("settings:");
+		headline.setUnderline(true);
+		VBox.setMargin(headline, new Insets(50, 0, 5, 0));
+		// add label to view
+		rightSideVBox.getChildren().add(headline);
+
+		// create Array of Checkboxes
+		checkBoxSettings = new CheckBox[] { new CheckBox("show edges with tet"),
+				new CheckBox("show vertices with tet") };
+
+		// add Checkboxes to vBox
+		for (CheckBox checkBox : checkBoxSettings) {
+			rightSideVBox.getChildren().add(checkBox);
+		}
+	}
+
 	/**
 	 * add Checkboxes to given BorderPane
 	 * 
-	 * @param borderPane
+	 * @param rootPane
 	 */
 	@SuppressWarnings("unchecked") // cast to generic type T is not checked
-	private <T> void addCheckboxes(BorderPane borderPane) {
+	private <T> VBox addCheckboxes(VBox rightSideVBox) {
 		// create vBox
 		TreeItem<T> rootItem = new TreeItem<T>((T) new Text("Cells"));
 		// add all elements of checkBoxCells
@@ -152,10 +189,19 @@ public class ViewFX {
 		tree.setMaxWidth(110);
 		tree.setMaxHeight(200);
 
-		// add vBox to borderPane
-		borderPane.setRight(tree);
+		// add Tree to vBox
+		rightSideVBox.getChildren().add(tree);
 		// align checkboxes
-		BorderPane.setMargin(borderPane.getRight(), new Insets(46, 5, 5, 5));
+		BorderPane.setMargin(rightSideVBox, new Insets(46, 5, 5, 5));
+
+		return rightSideVBox;
+	}
+
+	private void addButtonDeselectAllElements(VBox rightSideVBox) {
+		buttonDeselectAllElements = new Button("deselect all elements");
+		rightSideVBox.getChildren().add(buttonDeselectAllElements);
+		// align checkboxes
+		VBox.setMargin(buttonDeselectAllElements, new Insets(5, 0, 5, 0));
 	}
 
 	/**
@@ -483,6 +529,14 @@ public class ViewFX {
 
 	public Map<CheckBox, Integer> getCheckBoxCells() {
 		return checkBoxCells;
+	}
+
+	public Button getButtonDeselectAllElements() {
+		return buttonDeselectAllElements;
+	}
+
+	public CheckBox[] getCheckBoxSettings() {
+		return checkBoxSettings;
 	}
 
 }

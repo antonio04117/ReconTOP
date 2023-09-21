@@ -7,6 +7,8 @@ import app.App.AppFX.AppJME;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import model.Mesh;
 import view.fx.ViewFX;
@@ -15,6 +17,8 @@ import viewmodel.ViewModel;
 public abstract class EventManager {
 
 	public static void coreEvents(ViewFX viewFX, Mesh mesh) {
+
+		// cell function
 		if (viewFX.getCheckBoxCells().size() > 0) {
 			Iterator<Entry<CheckBox, Integer>> it = viewFX.getCheckBoxCells().entrySet().iterator();
 
@@ -145,6 +149,22 @@ public abstract class EventManager {
 						}
 					}
 				});
-	}
 
+		// trigger event for deselection of all objects
+		viewFX.getButtonDeselectAllElements().setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// deselect tets
+				viewFX.getListViewTetrahedron().getSelectionModel().clearAndSelect(1);
+				// deselect tris
+				viewFX.getListViewTriangle().getSelectionModel().clearAndSelect(1);
+				// deselect edges
+				viewFX.getListViewEdge().getSelectionModel().clearAndSelect(1);
+				// deselect vertices
+				viewFX.getListViewVertex().getSelectionModel().clearAndSelect(1);
+			}
+		});
+
+	}
 }
