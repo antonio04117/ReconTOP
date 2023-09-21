@@ -85,7 +85,7 @@ public abstract class JmeConfigurations {
 
 		// origin of the camera
 		app.getCamera().lookAtDirection(new Vector3f(0.60457885f, 0.79543835f, 0.04197961f), Vector3f.UNIT_Z);
-		app.getCamera().setLocation(new Vector3f(-8.776165f, -12.8125305f, 1.8886071f));
+		app.getCamera().setLocation(new Vector3f(-8.776165f, -12.8125305f, 3.1886071f));
 
 		/*
 		 * The distance between screen and camera is 100f by default.
