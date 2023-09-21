@@ -77,4 +77,8 @@ public class TriangleJME {
 		}
 	}
 
+	public Geometry getTriangleGeo() {
+		return triangleGeo;
+	}
+
 }
