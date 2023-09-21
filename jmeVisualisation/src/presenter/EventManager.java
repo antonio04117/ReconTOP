@@ -26,13 +26,15 @@ public abstract class EventManager {
 					@Override
 					public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
 							Boolean newValue) {
+						final int selectedTab = viewFX.getSelectedTab();
+
 						// clear selection -> do not display any element
 						viewFX.getListViewTetrahedron().getSelectionModel().clearSelection();
 						viewFX.getListViewTriangle().getSelectionModel().clearSelection();
 						viewFX.getListViewEdge().getSelectionModel().clearSelection();
 						viewFX.getListViewVertex().getSelectionModel().clearSelection();
 						// create new tabPane
-						viewFX.createTabPane(mesh);
+						viewFX.createTabPane(mesh, selectedTab);
 					}
 
 				});

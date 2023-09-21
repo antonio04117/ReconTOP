@@ -71,7 +71,7 @@ public class ViewFX {
 			addCheckboxes(rootPane);
 		}
 
-		createTabPane(mesh);
+		createTabPane(mesh, 0);
 
 		scene = new Scene(rootPane, 400, 400);
 
@@ -85,7 +85,7 @@ public class ViewFX {
 		stage.show();
 	}
 
-	public void createTabPane(Mesh mesh) {
+	public void createTabPane(Mesh mesh, int selectedTab) {
 		Tab tabTetrahedrons = new Tab("Tetrahedrons", createTetrahedronTab(mesh));
 		Tab tabTriangles = new Tab("Triangles", createTriangleTab(mesh));
 		Tab tabEdges = new Tab("Edges", createEdgeTab(mesh));
@@ -94,8 +94,21 @@ public class ViewFX {
 		TabPane tabPane = new TabPane(tabTetrahedrons, tabTriangles, tabEdges, tabVertices);
 		// tabs can not be closed by the user
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+		tabPane.getSelectionModel().select(selectedTab);
 
 		rootPane.setCenter(tabPane);
+	}
+
+	/**
+	 * get selection model of tabPane
+	 * 
+	 * @return
+	 */
+	public int getSelectedTab() {
+
+		TabPane tabPane = (TabPane) rootPane.getCenter();
+		return tabPane.getSelectionModel().getSelectedIndex();
+
 	}
 
 	/**
