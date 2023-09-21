@@ -12,10 +12,14 @@ import com.jme3.util.BufferUtils;
 
 public class TetrahedronJME {
 
+	private Node parentNode;
+
 	private Geometry tetrahedronGeo;
 
 	public TetrahedronJME(AssetManager assetManager, Node parentNode, float x0, float y0, float z0, float x1, float y1,
 			float z1, float x2, float y2, float z2, float x3, float y3, float z3, ColorRGBA color) {
+
+		this.parentNode = parentNode;
 
 		// triangle in jme
 		Mesh tetrahedronMesh = new Mesh();
@@ -39,11 +43,11 @@ public class TetrahedronJME {
 
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat.setColor("Color", color);
-		// initialize invisible
-		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+		// initialize fully visible
+		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
 		tetrahedronGeo.setMaterial(mat);
 
-		parentNode.attachChild(tetrahedronGeo);
+//		parentNode.attachChild(tetrahedronGeo);
 	}
 
 	public void move(float y0, float y1, float y2) {
@@ -53,11 +57,10 @@ public class TetrahedronJME {
 	public void setVisibility(boolean visible) {
 		if (visible) {
 			// visible
-			tetrahedronGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+			parentNode.attachChild(tetrahedronGeo);
 		} else {
 			// not visible
-			tetrahedronGeo.getMaterial().getAdditionalRenderState()
-					.setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+			parentNode.detachChild(tetrahedronGeo);
 
 		}
 	}

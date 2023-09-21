@@ -1,6 +1,5 @@
 package presenter;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -8,7 +7,6 @@ import app.App.AppFX.AppJME;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;

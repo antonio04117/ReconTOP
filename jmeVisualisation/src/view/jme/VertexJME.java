@@ -10,6 +10,8 @@ import com.jme3.scene.shape.Sphere;
 
 public class VertexJME {
 
+	private Node parentNode;
+
 	private float radius = 0.1f;
 
 	private Geometry pointGeo;
@@ -26,7 +28,9 @@ public class VertexJME {
 	 */
 	public VertexJME(AssetManager assetManager, Node parentNode, float x, float y, float z, ColorRGBA color) {
 
-		// line in jme
+		this.parentNode = parentNode;
+
+		// point in jme
 		Sphere pointMesh = new Sphere(30, 30, radius);
 
 		pointGeo = new Geometry("Point", pointMesh);
@@ -34,12 +38,12 @@ public class VertexJME {
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat.setColor("Color", color);
 		// initialize invisible
-		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
 		pointGeo.setMaterial(mat);
 		// set location
 		move(x, y, z);
 
-		parentNode.attachChild(pointGeo);
+//		parentNode.attachChild(pointGeo);
 	}
 
 	public void move(float y1, float y2, float y3) {
@@ -53,10 +57,10 @@ public class VertexJME {
 	public void setVisibility(boolean visible) {
 		if (visible) {
 			// visible
-			pointGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+			parentNode.attachChild(pointGeo);
 		} else {
 			// not visible
-			pointGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+			parentNode.detachChild(pointGeo);
 
 		}
 	}

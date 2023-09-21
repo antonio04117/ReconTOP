@@ -12,6 +12,7 @@ import com.jme3.util.BufferUtils;
 
 public class TriangleJME {
 
+	private Node parentNode;
 
 	private Geometry triangleGeo;
 
@@ -35,6 +36,8 @@ public class TriangleJME {
 	public TriangleJME(AssetManager assetManager, Node parentNode, float x0, float y0, float z0, float x1, float y1,
 			float z1, float x2, float y2, float z2, ColorRGBA color) {
 
+		this.parentNode = parentNode;
+
 		// triangle in jme
 		Mesh triangleMesh = new Mesh();
 
@@ -54,10 +57,10 @@ public class TriangleJME {
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat.setColor("Color", color);
 		// initialize invisible
-		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
 		triangleGeo.setMaterial(mat);
 
-		parentNode.attachChild(triangleGeo);
+//		parentNode.attachChild(triangleGeo);
 	}
 
 	public void move(float y0, float y1, float y2) {
@@ -67,11 +70,10 @@ public class TriangleJME {
 	public void setVisibility(boolean visible) {
 		if (visible) {
 			// visible
-			triangleGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+			parentNode.attachChild(triangleGeo);
 		} else {
 			// not visible
-			triangleGeo.getMaterial().getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
-
+			parentNode.detachChild(triangleGeo);
 		}
 	}
 
