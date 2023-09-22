@@ -20,7 +20,7 @@ public class TestApp extends SimpleApplication {
 	@Override
 	public void simpleInitApp() {
 
-		Sphere sphereMesh = new Sphere(32, 32, 2f);
+		Sphere sphereMesh = new Sphere(3, 3, 2f);
 		Geometry sphereGeo = new Geometry("sphere", sphereMesh);
 
 		Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
@@ -34,12 +34,17 @@ public class TestApp extends SimpleApplication {
 
 		rootNode.attachChild(sphereGeo);
 
-		/** Must add a light to make the lit object visible! */
+		// directional light e.g. the sun
 		DirectionalLight sun = new DirectionalLight();
-		sun.setDirection(new Vector3f(1, 0, -2).normalizeLocal());
+		// white -> neutral lighting
 		sun.setColor(ColorRGBA.White);
+		sun.setDirection(new Vector3f(-0.5f, -0.5f, -1.0f).normalizeLocal());
 		rootNode.addLight(sun);
 
+		// brighten the whole scene
+		AmbientLight al = new AmbientLight();
+		al.setColor(ColorRGBA.White.mult(1.3f));
+		rootNode.addLight(al);
 
 
 	}

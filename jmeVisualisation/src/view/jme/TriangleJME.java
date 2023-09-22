@@ -77,7 +77,7 @@ public class TriangleJME {
 		mat.setColor("Diffuse", color);
 		mat.setColor("Specular", ColorRGBA.Green);
 		mat.setBoolean("UseMaterialColors", true);
-		mat.setFloat("Shininess", 120);
+		mat.setFloat("Shininess", 5);
 
 //		mat.setColor("Color", color);
 		// initialize invisible
@@ -94,19 +94,20 @@ public class TriangleJME {
 		float[] vertices = { x0, y0, z0, // Punkt A
 				x1, y1, z1, // Punkt B
 				x2, y2, z2, // Punkt C
-				(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2, // Punkt D
-				(x0 + x2) / 2, (y0 + y2) / 2, (z0 + z2) / 2, // Punkt E
-				(x1 + x2) / 2, (y1 + y2) / 2, (z1 + z2) / 2 // Punkt F
+//				(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2, // Punkt D
+//				(x0 + x2) / 2, (y0 + y2) / 2, (z0 + z2) / 2, // Punkt E
+//				(x1 + x2) / 2, (y1 + y2) / 2, (z1 + z2) / 2 // Punkt F
 		};
 
-		int[] indexes = { 0, 3, 4, // Erstes Dreieck (ABC)
-				1, 3, 5, // Zweites Dreieck (DEF)
-				2, 4, 5, // Drittes Dreieck (BDE)
-				3, 4, 5 // Viertes Dreieck (CEF)
+		int[] indexes = { 0, 1, 2
+//				0, 3, 4, // Erstes Dreieck (ABC)
+//				1, 3, 5, // Zweites Dreieck (DEF)
+//				2, 4, 5, // Drittes Dreieck (BDE)
+//				3, 4, 5 // Viertes Dreieck (CEF)
 		};
 
 		triangleMesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
-		triangleMesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(indexes));
+		triangleMesh.setBuffer(Type.Index, 1, BufferUtils.createIntBuffer(indexes));
 
 	}
 

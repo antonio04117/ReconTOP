@@ -43,8 +43,12 @@ public class EdgeJME {
 
 		lineGeo = new Geometry("Line", lineMesh);
 
-		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-		mat.setColor("Color", color);
+		Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+		mat.setColor("Ambient", color);
+		mat.setColor("Diffuse", color);
+		mat.setColor("Specular", ColorRGBA.Green);
+		mat.setBoolean("UseMaterialColors", true);
+		mat.setFloat("Shininess", 5);
 		// set line width
 		mat.getAdditionalRenderState().setLineWidth(5f);
 		// initialize invisible
