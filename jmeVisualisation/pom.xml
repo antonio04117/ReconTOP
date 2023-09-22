@@ -23,5 +23,10 @@
 			<artifactId>jme3-lwjgl</artifactId>
 			<version>3.5.2-stable</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-testdata</artifactId>
+			<version>3.5.2-stable</version>
+		</dependency>
 	</dependencies>
 </project>

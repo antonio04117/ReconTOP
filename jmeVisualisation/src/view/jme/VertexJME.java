@@ -35,9 +35,13 @@ public class VertexJME {
 
 		pointGeo = new Geometry("Point", pointMesh);
 
-		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-		mat.setColor("Color", color);
-		// initialize invisible
+		Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+		mat.setColor("Ambient", ColorRGBA.Blue);
+		mat.setColor("Diffuse", ColorRGBA.Blue);
+		mat.setColor("Specular", ColorRGBA.Green);
+		mat.setBoolean("UseMaterialColors", true);
+		mat.setFloat("Shininess", 5);
+		// initialize visible from both sides
 		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
 		pointGeo.setMaterial(mat);
 		// set location

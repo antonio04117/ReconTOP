@@ -1,6 +1,10 @@
 package app;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.light.AmbientLight;
+import com.jme3.light.DirectionalLight;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -88,6 +92,18 @@ public class App {
 
 			@Override
 			public void simpleInitApp() {
+
+				// directional light e.g. the sun
+				DirectionalLight sun = new DirectionalLight();
+				// white -> neutral lighting
+				sun.setColor(ColorRGBA.White);
+				sun.setDirection(new Vector3f(-0.5f, -0.5f, -1.0f).normalizeLocal());
+				rootNode.addLight(sun);
+
+				// brighten the whole scene
+				AmbientLight al = new AmbientLight();
+				al.setColor(ColorRGBA.White.mult(1.3f));
+				rootNode.addLight(al);
 
 				// set Scene -> choose initial view
 				Presenter.setScene(this, mesh, InitialView.NOELEMENTS);
