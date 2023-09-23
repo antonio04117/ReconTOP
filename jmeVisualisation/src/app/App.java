@@ -97,7 +97,8 @@ public class App {
 				DirectionalLight sun = new DirectionalLight();
 				// white -> neutral lighting
 				sun.setColor(ColorRGBA.White);
-				sun.setDirection(new Vector3f(-0.5f, -0.5f, -1.0f).normalizeLocal());
+				sun.setDirection(new Vector3f(-0.5f, 0, 1).normalizeLocal());
+
 				rootNode.addLight(sun);
 
 				// brighten the whole scene

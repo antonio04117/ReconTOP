@@ -50,11 +50,9 @@ public class TriangleJME {
 
 		triangleMesh.updateBound();
 
-		// calculate normal manually
 		Vector3f normal = new Vector3f();
-		Vector3f edge1 = new Vector3f(x1 - x0, y1 - y0, z1 - z0);
-		Vector3f edge2 = new Vector3f(x2 - x0, y2 - y0, z2 - z0);
-		normal.cross(edge1, edge2).normalizeLocal();
+		Triangle.computeTriangleNormal(new Vector3f(x0, y0, z0), new Vector3f(x1, y1, z1), new Vector3f(x2, y2, z2),
+				normal);
 
 		float[] normals = { normal.x, normal.y, normal.z, normal.x, normal.y, normal.z, normal.x, normal.y, normal.z };
 
