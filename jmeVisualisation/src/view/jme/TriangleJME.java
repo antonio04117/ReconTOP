@@ -24,7 +24,7 @@ public class TriangleJME {
 
 	/**
 	 * creates a triangle in jme between point 1, 2 and 3 and visible from both
-	 * sides
+	 * sides after it has been set visible outside of this method
 	 * 
 	 * @param assetManager
 	 * @param parentNode
@@ -59,15 +59,15 @@ public class TriangleJME {
 
 		triangleMesh.setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
 
-		// Texturkoordinaten generieren
-		Vector2f[] texCoord = { new Vector2f(0, 0), // Texturkoordinate für Punkt A
-				new Vector2f(1, 0), // Texturkoordinate für Punkt B
-				new Vector2f(0, 1) // Texturkoordinate für Punkt C
+//generate texture coordinates
+		Vector2f[] texCoord = { new Vector2f(0, 0), // texcoord for point A
+				new Vector2f(1, 0), // texcoord for point B
+				new Vector2f(0, 1) // texcoord for point C
 		};
 
 		triangleMesh.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
 
-		TangentBinormalGenerator.generate(triangleMesh);
+//		TangentBinormalGenerator.generate(triangleMesh);
 
 		triangleGeo = new Geometry("Triangle", triangleMesh);
 
@@ -76,16 +76,12 @@ public class TriangleJME {
 		mat.setColor("Diffuse", color);
 		mat.setColor("Specular", ColorRGBA.Green);
 		mat.setBoolean("UseMaterialColors", true);
-		mat.setBoolean("BackfaceShadows", true);
+//		mat.setBoolean("BackfaceShadows", true);
 		mat.setFloat("Shininess", 10);
 
-//		mat.setColor("Color", color);
 		// initialize invisible
 		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
 		triangleGeo.setMaterial(mat);
-
-//		parentNode.attachChild(triangleGeo);
-
 	}
 
 	private void setBuffer(Mesh triangleMesh, float x0, float y0, float z0, float x1, float y1, float z1, float x2,

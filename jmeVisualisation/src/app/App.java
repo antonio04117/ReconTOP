@@ -114,17 +114,18 @@ public class App {
 				rootNode.addLight(sun);
 				rootNode.addLight(reflection);
 
-//				com.jme3.renderer.queue.RenderQueue.ShadowMode shadowMode = rootNode.getShadowMode();
-//				
-//				shadowMode = com.jme3.renderer.queue.RenderQueue.ShadowMode.Off;
-
 				renderManager.setPreferredLightMode(LightMode.SinglePass);
 				renderManager.setSinglePassLightBatchSize(2);
 
-				// brighten the whole scene
-//				AmbientLight al = new AmbientLight();
-//				al.setColor(ColorRGBA.White.mult(0.1f));
-//				rootNode.addLight(al);
+				// brighten the whole scene -> important for the surfaces colinear to the
+				// directional lights
+				AmbientLight al = new AmbientLight();
+				al.setColor(ColorRGBA.White.mult(0.05f));
+				rootNode.addLight(al);
+
+//				com.jme3.renderer.queue.RenderQueue.ShadowMode shadowMode = rootNode.getShadowMode();
+//				
+//				shadowMode = com.jme3.renderer.queue.RenderQueue.ShadowMode.Off;
 
 				/* Drop shadows */
 //				final int SHADOWMAP_SIZE = 1024;
