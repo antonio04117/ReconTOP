@@ -3,8 +3,15 @@ package app;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
+import com.jme3.material.RenderState;
+import com.jme3.material.TechniqueDef.LightMode;
+import com.jme3.material.TechniqueDef.ShadowMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
+import com.jme3.renderer.queue.RenderQueue;
+import com.jme3.shadow.DirectionalLightShadowFilter;
+import com.jme3.shadow.DirectionalLightShadowRenderer;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -97,14 +104,41 @@ public class App {
 				DirectionalLight sun = new DirectionalLight();
 				// white -> neutral lighting
 				sun.setColor(ColorRGBA.White);
-				sun.setDirection(new Vector3f(-0.5f, 0, 1).normalizeLocal());
+				sun.setDirection(new Vector3f(-0.5f, -0.5f, -0.5f).normalizeLocal());
+
+				// countering directional light e.g. reflection of the surface
+				DirectionalLight reflection = new DirectionalLight();
+				reflection.setColor(ColorRGBA.White.mult(0.3f));
+				reflection.setDirection(new Vector3f(0.5f, 0.5f, 0.5f).normalizeLocal());
 
 				rootNode.addLight(sun);
+				rootNode.addLight(reflection);
+
+//				com.jme3.renderer.queue.RenderQueue.ShadowMode shadowMode = rootNode.getShadowMode();
+//				
+//				shadowMode = com.jme3.renderer.queue.RenderQueue.ShadowMode.Off;
+
+				renderManager.setPreferredLightMode(LightMode.SinglePass);
+				renderManager.setSinglePassLightBatchSize(2);
 
 				// brighten the whole scene
-				AmbientLight al = new AmbientLight();
-				al.setColor(ColorRGBA.White.mult(1.3f));
-				rootNode.addLight(al);
+//				AmbientLight al = new AmbientLight();
+//				al.setColor(ColorRGBA.White.mult(0.1f));
+//				rootNode.addLight(al);
+
+				/* Drop shadows */
+//				final int SHADOWMAP_SIZE = 1024;
+//				DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(assetManager, SHADOWMAP_SIZE,
+//						3);
+//				dlsr.setLight(sun);
+//				viewPort.addProcessor(dlsr);
+//
+//				DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(assetManager, SHADOWMAP_SIZE, 3);
+//				dlsf.setLight(sun);
+//				dlsf.setEnabled(true);
+//				FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
+//				fpp.addFilter(dlsf);
+//				viewPort.addProcessor(fpp);
 
 				// set Scene -> choose initial view
 				Presenter.setScene(this, mesh, InitialView.NOELEMENTS);

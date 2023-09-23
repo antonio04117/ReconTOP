@@ -3,13 +3,14 @@ package view.jme;
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
+import com.jme3.material.Technique;
+import com.jme3.material.TechniqueDef;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Triangle;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
-import com.jme3.scene.Mesh.Mode;
 import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.util.BufferUtils;
@@ -66,7 +67,7 @@ public class TriangleJME {
 
 		triangleMesh.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
 
-//		TangentBinormalGenerator.generate(triangleMesh);
+		TangentBinormalGenerator.generate(triangleMesh);
 
 		triangleGeo = new Geometry("Triangle", triangleMesh);
 
@@ -75,7 +76,8 @@ public class TriangleJME {
 		mat.setColor("Diffuse", color);
 		mat.setColor("Specular", ColorRGBA.Green);
 		mat.setBoolean("UseMaterialColors", true);
-		mat.setFloat("Shininess", 5);
+		mat.setBoolean("BackfaceShadows", true);
+		mat.setFloat("Shininess", 10);
 
 //		mat.setColor("Color", color);
 		// initialize invisible
