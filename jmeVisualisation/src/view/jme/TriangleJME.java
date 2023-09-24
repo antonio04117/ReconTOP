@@ -3,8 +3,6 @@ package view.jme;
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Quaternion;
-import com.jme3.math.Transform;
 import com.jme3.math.Triangle;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
@@ -53,8 +51,8 @@ public class TriangleJME {
 		Material mat = JmeConfigurations.createLightingMaterial(assetManager, color);
 
 		triangleGeo.setMaterial(mat);
-		
-		//sorts the objects so the furthest object gets rendered first
+
+		// sorts the objects so the furthest object gets rendered first
 		triangleGeo.setQueueBucket(Bucket.Transparent);
 	}
 

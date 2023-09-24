@@ -9,7 +9,6 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
-import com.jme3.material.RenderState.BlendEquation;
 import com.jme3.material.RenderState.BlendMode;
 import com.jme3.material.TechniqueDef.LightMode;
 import com.jme3.math.ColorRGBA;
@@ -213,7 +212,6 @@ public abstract class JmeConfigurations {
 
 		// initialize visible
 		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
-
 
 		return mat;
 	}
