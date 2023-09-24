@@ -98,10 +98,6 @@ public class TriangleJME {
 		triangleMesh.setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
 	}
 
-	public void move(float y0, float y1, float y2) {
-		this.triangleGeo.move(y0, y1, y2);
-	}
-
 	public void setVisibility(boolean visible) {
 		if (visible) {
 			// visible
@@ -110,6 +106,10 @@ public class TriangleJME {
 			// not visible
 			parentNode.detachChild(triangleGeo);
 		}
+	}
+
+	public void move(float y0, float y1, float y2) {
+		this.triangleGeo.move(y0, y1, y2);
 	}
 
 	public Geometry getTriangleGeo() {

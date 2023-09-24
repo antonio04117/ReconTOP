@@ -43,25 +43,22 @@ public class EdgeJME {
 
 		lineGeo = new Geometry("Line", lineMesh);
 
+		// define material -> Lighting material renders according to light sources
 		Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+		// settings for material
 		mat.setColor("Ambient", color);
 		mat.setColor("Diffuse", color);
 		mat.setColor("Specular", ColorRGBA.Green);
 		mat.setBoolean("UseMaterialColors", true);
 		mat.setFloat("Shininess", 5);
+
 		// set line width
 		mat.getAdditionalRenderState().setLineWidth(5f);
-		// initialize invisible
-		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.FrontAndBack);
+		// initialize visible
+		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
 		lineGeo.setMaterial(mat);
 
 		this.parentNode = parentNode;
-		// do not attach node now, because edge is ought to be created transparently
-//		parentNode.attachChild(lineGeo);
-	}
-
-	public void move(float y1, float y2, float y3) {
-		this.lineGeo.move(y1, y2, y3);
 	}
 
 	public void setVisibility(boolean visible) {
@@ -72,6 +69,10 @@ public class EdgeJME {
 			// not visible
 			parentNode.detachChild(lineGeo);
 		}
+	}
+
+	public void move(float y1, float y2, float y3) {
+		this.lineGeo.move(y1, y2, y3);
 	}
 
 }

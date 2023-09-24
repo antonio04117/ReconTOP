@@ -32,10 +32,11 @@ public class VertexJME {
 
 		// point in jme
 		Sphere pointMesh = new Sphere(30, 30, radius);
-
 		pointGeo = new Geometry("Point", pointMesh);
 
+		// define material -> Lighting material renders according to light sources
 		Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+		// settings for material
 		mat.setColor("Ambient", ColorRGBA.Blue);
 		mat.setColor("Diffuse", ColorRGBA.Blue);
 		mat.setColor("Specular", ColorRGBA.Green);
@@ -47,15 +48,6 @@ public class VertexJME {
 		// set location
 		move(x, y, z);
 
-//		parentNode.attachChild(pointGeo);
-	}
-
-	public void move(float y1, float y2, float y3) {
-		this.pointGeo.move(y1, y2, y3);
-	}
-
-	public Geometry getPointGeo() {
-		return pointGeo;
 	}
 
 	public void setVisibility(boolean visible) {
@@ -67,6 +59,14 @@ public class VertexJME {
 			parentNode.detachChild(pointGeo);
 
 		}
+	}
+
+	public void move(float y1, float y2, float y3) {
+		this.pointGeo.move(y1, y2, y3);
+	}
+
+	public Geometry getPointGeo() {
+		return pointGeo;
 	}
 
 }
