@@ -2,10 +2,12 @@ package view.jme;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
-import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Transform;
 import com.jme3.math.Triangle;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
@@ -48,17 +50,12 @@ public class TriangleJME {
 		triangleGeo = new Geometry("Triangle", triangleMesh);
 
 		// define material -> Lighting material renders according to light sources
-		Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-		// settings for material
-		mat.setColor("Ambient", color);
-		mat.setColor("Diffuse", color);
-		mat.setColor("Specular", ColorRGBA.Green);
-		mat.setBoolean("UseMaterialColors", true);
-		mat.setFloat("Shininess", 10);
+		Material mat = JmeConfigurations.createLightingMaterial(assetManager, color);
 
-		// initialize visible
-		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
 		triangleGeo.setMaterial(mat);
+		
+		//sorts the objects so the furthest object gets rendered first
+		triangleGeo.setQueueBucket(Bucket.Transparent);
 	}
 
 	/**
@@ -96,6 +93,12 @@ public class TriangleJME {
 		float[] normals = { normal.x, normal.y, normal.z, normal.x, normal.y, normal.z, normal.x, normal.y, normal.z };
 
 		triangleMesh.setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
+
+		// prevent mesh to disappear while still in the view frustum
+//		triangleMesh.updateBound();
+		triangleMesh.getBound().computeFromPoints(triangleMesh.getFloatBuffer(Type.Position));
+//		triangleMesh.getBound().transform(
+//				new Transform(new Vector3f(1f, 1f, 1f), new Quaternion(1f, 1f, 1f, 1f), new Vector3f(5f, 5f, 5f)));
 	}
 
 	public void setVisibility(boolean visible) {

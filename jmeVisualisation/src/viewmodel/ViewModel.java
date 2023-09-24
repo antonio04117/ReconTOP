@@ -57,7 +57,6 @@ public abstract class ViewModel {
 
 		// set of all tetrahedrons
 		ViewModel.tetrahedrons.add(tetra);
-
 	}
 
 	/**
@@ -147,16 +146,6 @@ public abstract class ViewModel {
 				vertexJME.setVisibility(true);
 			}
 		}
-	}
-
-	/**
-	 * adapt camera according to the chosen example
-	 *
-	 * @param appJME
-	 * @param exampleA
-	 */
-	public static void adaptView(AppJME appJME, boolean exampleA) {
-		JmeConfigurations.adaptView(appJME, exampleA);
 	}
 
 	/**

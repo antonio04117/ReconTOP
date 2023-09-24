@@ -23,10 +23,11 @@
 			<artifactId>jme3-lwjgl</artifactId>
 			<version>3.5.2-stable</version>
 		</dependency>
+		<!-- can be used for test objects of jme library 
 		<dependency>
 			<groupId>org.jmonkeyengine</groupId>
 			<artifactId>jme3-testdata</artifactId>
 			<version>3.5.2-stable</version>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 </project>

@@ -66,8 +66,8 @@ public abstract class Presenter {
 	 */
 	private static void drawElements(AppJME app, Mesh mesh) {
 
-		// color for tetrahedron
-		ColorRGBA color = ColorRGBA.Red;
+		// color for tetrahedron -> red with alpha (transparency)
+		ColorRGBA color = ColorRGBA.fromRGBA255(255, 0, 0, 150);
 
 		for (int i = 0; i < mesh.getMapTet().size(); i++) {
 			// draw tetrahedron
@@ -75,8 +75,8 @@ public abstract class Presenter {
 
 		}
 
-		// color for triangle
-		color = ColorRGBA.Blue;
+		// color for triangle -> blue with alpha (transparency)
+		color = ColorRGBA.fromRGBA255(0, 0, 255, 150);
 
 		for (int i = 0; i < mesh.getMapTri().size(); i++) {
 			for (Triangle3D triangle : mesh.getMapTri().get(i)) {
@@ -86,8 +86,8 @@ public abstract class Presenter {
 			}
 		}
 
-		// color for edge
-		color = ColorRGBA.DarkGray;
+		// color for edge -> darkGrey with alpha (transparency)
+		color = ColorRGBA.fromRGBA255(51, 51, 51, 150);
 
 		for (int i = 0; i < mesh.getMapEdg().size(); i++) {
 			for (Edge3D edge : mesh.getMapEdg().get(i)) {
@@ -97,8 +97,8 @@ public abstract class Presenter {
 			}
 		}
 
-		// color for vertex
-		color = ColorRGBA.Green;
+		// color for vertex -> green with alpha (transparency)
+		color = ColorRGBA.fromRGBA255(0, 255, 0, 150);
 
 		for (int i = 0; i < mesh.getMapVer().size(); i++) {
 			for (Vertex3D vertex : mesh.getMapVer().get(i)) {

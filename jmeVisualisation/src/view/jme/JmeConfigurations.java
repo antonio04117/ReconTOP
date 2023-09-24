@@ -1,10 +1,17 @@
 package view.jme;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.input.CameraInput;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.light.AmbientLight;
+import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
+import com.jme3.material.RenderState.BlendEquation;
+import com.jme3.material.RenderState.BlendMode;
+import com.jme3.material.TechniqueDef.LightMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -17,11 +24,6 @@ import app.App.AppFX.AppJME;
  * configurations of general jme view
  */
 public abstract class JmeConfigurations {
-
-	private static Vector3f locationA = new Vector3f(-8.776165f, -12.8125305f, 1.8886071f);
-	private static Vector3f directionA = new Vector3f(0.60457885f, 0.79543835f, 0.04197961f);
-	private static Vector3f locationB = new Vector3f(-6.672361f, -11.4183445f, 3.046562f);
-	private static Vector3f directionB = new Vector3f(0.6053308f, 0.794814f, 0.04295534f);
 
 	/**
 	 * set initial settings of jme project
@@ -58,6 +60,44 @@ public abstract class JmeConfigurations {
 
 		// set background white
 		app.getViewPort().setBackgroundColor(ColorRGBA.White);
+
+		// set light sources
+		setLights(app);
+	}
+
+	/**
+	 * set lights in jme
+	 * 
+	 * @param app
+	 */
+	private static void setLights(AppJME app) {
+		// directional light e.g. the sun
+		DirectionalLight sun = new DirectionalLight();
+		// white -> neutral lighting
+		sun.setColor(ColorRGBA.White);
+		sun.setDirection(new Vector3f(-0.5f, -0.5f, -0.5f).normalizeLocal());
+
+		// countering directional light e.g. reflection of the surface
+		DirectionalLight reflection = new DirectionalLight();
+		reflection.setColor(ColorRGBA.White.mult(0.3f));
+		reflection.setDirection(new Vector3f(0.5f, 0.5f, 0.5f).normalizeLocal());
+
+		// add lights to rootNode
+		app.getRootNode().addLight(sun);
+		app.getRootNode().addLight(reflection);
+
+		// set SinglePass as LightMode (only works, if shader of the material includes
+		// SinglePass as option)
+		app.getRenderManager().setPreferredLightMode(LightMode.SinglePass);
+		// set the number of lights to use for each pass -> 2 lights (sun and
+		// reflection)
+		app.getRenderManager().setSinglePassLightBatchSize(2);
+
+		// brighten the whole scene -> important for the surfaces colinear to the
+		// directional lights
+		AmbientLight al = new AmbientLight();
+		al.setColor(ColorRGBA.White.mult(0.05f));
+		app.getRootNode().addLight(al);
 	}
 
 	/**
@@ -121,45 +161,6 @@ public abstract class JmeConfigurations {
 	}
 
 	/**
-	 * adapts camera according to the chosen example and re-draws coordinate system
-	 *
-	 * @param appJME
-	 * @param exampleA
-	 */
-	public static void adaptView(AppJME appJME, boolean exampleA) {
-		// origin of the camera
-
-		Vector3f previousDirection = appJME.getCamera().getDirection();
-
-		// save previous location of view
-		Vector3f previousLocation = appJME.getCamera().getLocation();
-
-		if (exampleA) {
-			// save previous location of other example to reload it later (no conflict,
-			// because this method is only called on a switch, not when the same example is
-			// chosen)
-			JmeConfigurations.locationB = previousLocation.clone();
-			JmeConfigurations.directionB = previousDirection.clone();
-			// load previous location of this example
-			appJME.getCamera().lookAtDirection(directionA, Vector3f.UNIT_Z);
-			appJME.getCamera().setLocation(JmeConfigurations.locationA);
-		} else {
-			// save previous location of other example to reload it later (no conflict,
-			// because this method is only called on a switch, not when the same example is
-			// chosen)
-			JmeConfigurations.locationA = previousLocation.clone();
-			JmeConfigurations.directionA = previousDirection.clone();
-			// load previous location of this example
-			appJME.getCamera().lookAtDirection(directionB, Vector3f.UNIT_Z);
-			appJME.getCamera().setLocation(JmeConfigurations.locationB);
-		}
-
-		// re-draw coordinate system
-		createCoordSys(appJME);
-
-	}
-
-	/**
 	 * Creates the coordinate system and assigns them to a node
 	 *
 	 * @param n : the node
@@ -187,6 +188,34 @@ public abstract class JmeConfigurations {
 		g.setMaterial(mat);
 
 		app.getRootNode().attachChild(g);
+	}
+
+	/**
+	 * create material that renders according to light sources
+	 * 
+	 * @param assetManager
+	 * @param color
+	 * @return
+	 */
+	public static Material createLightingMaterial(AssetManager assetManager, ColorRGBA color) {
+		// define material -> Lighting material renders according to light sources
+		Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+		// settings for material
+		mat.setColor("Ambient", color);
+		mat.setColor("Diffuse", color);
+		// specular color: green with alpha (transparency)
+		mat.setColor("Specular", ColorRGBA.fromRGBA255(0, 255, 0, 150));
+		mat.setBoolean("UseMaterialColors", true);
+		mat.setFloat("Shininess", 10);
+
+		// activate transparency
+		mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+
+		// initialize visible
+		mat.getAdditionalRenderState().setFaceCullMode(RenderState.FaceCullMode.Off);
+
+
+		return mat;
 	}
 
 }

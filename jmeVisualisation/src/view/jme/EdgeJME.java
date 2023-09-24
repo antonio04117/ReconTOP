@@ -3,6 +3,7 @@ package view.jme;
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
+import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -39,7 +40,10 @@ public class EdgeJME {
 		endPoint = new Vector3f(xE, yE, zE);
 
 		// line in jme
-		Line lineMesh = new com.jme3.scene.shape.Line(startPoint, endPoint);
+		Line lineMesh = new Line(startPoint, endPoint);
+
+		// prevent mesh to disappear while still in the view frustum
+		lineMesh.updateBound();
 
 		lineGeo = new Geometry("Line", lineMesh);
 
@@ -48,9 +52,12 @@ public class EdgeJME {
 		// settings for material
 		mat.setColor("Ambient", color);
 		mat.setColor("Diffuse", color);
-		mat.setColor("Specular", ColorRGBA.Green);
+		mat.setColor("Specular", ColorRGBA.fromRGBA255(0, 255, 0, 150));
 		mat.setBoolean("UseMaterialColors", true);
 		mat.setFloat("Shininess", 5);
+
+		// activate transparency
+		mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 
 		// set line width
 		mat.getAdditionalRenderState().setLineWidth(5f);
