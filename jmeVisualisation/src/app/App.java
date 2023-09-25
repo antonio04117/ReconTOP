@@ -67,9 +67,6 @@ public class App {
 
 		private static final Mesh mesh = App.createMeshExample();
 
-		public AppFX() {
-		}
-
 		@Override
 		public void start(Stage primaryStage) throws Exception {
 			ViewFX viewFX = new ViewFX(primaryStage, mesh);

@@ -81,12 +81,10 @@ public abstract class EventManager {
 								final int startingValue = 6 * index + 2;
 								if (viewFX.getListViewTetrahedron().getSelectionModel().getSelectedIndices()
 										.contains(i)) {
-									System.out.println("Tetrahedron " + index + " selected\n");
 									viewFX.getListViewEdge().getSelectionModel().selectIndices(startingValue,
 											startingValue + 1, startingValue + 2, startingValue + 3, startingValue + 4,
 											startingValue + 5);
 								} else {
-									System.out.println("Tetrahedron " + index + " not selected\n");
 									viewFX.getListViewEdge().getSelectionModel().clearSelection(startingValue);
 									viewFX.getListViewEdge().getSelectionModel().clearSelection(startingValue + 1);
 									viewFX.getListViewEdge().getSelectionModel().clearSelection(startingValue + 2);
@@ -105,11 +103,9 @@ public abstract class EventManager {
 								final int startingValue = 4 * index + 2;
 								if (viewFX.getListViewTetrahedron().getSelectionModel().getSelectedIndices()
 										.contains(i)) {
-									System.out.println("Tetrahedron " + index + " selected\n");
 									viewFX.getListViewVertex().getSelectionModel().selectIndices(startingValue,
 											startingValue + 1, startingValue + 2, startingValue + 3);
 								} else {
-									System.out.println("Tetrahedron " + index + " not selected\n");
 									viewFX.getListViewVertex().getSelectionModel().clearSelection(startingValue);
 									viewFX.getListViewVertex().getSelectionModel().clearSelection(startingValue + 1);
 									viewFX.getListViewVertex().getSelectionModel().clearSelection(startingValue + 2);
@@ -135,7 +131,6 @@ public abstract class EventManager {
 						}
 						// if "select all" is selected, every triangle is selected
 						if (viewFX.getListViewTriangle().getSelectionModel().getSelectedIndices().contains(0)) {
-							System.out.println("Every Triangle selected\n");
 							for (int j = 2; j < viewFX.getListViewTriangle().getItems().size(); j++) {
 								viewFX.getListViewTriangle().getSelectionModel().select(j);
 							}
