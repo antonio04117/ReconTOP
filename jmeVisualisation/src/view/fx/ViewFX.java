@@ -201,7 +201,12 @@ public class ViewFX {
 		buttonDeselectAllElements = new Button("deselect all elements");
 		rightSideVBox.getChildren().add(buttonDeselectAllElements);
 		// align checkboxes
-		VBox.setMargin(buttonDeselectAllElements, new Insets(5, 0, 5, 0));
+		if (checkBoxCells.size() > 0) {
+			VBox.setMargin(buttonDeselectAllElements, new Insets(5, 0, 5, 0));
+		} else {
+			BorderPane.setMargin(rightSideVBox, new Insets(46, 5, 5, 5));
+			VBox.setMargin(buttonDeselectAllElements, new Insets(205, 0, 5, 0));
+		}
 	}
 
 	/**
