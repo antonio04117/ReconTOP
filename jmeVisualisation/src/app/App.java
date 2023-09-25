@@ -1,6 +1,7 @@
 package app;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.math.ColorRGBA;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -89,8 +90,17 @@ public class App {
 			@Override
 			public void simpleInitApp() {
 
+				// color for tetrahedron -> red with alpha (transparency)
+				ColorRGBA colorTet = ColorRGBA.fromRGBA255(255, 0, 0, 150);
+				// color for triangle -> blue with alpha (transparency)
+				ColorRGBA colorTri = ColorRGBA.fromRGBA255(0, 0, 255, 150);
+				// color for edge -> darkGrey with alpha (transparency)
+				ColorRGBA colorEdg = ColorRGBA.fromRGBA255(51, 51, 51, 150);
+				// color for vertex -> green with alpha (transparency)
+				ColorRGBA colorVer = ColorRGBA.fromRGBA255(0, 255, 0, 150);
+
 				// set Scene -> choose initial view
-				Presenter.setScene(this, mesh, InitialView.NOELEMENTS);
+				Presenter.setScene(this, mesh, colorTet, colorTri, colorEdg, colorVer, InitialView.NOELEMENTS);
 			}
 		}
 	}

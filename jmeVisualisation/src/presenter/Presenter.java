@@ -36,12 +36,17 @@ public abstract class Presenter {
 	 * initialize jme view with drawn elements
 	 * 
 	 * @param app
+	 * @param colorVer
+	 * @param colorEdg
+	 * @param colorTri
+	 * @param colorTet
 	 * @param sampleSize
 	 */
-	public static void setScene(AppJME app, Mesh mesh, InitialView initView) {
+	public static void setScene(AppJME app, Mesh mesh, ColorRGBA colorTet, ColorRGBA colorTri, ColorRGBA colorEdg,
+			ColorRGBA colorVer, InitialView initView) {
 
 		ViewModel.initializeView(app);
-		Presenter.drawElements(app, mesh);
+		Presenter.drawElements(app, mesh, colorTet, colorTri, colorEdg, colorVer);
 
 		if (initView == InitialView.ALLBOUNDARYELEMENTS) {
 			ViewModel.drawBoundaryElements(true, true, true);
@@ -62,49 +67,37 @@ public abstract class Presenter {
 	 * 
 	 * @param app
 	 * @param mesh
+	 * @param colorVer
+	 * @param colorEdg
+	 * @param colorTri
+	 * @param colorTet
 	 * @param firstMesh
 	 */
-	private static void drawElements(AppJME app, Mesh mesh) {
-
-		// color for tetrahedron -> red with alpha (transparency)
-		ColorRGBA color = ColorRGBA.fromRGBA255(255, 0, 0, 150);
-
+	private static void drawElements(AppJME app, Mesh mesh, ColorRGBA colorTet, ColorRGBA colorTri, ColorRGBA colorEdg,
+			ColorRGBA colorVer) {
+		// draw tetrahedrons
 		for (int i = 0; i < mesh.getMapTet().size(); i++) {
-			// draw tetrahedron
-			ViewModel.drawTetrahedron(app, mesh.getMapTet().get(i), color);
-
+			ViewModel.drawTetrahedron(app, mesh.getMapTet().get(i), colorTet);
 		}
 
-		// color for triangle -> blue with alpha (transparency)
-		color = ColorRGBA.fromRGBA255(0, 0, 255, 150);
-
+		// draw triangles
 		for (int i = 0; i < mesh.getMapTri().size(); i++) {
 			for (Triangle3D triangle : mesh.getMapTri().get(i)) {
-
-				ViewModel.drawTriangle(app, triangle, color);
-
+				ViewModel.drawTriangle(app, triangle, colorTri);
 			}
 		}
 
-		// color for edge -> darkGrey with alpha (transparency)
-		color = ColorRGBA.fromRGBA255(51, 51, 51, 150);
-
+		// draw edges
 		for (int i = 0; i < mesh.getMapEdg().size(); i++) {
 			for (Edge3D edge : mesh.getMapEdg().get(i)) {
-
-				ViewModel.drawEdge(app, edge, color);
-
+				ViewModel.drawEdge(app, edge, colorEdg);
 			}
 		}
 
-		// color for vertex -> green with alpha (transparency)
-		color = ColorRGBA.fromRGBA255(0, 255, 0, 150);
-
+		// draw vertices
 		for (int i = 0; i < mesh.getMapVer().size(); i++) {
 			for (Vertex3D vertex : mesh.getMapVer().get(i)) {
-
-				ViewModel.drawVertex(app, vertex, color);
-
+				ViewModel.drawVertex(app, vertex, colorVer);
 			}
 		}
 	}
