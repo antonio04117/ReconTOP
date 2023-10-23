@@ -1,0 +1,86 @@
+/*
+ * For IE4 Bug
+ */
+null.null
+{
+	
+}
+
+.main
+{
+	/* padding-right: 1in; */
+        /* padding-left:  1in; */
+	width: 70%;
+	vertical-align: top;
+	margin: 0 auto;
+}
+
+body 
+{
+	background-color: #ffffff;
+	color: #000000;
+/*	line-height: 120%;*/
+	text-align: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	font-family: verdana, helvetica, arial, sans-serif;
+        font-size: 11pt;
+}
+
+div.sectionheading
+{
+	font-size: 18pt;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+div.section
+{
+	font-size: 11pt;
+	line-height: 120%;
+	text-align: justify;
+	padding-left: 0.25in;
+	padding-top: 2pt;
+}
+
+div.title
+{
+	font-size: 30pt;
+	text-align: left;
+	font-family: serif, times;
+	padding-top: 0.5in;
+	line-height: 100%;
+}
+
+p
+{
+	text-indent: 30px;
+}
+
+/* 
+ * Link style
+ */
+
+a:link 
+{
+        color: #000099;
+        text-decoration: none;
+}
+
+a:visited 
+{
+        color: #000099;
+        text-decoration: none;
+}
+
+a:hover 
+{
+        color: #aaaa20;
+        text-decoration: none;
+}
+
+td.email
+{
+	font-family: monospace, courier;
+}
