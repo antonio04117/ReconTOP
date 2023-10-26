@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.math.ColorRGBA;
+import com.jme3.system.AppSettings;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -20,7 +21,7 @@ import viewmodel.InitialView;
  * app for combined fx and jme application
  */
 public class App {
-	
+
 	private static final Logger logger = LogManager.getLogger(App.class);
 
 	private static Mesh createMeshExample() {
@@ -38,7 +39,7 @@ public class App {
 
 		// a square of tetrahedrons
 		Tetrahedron3D tet0 = new Tetrahedron3D(cube[0], cube[1], cube[2], cube[3]);
-		mesh.addTet(tet0,0);
+		mesh.addTet(tet0, 0);
 		Tetrahedron3D tet1 = new Tetrahedron3D(cube[0], cube[4], cube[2], cube[3]);
 		mesh.addTet(tet1);
 		Tetrahedron3D tet2 = new Tetrahedron3D(cube[1], cube[3], cube[5], cube[6]);
@@ -62,7 +63,7 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		
+
 		logger.info("logger test");
 
 		new Thread(() -> Application.launch(AppFX.class)).start();
@@ -82,6 +83,16 @@ public class App {
 			// start jme thread
 			new Thread(() -> {
 				AppJME appJME = new AppJME();
+
+				/*
+				 * put following into method: preSettings
+				 */
+				AppSettings settings = new AppSettings(true);
+				settings.setFullscreen(true);
+				appJME.setSettings(settings);
+				// directly open jme without pop up window opening first
+				appJME.setShowSettings(false);
+
 				appJME.start();
 				Presenter.createConnection(viewFX, appJME, mesh);
 			}).start();
