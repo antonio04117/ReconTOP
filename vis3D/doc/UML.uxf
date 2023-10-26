@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>3</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1116</x>
+      <y>309</y>
+      <w>123</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>*ViewFX*
+--
+-rootPane: BorderPane
+-canvas: Canvas
+-stage: Stage
+-defaultAnnotation: String
+-listViewTetrahedron: ListView&lt;Text&gt;
+-listViewTriangle: ListView&lt;Text&gt;
+-listViewEdge: ListView&lt;Text&gt;
+-listViewVertex: ListView&lt;Text&gt;
+-checkBoxCells: Map&lt;CheckBox, Integer&gt;
+-buttonDeselectAllElements: Button
+-buttonInitialCamera: Button
+-buttonTransparentOpaque: Button
+-sliderTransparency: Slider
+-checkBoxSettings: CheckBox[]
+_-TETSTRING: String_
+_-SELECTSTRING: String_
+_-DESELECTSTRING: String_
+--
++ViewFX(Stage, Mesh)
++setScene(Mesh): void
++createTabPane(Mesh, int): void
++getSelectedTab(): int
+-createCheckbox(Mesh): LinkedHashMap&lt;CheckBox, Integer&gt;
+-addCheckboxes(VBox)&lt;T&gt;: VBox
+-addButtonDeselectAllElements(VBox): void
+-addButtonInitialCamera(VBox): void
+-addButtonTransparentOpaque(VBox): void
+-addSliderTransparency(VBox): void
+-addSettingCheckboxes(VBox): void
+-createTetrahedronTab(Mesh): BorderPane
+-createTetrahedronList(Mesh): ObservableList&lt;Text&gt;
+-getAllDisplayableTetsID(Mesh): Set&lt;Integer&gt;
+-createTriangleTab(Mesh): BorderPane
+-createTriangleList(Mesh): ObservableList&lt;Text&gt;
+-createEdgeTab(Mesh): BorderPane
+-createEdgeList(Mesh): ObservableList&lt;Text&gt;
+-createVertexTab(Mesh): BorderPane
+-createVertexList(Mesh): ObservableList&lt;Text&gt;
++getListViewTetrahedron(): ListView&lt;Text&gt;
++getListViewTriangle(): ListView&lt;Text&gt;
++getListViewEdge(): ListView&lt;Text&gt;
++getListViewVertex(): ListView&lt;Text&gt;
++getCheckBoxCells(): Map&lt;CheckBox, Integer&gt;
++getButtonDeselectAllElements(): Button
++getCheckBoxSettings(): CheckBox[]
++getCanvas(): Canvas
++getButtonInitialCamera(): Button
++getButtonTransparentOpaque(): Button
++getSliderTransparency(): Slider</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>159</x>
+      <y>306</y>
+      <w>129</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>*Mesh*
+--
+-mapTet: Map&lt;Integer, Tetrahedron3D&gt;
+-mapTri: Map&lt;Integer, LinkedList&lt;Triangle3D&gt;&gt;
+-mapEdg: Map&lt;Integer, LinkedList&lt;Edge3D&gt;&gt;
+-mapVer: Map&lt;Integer, LinkedList&lt;Vertex3D&gt;&gt;
+-tetCount: Integer
+-cellIDs: Map&lt;Integer, Set&lt;Integer&gt;&gt;
+--
++Mesh()
++addTet(Tetrahedron3D): void
++addTet(Tetrahedron3D, int): void
++addExistingTetToCell(Tetrahedron3D, int): void
++getIdOfTet(Tetrahedron3D): Integer
++markBoundary(): void
+-edgeIsBoundary(Edge3D): boolean
+-triangleIsBoundary(Triangle3D): boolean
++getMapTet(): Map&lt;Integer, Tetrahedron3D&gt;
++getMapTri(): Map&lt;Integer, LinkedList&lt;Triangle3D&gt;&gt;
++getMapEdg(): Map&lt;Integer, LinkedList&lt;Edge3D&gt;&gt;
++getMapVer(): Map&lt;Integer, LinkedList&lt;Vertex3D&gt;&gt;
++getTetCount(): Integer
++getCellIDs(): Map&lt;Integer, Set&lt;Integer&gt;&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>315</x>
+      <y>318</y>
+      <w>63</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>*Point3D*
+--
+-x: int
+-y: int
+-z: int
+--
++Point3D(int, int, int)
++getX(): int
++getY(): int
++getZ(): int
++equals(Object): boolean
++hashCode(): int
++toString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>165</x>
+      <y>486</y>
+      <w>87</w>
+      <h>51</h>
+    </coordinates>
+    <panel_attributes>*Triangle3D*
+--
+-isBoundary: boolean
+-vertices: ArrayList&lt;Vertex3D&gt;
+--
++Triangle3D(Vertex3D, Vertex3D, Vertex3D)
++getP0(): Vertex3D
++getP1(): Vertex3D
++getP2(): Vertex3D
++isBoundary(): boolean
++setBoundary(boolean): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>813</x>
+      <y>309</y>
+      <w>120</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+*/JmeConfigurations/*
+--
+--
+-JmeConfigurations()
+_+jmeInitializer(AppJME): void_
+_-initInput(AppJME): void_
+_-setLights(AppJME): void_
+_-hideSettings(AppJME): void_
+_-configureCamera(AppJME): void_
+_setInitialCameraPosition(AppJME): void_
+_-createCoordSys(AppJME): void_
+_-createAxis(AppJME, Mesh, ColorRGBA): void_
+_+createLightingMaterial(AssetManager, ColorRGBA): Material_
+_+changeAlpha(Node, ColorRGBA, int): void_
+_+changeAlpha(Geometry, ColorRGBA, int): void_
+_-setAmbientColor(Material, ColorRGBA): void_
+_-setDiffuseColor(Material, ColorRGBA): void_
+_-setSpecularColor(Material, ColorRGBA): void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>435</y>
+      <w>81</w>
+      <h>51</h>
+    </coordinates>
+    <panel_attributes>*Edge3D*
+--
+-start: Vertex3D
+-end: Vertex3D
+-boundary: boolean
+--
++Edge3D(Vertex3D, Vertex3D, boolean)
++getStart(): Vertex3D
++getEnd(): Vertex3D
++isBoundary(): boolean
++setBoundary(boolean): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>951</x>
+      <y>402</y>
+      <w>153</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>*EdgeJME*
+--
+-parentNode: Node
+-startPoint: Vector3f
+-endPoint: Vector3f
+-edgeGeo: Geometry
+-color: ColorRGBA
+--
++EdgeJME(AssetManager, Node, float[], float[], ColorRGBA)
++setVisibility(boolean): void
++setTransparency(boolean): void
++move(float, float, float): void
++getEdgeGeo(): Geometry
++getColor(): ColorRGBA</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>813</x>
+      <y>468</y>
+      <w>135</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>*TriangleJME*
+--
+-parentNode: Node
+-triangleGeo: Geometry
+-color: ColorRGBA
+--
++TriangleJME(AssetManager, Node, float[], float[], float[], ColorRGBA)
+-defineMesh(Mesh, float[], float[], float[]): void
++setVisibility(boolean): void
++setTransparency(boolean): void
++move(float, float, float): void
++getTriangleGeo(): Geometry
++getColor(): ColorRGBA</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>813</x>
+      <y>402</y>
+      <w>135</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>*VertexJME*
+--
+-parentNode: Node
+-radius: float
+-vertexGeo: Geometry
+-color: ColorRGBA
+--
++VertexJME(AssetManager, Node, float, float, float, ColorRGBA)
++setVisibility(boolean): void
++setTransparency(boolean): void
++move(float, float, float): void
++getPointGeo(): Geometry
++getColor(): ColorRGBA
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>498</y>
+      <w>114</w>
+      <h>39</h>
+    </coordinates>
+    <panel_attributes>*Tetrahedron3D*
+--
+-vertices: ArrayList&lt;Vertex3D&gt;
+--
++Tetrahedron3D(Vertex3D, Vertex3D, Vertex3D, Vertex3D)
++getP0(): Vertex3D
++getP1(): Vertex3D
++getP2(): Vertex3D
++getP3(): Vertex3D
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>165</x>
+      <y>435</y>
+      <w>69</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>*Vertex3D*
+--
+-p: Point3D
+-isBoundary: boolean
+--
++Vertex3D(Point3D, boolean)
++getP(): Point3D
++isBoundary(): boolean
++setBoundary(boolean): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>951</x>
+      <y>468</y>
+      <w>153</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>*TetrahedronJME*
+--
+-parentNode: Node
+-tetrahedronGeo: Node
+-tri: TriangleJME[]
+-color: ColorRGBA
+--
++TetrahedronJME(AssetManager, Node, float[], float[], float[], float[], ColorRGBA)
++move(float, float, float): void
++setVisibility(boolean): void
++setTransparency(boolean): void
++getTetrahedronGeo(): Node
++getColor(): ColorRGBA</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>414</x>
+      <y>300</y>
+      <w>186</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+/*Presenter*/
+--
+--
+-Presenter()
+_+createConnection(ViewFX, AppJME, Mesh): void_
+_+setScene(AppJME, Mesh, ColorRGBA, ColorRGBA, ColorRGBA, ColorRGBA, InitialView): void_
+_-drawElements(AppJME, Mesh, ColorRGBA, ColorRGBA, ColorRGBA, ColorRGBA): void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>63</x>
+      <y>402</y>
+      <w>51</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>*JUnitTests*
+--
+--
+~testGetIdOfTet(): void
+~testContainsKey(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>63</x>
+      <y>429</y>
+      <w>45</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>*TestApp*
+--
+--
+_+main(String[]): void_
++simpleInitApp(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>414</x>
+      <y>339</y>
+      <w>87</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+/*EventManager*/
+--
+--
+-EventManager()
+_+coreEvents(ViewFX, Mesh): void_
+_+viewModelEvents(ViewFX, AppJME): void_
+_-alphaValue(ViewFX, AppJME): void_
+_-opaqueTransparent(ViewFX, AppJME): void_
+_-tetOpaqueTransparent(ViewFX, AppJME): void_
+_-triOpaqueTransparent(ViewFX, AppJME): void_
+_-edgOpaqueTransparent(ViewFX, AppJME): void_
+_-verOpaqueTransparent(ViewFX, AppJME): void_
+_-settingsTicked(ViewFX): void_
+_-edgesSettingsTicked(ViewFX): void_
+_-edgesSettingsNotTicked(ViewFX): void_
+_-vertexSettingsTicked(ViewFX): void_
+_-vertexSettingsNotTicked(ViewFX): void_
+_-deselectAll(ViewFX): void_
+_-selectionTet(ViewFX, AppJME): void_
+_-selectionTri(ViewFX, AppJME): void_
+_-selectionEdg(ViewFX, AppJME): void_
+_-selectionVer(ViewFX, AppJME): void_
+_-showEdgesWithTets(ViewFX): void_
+_-showVerticesWithTets(ViewFX): void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>627</x>
+      <y>297</y>
+      <w>159</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+*/ViewModel/*
+--
+-ViewModel()
+_-tetrahedrons: LinkedList&lt;TetrahedronJME&gt;_
+_-triBoundary: HashSet&lt;TriangleJME&gt;_
+_-triangles: LinkedList&lt;TriangleJME&gt;_
+_-edgBoundary: HashSet&lt;EdgeJME&gt;_
+_-edges: LinkedList&lt;EdgeJME&gt;_
+_-verBoundary: HashSet&lt;VertexJME&gt;_
+_-vertices: LinkedList&lt;VertexJME&gt;_
+_-transparent: boolean_
+--
+_+initializeView(AppJME): void_
+_+drawTetrahedron(AppJME, Tetrahedron3D, ColorRGBA): void_
+_+drawTriangle(AppJME, Triangle3D, ColorRGBA): void_
+_+drawEdge(AppJME, Edge3D, ColorRGBA): void_
+_+drawVertex(AppJME, Vertex3D, ColorRGBA): void_
+_+drawBoundaryElements(boolean, boolean, boolean): void_
+_+setInitialCameraPosition(AppJME): void_
+_+hideBoundary(): void_
+_+showBoundary(): void_
+_+showTetrahedron(int): void_
+_+hideTetrahedron(int): void_
+_+transparentTetrahedron(int): void_
+_+opaqueTetrahedron(int): void_
+_+showTriangle(int): void_
+_+hideTriangle(int): void_
+_+transparentTriangle(int): void_
+_+opaqueTriangle(int): void_
+_+showEdge(int): void_
+_+hideEdge(int): void_
+_+transparentEdge(int): void_
+_+opaqueEdge(int): void_
+_+showVertex(int): void_
+_+hideVertex(int): void_
+_+transparentVertex(int): void_
+_+opaqueVertex(int): void_
+_+setAlphaTetrahedron(int, int): void_
+_+setAlphaTriangle(int, int): void_
+_+setAlphaEdge(int, int): void_
+_+setAlphaVertex(int, int): void_
+_+isTransparent(): boolean_
+_+setTransparent(boolean): void_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>627</x>
+      <y>510</y>
+      <w>69</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+*InitialView*
+--
++ALLBOUNDARYELEMENTS
++TRIANGLEBOUNDARY
++EDGEBOUNDARY
++VERTEXBOUNDARY
++EDGEVERTEXBOUNDARY
++NOELEMENTS
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>618</x>
+      <y>285</y>
+      <w>177</w>
+      <h>276</h>
+    </coordinates>
+    <panel_attributes>viewmodel</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>306</x>
+      <y>306</y>
+      <w>78</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>geometry</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>144</x>
+      <y>282</y>
+      <w>252</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>model</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>159</x>
+      <y>420</y>
+      <w>225</w>
+      <h>123</h>
+    </coordinates>
+    <panel_attributes>topology</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>408</x>
+      <y>285</y>
+      <w>201</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>presenter</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>804</x>
+      <y>285</y>
+      <w>447</w>
+      <h>276</h>
+    </coordinates>
+    <panel_attributes>view</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>807</x>
+      <y>297</y>
+      <w>300</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>jme</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1110</x>
+      <y>297</y>
+      <w>135</w>
+      <h>258</h>
+    </coordinates>
+    <panel_attributes>fx</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>57</x>
+      <y>390</y>
+      <w>63</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>junit</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>66</x>
+      <y>297</y>
+      <w>60</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>*App*
+--
+--
+_-createMeshExample(): Mesh_
+_+main(String[]): void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>57</x>
+      <y>285</y>
+      <w>78</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>app</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>66</x>
+      <y>327</y>
+      <w>45</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>_*/AppFX/*_
+--
+_-mesh: Mesh_
+--
++start(Stage): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>66</x>
+      <y>357</y>
+      <w>45</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>_*/AppJME/*_
+--
+--
++simpleInitApp(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>84</x>
+      <y>318</y>
+      <w>9</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=(+)-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>84</x>
+      <y>348</y>
+      <w>9</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=(+)-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+</diagram>
